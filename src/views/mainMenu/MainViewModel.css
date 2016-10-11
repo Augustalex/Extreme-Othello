@@ -1,0 +1,15 @@
+BorderPane{
+    -fx-background-color: rgb(76, 136, 200);
+}
+
+Label#mainTitle{
+    -fx-font-size: 42;
+    -fx-font-family: monospace;
+}
+
+Button{
+    -fx-min-width: 200px;
+    -fx-padding: 1em;
+    -fx-border-insets: 50px;
+    -fx-background-insets: 5px;
+}

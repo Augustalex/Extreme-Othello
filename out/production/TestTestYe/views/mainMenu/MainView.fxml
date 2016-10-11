@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane
+        xmlns:fx="http://javafx.com/fxml"
+        stylesheets="/views/mainMenu/MainViewModel.css" id="window">
+    <top>
+        <TextFlow textAlignment="CENTER">
+            <Label fx:id="mainTitle" id="mainTitle" alignment="CENTER" text="MAIN MENU"/>
+        </TextFlow>
+    </top>
+    <center>
+        <VBox alignment="CENTER">
+            <Button text="Create new game" fx:id="newGameButton"/>
+            <Button text="Settings" />
+        </VBox>
+    </center>
+    <bottom>
+    </bottom>
+</BorderPane>
