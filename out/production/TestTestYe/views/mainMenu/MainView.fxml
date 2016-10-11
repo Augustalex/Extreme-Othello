@@ -8,16 +8,14 @@
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/mainMenu/MainViewModel.css" id="window">
     <top>
-        <TextFlow textAlignment="CENTER">
-            <Label fx:id="mainTitle" id="mainTitle" alignment="CENTER" text="MAIN MENU"/>
-        </TextFlow>
+        <HBox>
+            <Label fx:id="mainTitle" id="mainTitle" text="MAIN MENU"/>
+        </HBox>
     </top>
     <center>
-        <VBox alignment="CENTER">
+        <VBox>
             <Button text="Create new game" fx:id="newGameButton"/>
             <Button text="Settings" />
         </VBox>
     </center>
-    <bottom>
-    </bottom>
 </BorderPane>

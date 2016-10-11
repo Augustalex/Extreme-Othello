@@ -1,0 +1,10 @@
+Cell#gameBoardCell{
+    -fx-border-color: black;
+    -fx-background-color: green;
+}
+
+HBox{
+    -fx-alignment: CENTER;
+}
+BorderPane#Window{
+}

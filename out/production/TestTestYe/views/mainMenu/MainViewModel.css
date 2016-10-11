@@ -10,6 +10,16 @@ Label#mainTitle{
 Button{
     -fx-min-width: 200px;
     -fx-padding: 1em;
-    -fx-border-insets: 50px;
+    -fx-border-insets: 30px;
     -fx-background-insets: 5px;
+}
+
+HBox{
+    -fx-min-height: 13em;
+    -fx-alignment: center;
+}
+
+VBox{
+    -fx-alignment: center;
+    -fx-alignment: top-center;
 }
