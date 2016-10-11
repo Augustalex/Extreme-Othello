@@ -24,7 +24,6 @@ Button {
     -fx-background-color: linear-gradient(rgb(76, 136, 200), rgb(113, 180, 255));
     -fx-border-color: black;
     -fx-border-width: 2px;
-    -fx-pref-width: 50%;
     -fx-padding: 0.5em;
 }
 

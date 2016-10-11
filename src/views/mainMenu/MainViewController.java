@@ -35,6 +35,11 @@ public class MainViewController extends FXMLViewController implements Initializa
         this.loadFXLMInto(this.getClass(), this, container);
     }
 
+    /**
+     * This function runs when the FXML and CSS is loaded, and only then.
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("What");
