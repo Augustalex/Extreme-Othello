@@ -13,7 +13,7 @@
         </TextFlow>
     </top>
     <center>
-            <HBox alignment="TOP_CENTER">
+            <HBox fx:id="buttonContainer">
                 <Button text="CREATE NEW GAME" fx:id="newGameButton"/>
                 <Button text="SETTINGS" />
             </HBox>

@@ -2,8 +2,10 @@ package views.mainMenu;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import router.Router;
 import views.FXMLViewController;
@@ -26,6 +28,9 @@ public class MainViewController extends FXMLViewController implements Initializa
     @FXML
     Button newGameButton;
 
+    @FXML
+    HBox buttonContainer;
+
     public MainViewController(){
         super(MainViewController.fxmlFileName);
     }
@@ -38,6 +43,17 @@ public class MainViewController extends FXMLViewController implements Initializa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("What");
+
+        int numberOfButtons = this.buttonContainer.getChildren().filtered(n -> n instanceof Button).size();
+
+        for(Node node : this.buttonContainer.getChildren()){
+            if(node instanceof Button){
+                Button button = (Button) node;
+                button.minWidthProperty().bind(this.container.widthProperty().divide(numberOfButtons));
+                button.maxWidthProperty().bind(button.minWidthProperty());
+            }
+        }
+
         newGameButton.setOnAction((e)->{
             try {
                 Router.getApplicationRouter().route("NewGameView", new HashMap());
