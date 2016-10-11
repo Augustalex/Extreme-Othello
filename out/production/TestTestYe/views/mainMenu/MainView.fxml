@@ -8,16 +8,19 @@
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/mainMenu/MainViewModel.css" id="window">
     <top>
-        <TextFlow textAlignment="CENTER">
-            <Label fx:id="mainTitle" id="mainTitle" alignment="CENTER" text="MAIN MENU"/>
+        <TextFlow>
+            <Label fx:id="mainTitle" id="mainTitle" text="MAIN MENU"/>
         </TextFlow>
     </top>
     <center>
-        <VBox alignment="CENTER">
-            <Button text="Create new game" fx:id="newGameButton"/>
-            <Button text="Settings" />
-        </VBox>
+            <HBox alignment="TOP_CENTER">
+                <Button text="CREATE NEW GAME" fx:id="newGameButton"/>
+                <Button text="SETTINGS" />
+            </HBox>
     </center>
     <bottom>
+        <TextFlow fx:id="bottom">
+            <Label fx:id="creatorName" id="creatorName" text="Created by: Jacob Berqvist, Björn Andersson and August Alexandersson."/>
+        </TextFlow>
     </bottom>
 </BorderPane>
