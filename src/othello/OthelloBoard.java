@@ -16,6 +16,7 @@ import java.awt.Point;
 public class OthelloBoard extends GameBoard {
     private static int width = 8;
     private static int height = 8;
+
     public OthelloBoard() {
         super(OthelloBoard.width, OthelloBoard.height);
 

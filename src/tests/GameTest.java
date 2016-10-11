@@ -30,7 +30,7 @@ public class GameTest extends Application {
         Router.setApplicationRouter(router);
         Map map = new HashMap();
         map.put("GameMatch", null);
-        router.route("MainView", new HashMap());
+        router.route("GameView", map);
 
         primaryStage.show();
     }

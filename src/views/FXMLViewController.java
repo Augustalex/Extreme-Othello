@@ -15,6 +15,7 @@ import java.net.URL;
 public abstract class FXMLViewController implements ViewController{
 
     private String resourceName;
+    protected Pane container;
 
     public FXMLViewController(String resourceName){
         this.resourceName = resourceName;
@@ -35,6 +36,8 @@ public abstract class FXMLViewController implements ViewController{
     }
 
     protected void loadFXLMInto(Class classObject, Initializable controller, Pane container){
+        this.container = container;
+
         Parent fxml = this.loadFXML(classObject, controller);
         container.getChildren().setAll(fxml);
     }

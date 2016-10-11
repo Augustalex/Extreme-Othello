@@ -8,10 +8,13 @@
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/gameView/GameViewModel.css" id="window">
     <top>
-        <GridPane>
-            <Text text="Game field here" />
-        </GridPane>
+        
     </top>
+    
+    <center>
+            <HBox fx:id="gameBoardContainer" >  
+            </HBox>   
+    </center>
     <bottom>
         <BorderPane>
             <left>
