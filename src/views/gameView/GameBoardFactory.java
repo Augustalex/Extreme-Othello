@@ -24,18 +24,20 @@ public class GameBoardFactory {
         pane.minWidthProperty().bind(container.widthProperty());
         pane.maxWidthProperty().bind(container.widthProperty());
 
-        pane.minHeightProperty().bind(container.heightProperty());
-        pane.maxHeightProperty().bind(container.heightProperty());
+        pane.minHeightProperty().bind(pane.widthProperty());
+        pane.maxHeightProperty().bind(pane.widthProperty());
 
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++){
                 Cell cell = new Cell();
+                
+                
                 cell.minWidthProperty().bind(pane.widthProperty().divide(size));
                 cell.maxWidthProperty().bind(pane.widthProperty().divide(size));
                 cell.minHeightProperty().bind(pane.widthProperty().divide(size));
                 cell.maxHeightProperty().bind(pane.widthProperty().divide(size));
-
                 pane.add(cell, j, i);
+                
             }
 
         return pane;
