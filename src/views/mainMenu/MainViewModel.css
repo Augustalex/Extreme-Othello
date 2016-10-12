@@ -1,4 +1,4 @@
-BorderPane{
+BorderPane#mainViewWindow{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
     -fx-border-width: 2px;
     -fx-border-color: black;
