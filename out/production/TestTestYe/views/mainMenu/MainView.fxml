@@ -17,7 +17,7 @@
                 <Button text="NEW GAME" fx:id="newGameButton"/>
                 <Button text="SETTINGS" />
                 <Button text="REPLAYS" />
-                <Button text="Hej o Hå" />
+                <Button text="STATISTICS" />
             </HBox>
     </center>
     <bottom>

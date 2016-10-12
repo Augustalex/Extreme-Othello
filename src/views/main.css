@@ -1,3 +1,5 @@
+/* Combobox properties. */
+
 ComboBox{
     -fx-background-color: rgba(255, 62, 52, 0.61);
 }
@@ -11,11 +13,15 @@ BorderPane{
 }
 */
 
+/* Main Title text. */
+
 Label#mainTitle{
     -fx-font-size: 62;
     -fx-font-family: 'Helvetica Neue', monospace;
     -fx-text-alignment: center;
 }
+
+/* Generic properties for text. */
 
 TextFlow{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
@@ -24,6 +30,8 @@ TextFlow{
     -fx-padding: 0.5em;
     -fx-font-family: 'Helvetica Neue', monospace;
 }
+
+/* Properties for buttons in application. */
 
 Button {
     -fx-font-size: 2em;
@@ -34,14 +42,20 @@ Button {
     -fx-background-insets: 2, 2, 2, 2;
 }
 
+/* Light up effect for buttons when you hover over. */
+
 .button:hover {
     -fx-background-color: linear-gradient(rgb(72, 255, 108), rgb(18, 97, 27));
 }
+
+/* Gameboard */
 
 Cell#gameBoardCell{
     -fx-border-color: black;
     -fx-background-color: green;
 }
+
+/* Alignment for HBox in gameView */
 
 HBox#gameViewWindow {
     -fx-alignment: CENTER;
