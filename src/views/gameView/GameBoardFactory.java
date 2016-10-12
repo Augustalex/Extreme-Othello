@@ -8,6 +8,7 @@ package views.gameView;
 
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 
 /**
@@ -16,10 +17,12 @@ import javafx.scene.layout.GridPane;
  */
 public class GameBoardFactory {
 
-    public static GridPane createBoard(int maxSize){
+    public static GridPane createBoard(Pane contianer, int maxSize){
         GridPane pane = new GridPane();
         pane.setId("gameBoard");
 
+        pane.prefWidthProperty().bind(contianer.widthProperty());
+        pane.prefHeightProperty().bind(pane.widthProperty());
         //ColumnConstraints column = new ColumnConstraints();
         //column.setPercentWidth(100);
         //pane.getColumnConstraints().add(column);
