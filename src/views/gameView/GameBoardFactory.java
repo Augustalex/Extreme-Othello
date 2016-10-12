@@ -21,8 +21,8 @@ public class GameBoardFactory {
         GridPane pane = new GridPane();
         pane.setId("gameBoard");
 
-        pane.prefWidthProperty().bind(contianer.widthProperty());
-        pane.prefHeightProperty().bind(pane.widthProperty());
+        //pane.prefWidthProperty().bind(contianer.widthProperty());
+        //pane.prefHeightProperty().bind(pane.widthProperty());
         //ColumnConstraints column = new ColumnConstraints();
         //column.setPercentWidth(100);
         //pane.getColumnConstraints().add(column);
