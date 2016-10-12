@@ -35,9 +35,5 @@ public class Cell extends StackPane {
         this.heightProperty().addListener((e)->{
             shape.prefHeight(this.heightProperty().get());
         });
-        
-        Circle circle = new Circle(this.getWidth() /2, this.getHeight() /2
-        ,this.getWidth() / 2 - 10, this.getHeight / 2 - 10);
-        Circle();
     }
 }

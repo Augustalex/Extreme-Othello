@@ -26,7 +26,7 @@ public class GameTest extends Application {
         primaryStage.setScene(new Scene(content, 600, 600));
 
         Router router = new PaneRouter(content);
-        Router.setApplicationRouter(..  router);
+        Router.setApplicationRouter(router);
         Map map = new HashMap();
         map.put("GameMatch", null);
         router.route("MainView", map);
