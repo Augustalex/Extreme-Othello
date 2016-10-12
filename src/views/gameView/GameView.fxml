@@ -7,6 +7,7 @@
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/main.css" id="gameViewWindow">
+    
     <top>
         
     </top>

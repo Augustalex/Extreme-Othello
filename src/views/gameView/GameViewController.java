@@ -33,7 +33,7 @@ public class GameViewController extends FXMLViewController implements Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        gameBoardContainer.getChildren().add(GameBoardFactory.createBoard(this.container, 8));
+        gameBoardContainer.getChildren().add(GameBoardFactory.createBoard(gameBoardContainer, 8));
 
         //gameBoardContainer.setStyle("-fx-border-color: black; -fx-background-color: yellow");
         //gameBoardContainer.minWidthProperty().bind(this.container.widthProperty());
