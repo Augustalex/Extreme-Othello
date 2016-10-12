@@ -23,13 +23,13 @@ public class MainViewController extends FXMLViewController implements Initializa
     private static final String fxmlFileName = "MainView.fxml";
 
     @FXML
-    Label mainTitle;
+    private Label mainTitle;
 
     @FXML
-    Button newGameButton;
+    private Button newGameButton;
 
     @FXML
-    HBox buttonContainer;
+    private HBox buttonContainer;
 
     public MainViewController(){
         super(MainViewController.fxmlFileName);
@@ -47,18 +47,22 @@ public class MainViewController extends FXMLViewController implements Initializa
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("What");
 
+        strifeMenuButtonSize();
+        setupButtonRouting();
+    }
+
+    private void strifeMenuButtonSize(){
         int numberOfButtons = this.buttonContainer.getChildren().filtered(n -> n instanceof Button).size();
 
-        for(Node node : this.buttonContainer.getChildren()){
-            if(node instanceof Button){
-                Button button = (Button) node;
-                button.minWidthProperty().bind(this.container.widthProperty().divide(numberOfButtons));
-                button.maxWidthProperty().bind(button.minWidthProperty());
-            }
-        }
+        this.buttonContainer.getChildren().stream().filter(node -> node instanceof Button).forEach(node -> {
+            Button button = (Button) node;
+            button.minWidthProperty().bind(this.container.widthProperty().divide(numberOfButtons));
+            button.maxWidthProperty().bind(button.minWidthProperty());
+        });
+    }
 
+    private void setupButtonRouting(){
         newGameButton.setOnAction((e)->{
             try {
                 Router.getApplicationRouter().route("NewGameView", new HashMap());

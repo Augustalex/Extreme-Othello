@@ -18,13 +18,12 @@ import java.util.Map;
 public class GameTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane pane = new BorderPane();
         StackPane content = new StackPane();
-        pane.setCenter(content);
-        pane.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         content.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        primaryStage.setScene(new Scene(pane, 600, 600));
+        content.minWidthProperty().bind(primaryStage.widthProperty());
+        content.maxWidthProperty().bind(primaryStage.widthProperty());
+        primaryStage.setScene(new Scene(content, 600, 600));
 
         Router router = new PaneRouter(content);
         Router.setApplicationRouter(router);

@@ -9,13 +9,15 @@
         stylesheets="/views/mainMenu/MainViewModel.css" id="window">
     <top>
         <TextFlow>
-            <Label fx:id="mainTitle" id="mainTitle" text="MAIN MENU"/>
+            <Label fx:id="mainTitle" id="mainTitle" text="OTHELLO"/>
         </TextFlow>
     </top>
     <center>
             <HBox fx:id="buttonContainer">
-                <Button text="CREATE NEW GAME" fx:id="newGameButton"/>
+                <Button text="NEW GAME" fx:id="newGameButton"/>
                 <Button text="SETTINGS" />
+                <Button text="REPLAYS" />
+                <Button text="Hej o Hå" />
             </HBox>
     </center>
     <bottom>

@@ -2,7 +2,7 @@ package views;
 
 import boardGame.GameMatch;
 import javafx.scene.layout.Pane;
-import views.createNewGame.NewGameViewController;
+import views.newGame.NewGameViewController;
 import views.gameView.GameViewController;
 import views.mainMenu.MainViewController;
 

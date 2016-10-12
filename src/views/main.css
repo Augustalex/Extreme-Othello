@@ -1,8 +1,13 @@
+ComboBox{
+    -fx-background-color: rgba(255, 62, 52, 0.61);
+
+}
+
 BorderPane{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
     -fx-border-width: 2px;
     -fx-border-color: black;
-    -fx-background-image: url("../../tests/reversi.jpg");
+    -fx-background-image: url("../tests/reversi.jpg");
     -fx-background-size: auto 100%;
 }
 

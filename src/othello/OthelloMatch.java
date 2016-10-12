@@ -17,14 +17,14 @@ public class OthelloMatch extends GameMatch {
     }
 
     @Override
-    protected void round() {
+    public void round() {
         for(Player player : this.players){
             turn(player, this.board);
         }
     }
 
     @Override
-    protected void turn(Player player, GameBoard board) {
+    public void turn(Player player, GameBoard board) {
         Move move;
         do {
             move = player.getMove();

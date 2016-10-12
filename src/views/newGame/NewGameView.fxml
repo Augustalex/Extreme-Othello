@@ -6,17 +6,16 @@
 
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
-        stylesheets="/views/createNewGame/NewGameViewModel.css" id="window">
+        stylesheets="/views/main.css" id="window">
     <top>
         <TextFlow textAlignment="CENTER">
-            <Label fx:id="windowTitle" id="windowTitle" alignment="CENTER" text="NEW GAME"/>
+            <Label fx:id="windowTitle" id="windowTitle" text="Create a new Game"/>
         </TextFlow>
     </top>
     <center>
         <VBox alignment="CENTER">
             <Label fx:id="firstPlayerBoxLabel"/>
-            <ComboBox fx:id="firstPlayerBox" />
-            <ComboBox fx:id="fuckIt" />
+            <ComboBox fx:id="firstPlayerBox"/>
             <Label fx:id="secondPlayerBoxLabel" />
             <ComboBox fx:id="secondPlayerBox" />
         </VBox>
