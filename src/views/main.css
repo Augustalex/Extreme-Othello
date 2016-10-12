@@ -3,15 +3,15 @@
 ComboBox{
     -fx-background-color: rgba(255, 62, 52, 0.61);
 }
-/*
-BorderPane{
+
+BorderPane#mainViewBackground{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
     -fx-border-width: 2px;
     -fx-border-color: black;
     -fx-background-image: url("../tests/reversi.jpg");
     -fx-background-size: auto 100%;
 }
-*/
+
 
 /* Main Title text. */
 
@@ -56,7 +56,11 @@ Cell#gameBoardCell{
 }
 
 BorderPane#gameViewWindow{
-    -fx-alignment: center;
+    -fx-background-color: black;
+}
+
+BorderPane#gameViewWindow Label{
+    -fx-text-fill: white;
 }
 
 HBox#gameBoardContainer {
@@ -65,6 +69,13 @@ HBox#gameBoardContainer {
     -fx-min-width: 0;
 }
 
+BorderPane#gameTitle{
+    -fx-pref-height: 80;
+    -fx-font-size: 4em;
+    -fx-padding: 2em;
+}
+
 BorderPane#gameViewStatusBar{
-    -fx-pref-height: 200;
+    -fx-pref-height: 120;
+
 }

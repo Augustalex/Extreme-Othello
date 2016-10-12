@@ -21,7 +21,7 @@ public class GameViewController extends FXMLViewController implements Initializa
     private static final String fxmlFileName = "GameView.fxml";
     
     @FXML
-    HBox gameBoardContainer;
+    private HBox gameBoardContainer;
     
     public GameViewController(GameMatch match){
         super(GameViewController.fxmlFileName);

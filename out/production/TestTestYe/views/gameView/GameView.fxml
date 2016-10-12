@@ -7,22 +7,30 @@
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/main.css" id="gameViewWindow">
-    
     <top>
-        
+        <BorderPane id="gameTitle">
+            <left>
+                <Label text="AUGUST" />
+            </left>
+            <center>
+                <Label text="V.S." />
+            </center>
+            <right>
+                <Label text="BJORN" />
+            </right>
+        </BorderPane>
     </top>
-    
     <center>
-            <HBox fx:id="gameBoardContainer" >  
-            </HBox>   
+        <HBox fx:id="gameBoardContainer" id="gameBoardContainer" >
+        </HBox>
     </center>
     <bottom>
-        <BorderPane>
+        <BorderPane id="gameViewStatusBar">
             <left>
-                <Text text="Available move" />
+                <Label text="Available move" />
             </left>
             <right>
-                <Text text="Stats here" />
+                <Label text="Stats here" />
             </right>
         </BorderPane>
     </bottom>
