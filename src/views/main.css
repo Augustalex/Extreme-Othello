@@ -1,7 +1,7 @@
 ComboBox{
     -fx-background-color: rgba(255, 62, 52, 0.61);
 }
-
+/*
 BorderPane{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
     -fx-border-width: 2px;
@@ -9,6 +9,7 @@ BorderPane{
     -fx-background-image: url("../tests/reversi.jpg");
     -fx-background-size: auto 100%;
 }
+*/
 
 Label#mainTitle{
     -fx-font-size: 62;
@@ -40,6 +41,8 @@ Button {
 Cell#gameBoardCell{
     -fx-border-color: black;
     -fx-background-color: green;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
 }
 
 HBox#gameViewWindow {
