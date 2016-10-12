@@ -6,7 +6,7 @@
 
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
-        stylesheets="/views/mainMenu/MainViewModel.css" id="window">
+        stylesheets="/views/main.css" id="window">
     <top>
         <TextFlow>
             <Label fx:id="mainTitle" id="mainTitle" text="OTHELLO"/>
