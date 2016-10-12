@@ -6,6 +6,8 @@
 package views.gameView;
 
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 /**
  *
  * @author S132063
@@ -21,5 +23,21 @@ public class Cell extends StackPane {
     private void handleMouseClick() {
         /**throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. */ 
         System.out.println("lalala");
+        
     }
+    void markCell(Shape shape){
+        
+        
+        this.widthProperty().addListener((e)->{
+            shape.prefWidth(this.widthProperty().get());
+        });
+        
+        this.heightProperty().addListener((e)->{
+            shape.prefHeight(this.heightProperty().get());
+        });
+        
+        Circle circle = new Circle(this.getWidth() /2, this.getHeight() /2
+        ,this.getWidth() / 2 - 10, this.getHeight / 2 - 10);
+        Circle();
     }
+}
