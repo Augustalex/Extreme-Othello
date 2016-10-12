@@ -55,9 +55,16 @@ Cell#gameBoardCell{
     -fx-background-color: green;
 }
 
-/* Alignment for HBox in gameView */
-
-HBox#gameViewWindow {
-    -fx-alignment: CENTER;
+BorderPane#gameViewWindow{
+    -fx-alignment: center;
 }
 
+HBox#gameBoardContainer {
+    -fx-alignment: CENTER;
+    -fx-min-height: 0;
+    -fx-min-width: 0;
+}
+
+BorderPane#gameViewStatusBar{
+    -fx-pref-height: 200;
+}

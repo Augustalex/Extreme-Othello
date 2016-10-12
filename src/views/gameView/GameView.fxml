@@ -7,17 +7,12 @@
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/views/main.css" id="gameViewWindow">
-    
-    <top>
-        
-    </top>
-    
     <center>
             <HBox fx:id="gameBoardContainer" >  
             </HBox>   
     </center>
     <bottom>
-        <BorderPane>
+        <BorderPane id="gameViewStatusBar">
             <left>
                 <Text text="Available move" />
             </left>
