@@ -36,6 +36,7 @@ public class GameViewController extends FXMLViewController implements Initializa
         gameBoardContainer.getChildren().add(GameBoardFactory.createBoard(gameBoardContainer, 8));
 
         //gameBoardContainer.setStyle("-fx-border-color: black; -fx-background-color: yellow");
-        //gameBoardContainer.minWidthProperty().bind(this.container.widthProperty());
+        gameBoardContainer.minWidthProperty().bind(this.container.widthProperty());
+        gameBoardContainer.maxWidthProperty().bind(this.container.widthProperty());
     }
 }

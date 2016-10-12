@@ -8,7 +8,10 @@ package views.gameView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
+import views.gameView.cellMarker.CellMarker;
+
 /**
  *
  * @author S132063
@@ -24,22 +27,19 @@ public class Cell extends StackPane {
     private void handleMouseClick() {
         /**throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. */ 
         System.out.println("lalala");
-        markCell();
-        
+        Circle circle = new Circle();
+        circle.setFill(Color.BLACK);
+
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFill(Color.WHITE);
+        markCell(CellMarker.createCellMarker(circle));
+
     }
-    void markCell(){
-        
-        
-        /*this.widthProperty().addListener((e)->{
-            shape.prefWidth(this.widthProperty().get());
-        });
-        
-        this.heightProperty().addListener((e)->{
-            shape.prefHeight(this.heightProperty().get());
-        });
-        */
-        Circle circle = new Circle(this.getWidth(), this.getHeight()
-        ,this.getWidth() / 2 , Color.BLACK);
-        getChildren().add(circle);
+
+    public void markCell(CellMarker marker){
+        this.getChildren().setAll(marker.getShape());
+
+        marker.getWidthProperty().bind(this.widthProperty());
+        marker.getHeightProperty().bind(this.heightProperty());
     }
 }

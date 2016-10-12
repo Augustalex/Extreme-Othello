@@ -17,20 +17,27 @@ import javafx.scene.layout.Pane;
  */
 public class GameBoardFactory {
 
-    public static GridPane createBoard(Pane contianer, int maxSize){
+    public static GridPane createBoard(Pane container, int size){
         GridPane pane = new GridPane();
         pane.setId("gameBoard");
 
-        //pane.prefWidthProperty().bind(contianer.widthProperty());
-        //pane.prefHeightProperty().bind(pane.widthProperty());
-        //ColumnConstraints column = new ColumnConstraints();
-        //column.setPercentWidth(100);
-        //pane.getColumnConstraints().add(column);
+        pane.minWidthProperty().bind(container.widthProperty());
+        pane.maxWidthProperty().bind(container.widthProperty());
 
-        for (int i = 0; i < maxSize; i++)
-            for (int j = 0; j < maxSize; j++)
-                pane.add(new Cell(), j, i);
-        
+        pane.minHeightProperty().bind(container.heightProperty());
+        pane.maxHeightProperty().bind(container.heightProperty());
+
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++){
+                Cell cell = new Cell();
+                cell.minWidthProperty().bind(pane.widthProperty().divide(size));
+                cell.maxWidthProperty().bind(pane.widthProperty().divide(size));
+                cell.minHeightProperty().bind(pane.widthProperty().divide(size));
+                cell.maxHeightProperty().bind(pane.widthProperty().divide(size));
+
+                pane.add(cell, j, i);
+            }
+
         return pane;
     }
     

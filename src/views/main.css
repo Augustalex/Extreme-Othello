@@ -41,8 +41,6 @@ Button {
 Cell#gameBoardCell{
     -fx-border-color: black;
     -fx-background-color: green;
-    -fx-pref-width: 100;
-    -fx-pref-height: 100;
 }
 
 HBox#gameViewWindow {
