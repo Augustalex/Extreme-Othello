@@ -1,6 +1,6 @@
 package othello;
 
-import boardGame.GameBoard;
+import boardGame.BoardMoveMaker;
 import boardGame.GameMatch;
 import boardGame.Move;
 import boardGame.player.Player;
@@ -10,7 +10,7 @@ import boardGame.player.Player;
  */
 public class OthelloMatch extends GameMatch {
 
-    public OthelloMatch(OthelloBoard board, Player[] players) {
+    public OthelloMatch(OthelloBoardMoveMaker board, Player[] players) {
         super(board, players);
 
         this.board.setStartPawns(players);
@@ -24,7 +24,7 @@ public class OthelloMatch extends GameMatch {
     }
 
     @Override
-    public void turn(Player player, GameBoard board) {
+    public void turn(Player player, BoardMoveMaker board) {
         Move move;
         do {
             move = player.getMove();

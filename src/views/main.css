@@ -70,12 +70,12 @@ HBox#gameBoardContainer {
 }
 
 BorderPane#gameTitle{
-    -fx-pref-height: 80;
-    -fx-font-size: 4em;
+    -fx-pref-height: 30;
+    -fx-font-size: 2em;
     -fx-padding: 2em;
 }
 
 BorderPane#gameViewStatusBar{
-    -fx-pref-height: 120;
+    -fx-pref-height: 20;
 
 }

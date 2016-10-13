@@ -5,6 +5,7 @@
  */
 package views.gameView;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -32,7 +33,7 @@ public class Cell extends StackPane {
 
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(Color.WHITE);
-        markCell(CellMarker.createCellMarker(circle));
+        markCell(CellMarker.createCellMarker(rectangle));
 
     }
 

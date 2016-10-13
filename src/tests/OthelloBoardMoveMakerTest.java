@@ -1,26 +1,23 @@
 package tests;
 
-import boardGame.GameMatch;
 import boardGame.Move;
-import boardGame.Pawn;
 import boardGame.PlayerAction;
 import boardGame.player.LocalConsolePlayer;
 import boardGame.player.Player;
 import javafx.scene.paint.Color;
-import othello.OthelloBoard;
-import othello.OthelloMatch;
+import othello.OthelloBoardMoveMaker;
 import othello.OthelloMove;
 import othello.OthelloPawn;
 
 /**
  * Created by August on 2016-10-02.
  */
-public class OthelloBoardTest extends OthelloBoard{
+public class OthelloBoardMoveMakerTest extends OthelloBoardMoveMaker {
 
     private final int width = 8;
     private final int height = 8;
 
-    public OthelloBoardTest() {
+    public OthelloBoardMoveMakerTest() {
 
     }
 
@@ -81,7 +78,7 @@ public class OthelloBoardTest extends OthelloBoard{
     }
 /*
     public static void main(String[] args){
-        OthelloBoardTest test = new OthelloBoardTest();
+        OthelloBoardMoveMakerTest test = new OthelloBoardMoveMakerTest();
         //test.runTest();
         test.runMatchTest();
     }*/

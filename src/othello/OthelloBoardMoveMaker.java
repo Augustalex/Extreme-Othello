@@ -1,6 +1,6 @@
 package othello;
 
-import boardGame.GameBoard;
+import boardGame.BoardMoveMaker;
 import boardGame.Move;
 import boardGame.PlayerAction;
 import boardGame.player.Player;
@@ -13,15 +13,15 @@ import java.awt.Point;
 /**
  * Created by August on 2016-10-02.
  */
-public class OthelloBoard extends GameBoard {
+public class OthelloBoardMoveMaker extends BoardMoveMaker {
     private static int width = 8;
     private static int height = 8;
 
-    public OthelloBoard() {
-        super(OthelloBoard.width, OthelloBoard.height);
+    public OthelloBoardMoveMaker() {
+        super(OthelloBoardMoveMaker.width, OthelloBoardMoveMaker.height);
 
-        for(int y = 0; y < OthelloBoard.height; y++)
-            for(int x = 0; x < OthelloBoard.width; x++)
+        for(int y = 0; y < OthelloBoardMoveMaker.height; y++)
+            for(int x = 0; x < OthelloBoardMoveMaker.width; x++)
                 this.board[x][y] = new OthelloPawn(new VoidPlayer(), new Color(0,0,0,0));
     }
 
@@ -47,7 +47,7 @@ public class OthelloBoard extends GameBoard {
     }
 
     @Override
-    public Move getAvailableMoves() {
+    public Move[] getAvailableMoves() {
         return null;
     }
 
@@ -60,10 +60,6 @@ public class OthelloBoard extends GameBoard {
         for(Direction direction : Direction.values()) {
             findMove(player, movePoint(direction, startPosition), direction);
         }
-    }
-
-    private void makeMoveThreadsTest(){
-
     }
 
     private void findMove(Player player, Point position, Direction direction){

@@ -1,10 +1,6 @@
 package boardGame;
 
-import boardGame.player.LocalConsolePlayer;
 import boardGame.player.Player;
-import boardGame.player.VoidPlayer;
-import othello.OthelloBoard;
-import othello.OthelloMatch;
 
 /**
  * Created by August on 2016-09-30.
@@ -12,14 +8,14 @@ import othello.OthelloMatch;
 public abstract class GameMatch {
 
     protected Player[] players;
-    protected GameBoard board;
+    protected BoardMoveMaker board;
 
-    public GameMatch(GameBoard board, Player[] players){
+    public GameMatch(BoardMoveMaker board, Player[] players){
         this.board = board;
         this.players = players;
     }
 
     protected abstract void round();
 
-    protected abstract void turn(Player player, GameBoard board);
+    protected abstract void turn(Player player, BoardMoveMaker board);
 }
