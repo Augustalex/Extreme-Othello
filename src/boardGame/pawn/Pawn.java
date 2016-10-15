@@ -1,6 +1,10 @@
-package boardGame;
+package boardGame.pawn;
 
+import boardGame.events.CellClickEvent;
 import boardGame.player.Player;
+import events.EventMediator;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Created by August on 2016-09-30.

@@ -51,9 +51,14 @@ Button {
 
 /* Gameboard */
 
-Cell#gameBoardCell{
+Cell#gameBoardCell:odd{
     -fx-border-color: black;
     -fx-background-color: green;
+}
+
+Cell#gameBoardCell:even{
+    -fx-border-color: black;
+    -fx-background-color: #004605;
 }
 
 BorderPane#gameViewWindow{

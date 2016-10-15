@@ -1,7 +1,7 @@
 package router;
 
 import javafx.scene.layout.Pane;
-import HistoryTracker.HistoryCall;
+import events.callbackLibrary.Callback;
 import HistoryTracker.History;
 import views.ViewController;
 
@@ -40,13 +40,13 @@ public class PaneRouter extends Router{
         arguments[0] = viewId;
         arguments[1] = data;
 
-        this.history.store(new HistoryCall(method, context, arguments));
+        this.history.store(new Callback(method, context, arguments));
     }
 
     @Override
     public void previous() {
         this.history.revertTo(this.history.getCursorPosition()-1);
-        HistoryCall call = this.history.get();
+        Callback call = this.history.get();
 
         try{
             call.invoke();
@@ -59,7 +59,7 @@ public class PaneRouter extends Router{
     @Override
     public void next() {
         this.history.revertTo(this.history.getCursorPosition()+1);
-        HistoryCall call = this.history.get();
+        Callback call = this.history.get();
 
         try {
             call.invoke();

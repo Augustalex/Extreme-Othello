@@ -1,6 +1,6 @@
 package othello;
 
-import boardGame.Pawn;
+import boardGame.pawn.Pawn;
 import boardGame.player.Player;
 import javafx.scene.paint.Color;
 

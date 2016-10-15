@@ -2,7 +2,6 @@ package boardGame.player;
 
 import boardGame.Move;
 import boardGame.PlayerAction;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.Scanner;
 
@@ -11,7 +10,7 @@ import java.util.Scanner;
  */
 public class LocalConsolePlayer extends Player {
     @Override
-    public Move getMove() {
+    public void makeMove() {
         System.out.println("Enter coordinates to make a move: x y");
         System.out.println("\n");
         Scanner scanner = new Scanner(System.in);

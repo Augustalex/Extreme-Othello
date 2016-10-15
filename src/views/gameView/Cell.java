@@ -33,7 +33,7 @@ public class Cell extends StackPane {
 
         Rectangle rectangle = new Rectangle();
         rectangle.setFill(Color.WHITE);
-        markCell(CellMarker.createCellMarker(rectangle));
+        markCell(CellMarker.createCellMarker(circle));
 
     }
 

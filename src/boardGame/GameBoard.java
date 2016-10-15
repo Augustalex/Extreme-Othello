@@ -1,5 +1,6 @@
 package boardGame;
 
+import boardGame.pawn.Pawn;
 import boardGame.player.VoidPlayer;
 
 import java.awt.*;
@@ -30,6 +31,10 @@ public class GameBoard{
             return false;
         else
             return true;
+    }
+
+    public Dimension getBoundaries(){
+        return new Dimension(this.width, this.height);
     }
 
     public Pawn getPawn(Point position){

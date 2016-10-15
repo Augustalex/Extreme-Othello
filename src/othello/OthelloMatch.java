@@ -19,6 +19,7 @@ public class OthelloMatch extends GameMatch {
     @Override
     public void round() {
         for(Player player : this.players){
+
             turn(player, this.board);
         }
     }
@@ -27,8 +28,10 @@ public class OthelloMatch extends GameMatch {
     public void turn(Player player, BoardMoveMaker board) {
         Move move;
         do {
-            move = player.getMove();
+            move = player.makeMove();
         } while (!board.isLegalMove(player, move));
         board.makeMove(player, move);
     }
+
+
 }

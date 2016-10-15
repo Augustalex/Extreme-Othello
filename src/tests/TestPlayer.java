@@ -1,9 +1,6 @@
 package tests;
 
-import boardGame.Move;
 import boardGame.player.Player;
-
-import java.awt.*;
 
 /**
  * Created by August on 2016-10-02.
@@ -11,7 +8,7 @@ import java.awt.*;
 public class TestPlayer extends Player {
 
     @Override
-    public Move getMove() {
+    public void makeMove() {
         return null;
     }
 }

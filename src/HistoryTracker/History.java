@@ -1,6 +1,7 @@
 package HistoryTracker;
 
 import HistoryTracker.exceptions.NoHistoryException;
+import events.callbackLibrary.Callback;
 
 /**
  * Created by August on 2016-10-10.
@@ -9,12 +10,12 @@ public class History{
 
     private static final int maxHistorySize = 1000;
 
-    private HistoryCall[] history = new HistoryCall[History.maxHistorySize];
+    private Callback[] history = new Callback[History.maxHistorySize];
 
     private int cursor = 0;
     private int historySize = 0;
 
-    public void store(HistoryCall call){
+    public void store(Callback call){
         if(this.cursor == History.maxHistorySize)
             this.cursor /= 2;
 
@@ -25,7 +26,7 @@ public class History{
         this.historySize++;
     }
 
-    public HistoryCall get(){
+    public Callback get(){
         if(this.cursor < 0)
             throw new NoHistoryException();
 
