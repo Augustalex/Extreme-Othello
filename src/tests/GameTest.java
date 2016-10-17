@@ -1,13 +1,18 @@
 package tests;
 
+import boardGameLibrary.player.LocalPlayer;
+import boardGameLibrary.player.Player;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import router.PaneRouter;
-import router.Router;
+import boardGamePlugins.othello.board.OthelloBoard;
+import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
+import boardGamePlugins.othello.match.OthelloMatch;
+import utilities.router.PaneRouter;
+import utilities.router.Router;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +33,15 @@ public class GameTest extends Application {
         Router router = new PaneRouter(content);
         Router.setApplicationRouter(router);
         Map map = new HashMap();
-        map.put("GameMatch", null);
+
+        Player player1 = new LocalPlayer("August", Color.WHITE);
+        Player player2 = new LocalPlayer("Björn", Color.BLACK);
+
+        OthelloBoard board = new OthelloBoard();
+        OthelloBoardMoveMaker moveMaker = new OthelloBoardMoveMaker(board);
+
+        OthelloMatch match = new OthelloMatch(moveMaker, new Player[]{player1, player2});
+        map.put("GameMatch", match);
         router.route("GameView", map);
 
         primaryStage.show();
