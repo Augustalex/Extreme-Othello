@@ -37,11 +37,9 @@ public class GameTest extends Application {
         Player player1 = new LocalPlayer("August", Color.WHITE);
         Player player2 = new LocalPlayer("Björn", Color.BLACK);
 
-        OthelloBoard board = new OthelloBoard();
-        OthelloBoardMoveMaker moveMaker = new OthelloBoardMoveMaker(board);
+        GameMatch match =
 
-        OthelloMatchLocal match = new OthelloMatchLocal(moveMaker, new Player[]{player1, player2});
-        map.put("LocalGameMatch", match);
+        map.put("GameMatch", match);
         router.route("GameView", map);
 
         primaryStage.show();

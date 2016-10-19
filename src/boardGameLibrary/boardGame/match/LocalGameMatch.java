@@ -12,7 +12,7 @@ import javafx.beans.value.ObservableValue;
 /**
  * Created by August on 2016-09-30.
  */
-public abstract class LocalGameMatch implements GameMatch{
+public class LocalGameMatch implements GameMatch{
 
     private Player[] players;
     private int currentPlayerIndex = 0;
