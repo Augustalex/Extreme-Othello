@@ -15,6 +15,7 @@ public class GameMatchFactory {
         switch (gameType.toLowerCase()) {
             case "othello":
                 moveMaker = new OthelloBoardMoveMaker(new OthelloBoard());
+                moveMaker.setStartPawns(players);
                 break;
             default:
                 throw new IllegalArgumentException();

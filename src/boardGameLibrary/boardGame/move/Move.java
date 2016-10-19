@@ -1,7 +1,9 @@
 package boardGameLibrary.boardGame.move;
 
 /**
- * Created by August on 2016-09-30.
+ * Move class is a wrapper, or holder, class for a number of {@link PlayerAction}s. A board game
+ * might include one single action as a more, or it may hold several. This class is independent on
+ * which ever number of actions are required for a legal move.
  */
 public class Move {
 
@@ -11,6 +13,11 @@ public class Move {
         this.actions = actions;
     }
 
+    /**
+     * Returns an array of all {@link PlayerAction}s instantiated from
+     * the class constructor.
+     * @return
+     */
     public PlayerAction[] getMove(){
         return this.actions;
     }

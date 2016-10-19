@@ -12,6 +12,7 @@ public class OnlineGameMatch implements GameMatch {
 
     @Override
     public void run() {
+
     }
 
     @Override

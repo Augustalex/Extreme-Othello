@@ -7,6 +7,7 @@ import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
 import boardGameLibrary.viewModel.gameBoard.cell.Cell;
 import boardGameLibrary.viewModel.gameBoard.GameBoardFactory;
+import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -14,7 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
-import boardGameLibrary.views.javaFxViews.FXMLViewController;
+import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -30,7 +31,7 @@ import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
 /**
  * Created by August on 2016-09-29.
  */
-public class GameViewController extends FXMLViewController implements Initializable{
+public class GameViewController extends FXMLViewController{
     
     private static final String fxmlFileName = "GameView.fxml";
 
@@ -39,15 +40,9 @@ public class GameViewController extends FXMLViewController implements Initializa
     @FXML
     private HBox gameBoardContainer;
     
-    public GameViewController(LocalGameMatch match){
-        super(GameViewController.fxmlFileName);
-
+    public GameViewController(Pane container, LocalGameMatch match){
+        super(container, GameViewController.fxmlFileName);
         this.match = match;
-    }
-
-    @Override
-    public void loadViewInto(Pane container) {
-        this.loadFXLMInto(this.getClass(), this, container);
     }
 
     @Override

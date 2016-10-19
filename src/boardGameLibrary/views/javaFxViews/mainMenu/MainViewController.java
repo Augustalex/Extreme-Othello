@@ -1,5 +1,6 @@
 package boardGameLibrary.views.javaFxViews.mainMenu;
 
+import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -7,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import utilities.router.Router;
-import boardGameLibrary.views.javaFxViews.FXMLViewController;
+import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
 /**
  * Created by August on 2016-09-29.
  */
-public class MainViewController extends FXMLViewController implements Initializable{
+public class MainViewController extends FXMLViewController{
 
     private static final String fxmlFileName = "MainView.fxml";
 
@@ -29,13 +30,8 @@ public class MainViewController extends FXMLViewController implements Initializa
     @FXML
     private HBox buttonContainer;
 
-    public MainViewController(){
-        super(MainViewController.fxmlFileName);
-    }
-
-    @Override
-    public void loadViewInto(Pane container) {
-        this.loadFXLMInto(this.getClass(), this, container);
+    public MainViewController(Pane container){
+        super(container, MainViewController.fxmlFileName);
     }
 
     /**
@@ -45,7 +41,6 @@ public class MainViewController extends FXMLViewController implements Initializa
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         strifeMenuButtonSize();
         setupButtonRouting();
     }
@@ -55,7 +50,7 @@ public class MainViewController extends FXMLViewController implements Initializa
 
         this.buttonContainer.getChildren().stream().filter(node -> node instanceof Button).forEach(node -> {
             Button button = (Button) node;
-            button.minWidthProperty().bind(this.container.widthProperty().divide(numberOfButtons));
+            button.minWidthProperty().bind(this.getContainer().widthProperty().divide(numberOfButtons));
             button.maxWidthProperty().bind(button.minWidthProperty());
         });
     }

@@ -1,42 +1,32 @@
 package boardGameLibrary.views.javaFxViews;
 
-import utilities.router.ViewController;
-import javafx.fxml.FXMLLoader;
+import boardGameLibrary.views.exceptions.ViewNotLoadedException;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import utilities.router.paneRouter.PaneViewController;
+
+import java.io.IOException;
 
 /**
- * Created by August on 2016-10-10.
+ * Created by August on 2016-10-19.
  */
-public abstract class FXMLViewController implements ViewController {
+public abstract class FXMLViewController extends PaneViewController implements Initializable{
 
-    private String resourceName;
-    protected Pane container;
+    private FXMLPaneLoader fxmlPaneLoader;
 
-    public FXMLViewController(String resourceName){
-        this.resourceName = resourceName;
+    public FXMLViewController(Pane container, String resourcePath){
+        this.setContainer(container);
+        this.fxmlPaneLoader = new FXMLPaneLoader(container, resourcePath);
     }
 
-    private Parent loadFXML(Class classObject, Initializable controller){
-        Parent fxml = null;
-        try{
-            FXMLLoader loader = new FXMLLoader(classObject.getResource(this.resourceName));
-            loader.setController(controller);
-            fxml = loader.load();
+    @Override
+    public void loadView() {
+        try {
+            this.fxmlPaneLoader.loadFXMLWith(this);
         }
         catch(Exception e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            throw new ViewNotLoadedException();
         }
-
-        return fxml;
     }
-
-    protected void loadFXLMInto(Class classObject, Initializable controller, Pane container){
-        this.container = container;
-
-        Parent fxml = this.loadFXML(classObject, controller);
-        container.getChildren().setAll(fxml);
-    }
-
 }

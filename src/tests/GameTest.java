@@ -1,5 +1,7 @@
 package tests;
 
+import boardGameLibrary.boardGame.match.GameMatch;
+import boardGameLibrary.boardGame.match.GameMatchFactory;
 import boardGameLibrary.player.LocalPlayer;
 import boardGameLibrary.player.Player;
 import javafx.application.Application;
@@ -8,10 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import boardGamePlugins.othello.board.OthelloBoard;
-import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
-import boardGamePlugins.othello.match.OthelloMatchLocal;
-import utilities.router.PaneRouter;
+import utilities.router.paneRouter.PaneRouter;
 import utilities.router.Router;
 
 import java.util.HashMap;
@@ -37,8 +36,7 @@ public class GameTest extends Application {
         Player player1 = new LocalPlayer("August", Color.WHITE);
         Player player2 = new LocalPlayer("Björn", Color.BLACK);
 
-        GameMatch match =
-
+        GameMatch match = GameMatchFactory.createGameMatch("Othello", new Player[]{player1, player2}, false);
         map.put("GameMatch", match);
         router.route("GameView", map);
 

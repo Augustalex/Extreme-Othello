@@ -66,11 +66,22 @@ public abstract class BoardMoveMaker{
         return this.boardMoveEventObjectProperty;
     }
 
+    /**
+     * This method is called when a move has been made and all calculations are finished regarding
+     * it. This method is called no matter if a move is legal or not. The issue whether the move was
+     * legal or not is obtain from within the Property.
+     * @param wasLegalMove
+     */
     protected void setMadeMove(boolean wasLegalMove){
         System.out.println("Move Made! Move was " + (wasLegalMove ? "legal" : "not legal"));
         this.getBoardMoveEventObjectProperty().set(new BoardMoveEvent(wasLegalMove));
     }
 
+    /**
+     * Returns the game board containing the two-dimensional storage array for all game
+     * Pawn object references.
+     * @return
+     */
     public GameBoard getGameBoard(){
         return this.board;
     }

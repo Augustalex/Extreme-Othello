@@ -38,6 +38,7 @@ public class LocalGameMatch implements GameMatch{
     }
 
     public void turn(Player player) {
+        System.out.println("Current player: " + player.getName());
         ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty = new SimpleObjectProperty<>();
 
         ChangeListener<PlayerMadeMoveEvent> madeMoveListener = (observableValue, oldValue, newValue) -> {
