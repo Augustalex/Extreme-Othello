@@ -15,12 +15,28 @@ import java.awt.Point;
  */
 public class OthelloBoardMoveMaker extends BoardMoveMaker {
 
+    /**
+     * Recieves an instantiated {@link OthelloBoard} that is accessible from
+     * a protected field inside this class.
+     * @param board
+     */
     public OthelloBoardMoveMaker(OthelloBoard board) {
         super(board);
     }
 
     private final Object key = new Object();
 
+    /**
+     * Checks if a move made by a player is legal.
+     *
+     * For all possible directions it passes down a straight path from the starting position.
+     * If a player owned pawn is crossed beyond a distance of 1 cell, it is a legal move. Otherwise,
+     * it is a non-legal move.
+     *
+     * @param player
+     * @param move
+     * @return
+     */
     @Override
     public boolean isLegalMove(Player player, Move move) {
         if(move.getMove().length < 1)
@@ -29,19 +45,32 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
         PlayerAction action = move.getMove()[0];
         Point startPosition = new Point(action.getX(), action.getY());
 
-        for(Direction direction : Direction.values()){
-            Point position = movePoint(direction, startPosition);
-            while(this.board.withinBounds(position) && !this.board.isEmpty(position)){
-                if(this.board.getPawn(position).getOwner().equals(player))
-                    return true;
+        if(this.board.withinBounds(startPosition) && this.board.isEmpty(startPosition))
+            for(Direction direction : Direction.values()){
 
-                position = movePoint(direction, position);
+                Point position = movePoint(direction, startPosition);
+                int distance = 1;
+
+                while(this.board.withinBounds(position) && !this.board.isEmpty(position)){
+                    if(this.board.getPawn(position).getOwner().equals(player)) {
+                        if (distance > 1)
+                            return true;
+                        else
+                            continue;
+                    }
+
+                    position = movePoint(direction, position);
+                    distance++;
+                }
             }
-        }
 
         return false;
     }
 
+    /**
+     * Returns an array of available {@link Move}s from which a player can make a decision on which move to apply.
+     * @return
+     */
     @Override
     public Move[] getAvailableMoves() {
         return null;

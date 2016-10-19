@@ -1,5 +1,6 @@
 package boardGameLibrary.player;
 
+import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.eventWrappers.PlayerMadeMoveEvent;
 import javafx.beans.property.ObjectProperty;

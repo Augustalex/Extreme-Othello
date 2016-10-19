@@ -3,8 +3,13 @@ package boardGameLibrary.boardGame.match;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.player.Player;
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by August on 2016-09-30.
@@ -31,8 +36,8 @@ public abstract class GameMatch {
                 this.previousPlayer();
 
             turn(this.board);
-});
-        }
+        });
+    }
 
     protected abstract void turn(BoardMoveMaker board);
 

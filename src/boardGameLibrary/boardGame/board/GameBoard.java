@@ -27,12 +27,8 @@ public class GameBoard{
     }
 
     public boolean withinBounds(Point position){
-        if(position.x < 0 || position.y > this.width-1)
-            return false;
-        else if(position.y < 0 || position.y > this.height-1)
-            return false;
-        else
-            return true;
+        return (position.x >= 0 && position.x <= this.width-1)
+            && (position.y >= 0 && position.y <= this.height-1);
     }
 
     public Dimension getBoundaries(){
