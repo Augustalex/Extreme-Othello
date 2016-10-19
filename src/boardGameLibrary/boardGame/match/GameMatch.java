@@ -8,7 +8,7 @@ import javafx.beans.property.ObjectProperty;
 /**
  * Created by August on 2016-10-19.
  */
-public interface IGameMatch {
+public interface GameMatch {
 
     void run();
 
@@ -17,8 +17,4 @@ public interface IGameMatch {
     BoardMoveMaker getBoardMoveMaker();
 
     ObjectProperty<CellClickEvent> cellClickProperty();
-
-    Player nextPlayer();
-
-    Player currentPlayer();
 }

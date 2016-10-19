@@ -12,7 +12,7 @@ import javafx.beans.value.ObservableValue;
 /**
  * Created by August on 2016-09-30.
  */
-public abstract class LocalGameMatch {
+public abstract class LocalGameMatch implements GameMatch{
 
     private Player[] players;
     private int currentPlayerIndex = 0;
@@ -60,7 +60,7 @@ public abstract class LocalGameMatch {
         return this.cellClickProperty;
     }
 
-    protected Player nextPlayer(){
+    private Player nextPlayer(){
         Player nextPlayer = this.players[this.currentPlayerIndex++];
 
         if(this.currentPlayerIndex == this.players.length)
@@ -69,7 +69,7 @@ public abstract class LocalGameMatch {
         return nextPlayer;
     }
 
-    protected Player currentPlayer(){
+    private Player currentPlayer(){
         return this.players[this.currentPlayerIndex];
     }
 }
