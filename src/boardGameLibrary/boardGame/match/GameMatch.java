@@ -39,24 +39,17 @@ public abstract class GameMatch {
 
     public void turn(Player player) {
         ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty = new SimpleObjectProperty<>();
-        madeMoveProperty.addListener(new MadeMoveListener(board));
+
+        ChangeListener<PlayerMadeMoveEvent> madeMoveListener = (observableValue, oldValue, newValue) -> {
+            this.board.makeMove(observableValue.getValue().getPlayer(), observableValue.getValue().getMove());
+        };
+
+        madeMoveProperty.addListener(e -> {
+            madeMoveListener.changed(madeMoveProperty, null, madeMoveProperty.get());
+            madeMoveProperty.removeListener(madeMoveListener);
+        });
 
         player.makeMove(madeMoveProperty, this.cellClickProperty());
-    }
-
-    private class MadeMoveListener implements ChangeListener<PlayerMadeMoveEvent> {
-
-        private BoardMoveMaker boardMoveMaker;
-
-        public MadeMoveListener(BoardMoveMaker boardMoveMaker){
-            this.boardMoveMaker = boardMoveMaker;
-        }
-
-
-        public void changed(ObservableValue<? extends PlayerMadeMoveEvent> observable, PlayerMadeMoveEvent oldValue, PlayerMadeMoveEvent newValue) {
-            this.boardMoveMaker.makeMove(observable.getValue().getPlayer(), observable.getValue().getMove());
-            observable.removeListener(this);
-        }
     }
 
     public BoardMoveMaker getBoardMoveMaker(){
