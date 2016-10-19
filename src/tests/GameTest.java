@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import boardGamePlugins.othello.board.OthelloBoard;
 import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
-import boardGamePlugins.othello.match.OthelloMatch;
+import boardGamePlugins.othello.match.OthelloMatchLocal;
 import utilities.router.PaneRouter;
 import utilities.router.Router;
 
@@ -40,8 +40,8 @@ public class GameTest extends Application {
         OthelloBoard board = new OthelloBoard();
         OthelloBoardMoveMaker moveMaker = new OthelloBoardMoveMaker(board);
 
-        OthelloMatch match = new OthelloMatch(moveMaker, new Player[]{player1, player2});
-        map.put("GameMatch", match);
+        OthelloMatchLocal match = new OthelloMatchLocal(moveMaker, new Player[]{player1, player2});
+        map.put("LocalGameMatch", match);
         router.route("GameView", map);
 
         primaryStage.show();

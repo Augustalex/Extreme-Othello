@@ -1,6 +1,6 @@
 package utilities.router;
 
-import boardGameLibrary.boardGame.match.GameMatch;
+import boardGameLibrary.boardGame.match.LocalGameMatch;
 import javafx.scene.layout.Pane;
 import boardGameLibrary.views.javaFxViews.newGame.NewGameViewController;
 import boardGameLibrary.views.javaFxViews.gameView.GameViewController;
@@ -17,9 +17,9 @@ public interface ViewController {
         if(dependencies == null)
             throw new IllegalArgumentException();
 
-        if(dependencies.containsKey("GameMatch")) {
+        if(dependencies.containsKey("LocalGameMatch")) {
             if (viewId.equals("GameView"))
-                return new GameViewController((GameMatch) dependencies.get("GameMatch"));
+                return new GameViewController((LocalGameMatch) dependencies.get("LocalGameMatch"));
         }
 
         if(viewId.equals("NewGameView"))

@@ -12,7 +12,7 @@ import javafx.beans.value.ObservableValue;
 /**
  * Created by August on 2016-09-30.
  */
-public abstract class GameMatch {
+public abstract class LocalGameMatch {
 
     private Player[] players;
     private int currentPlayerIndex = 0;
@@ -21,7 +21,7 @@ public abstract class GameMatch {
 
     private ObjectProperty<CellClickEvent> cellClickProperty = new SimpleObjectProperty<>();
 
-    public GameMatch(BoardMoveMaker board, Player[] players){
+    public LocalGameMatch(BoardMoveMaker board, Player[] players){
         this.board = board;
         this.players = players;
     }
