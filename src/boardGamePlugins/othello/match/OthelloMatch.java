@@ -21,27 +21,4 @@ public class OthelloMatch extends GameMatch {
         this.board.setStartPawns(players);
     }
 
-    @Override
-    public void turn(BoardMoveMaker board) {
-        Player currentPlayer = this.nextPlayer();
-
-        ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty = new SimpleObjectProperty<>();
-        madeMoveProperty.addListener(new MadeMoveListener(board));
-        currentPlayer.makeMove(madeMoveProperty, this.cellClickProperty());
-    }
-
-    private class MadeMoveListener implements ChangeListener<PlayerMadeMoveEvent> {
-
-        private BoardMoveMaker boardMoveMaker;
-
-        public MadeMoveListener(BoardMoveMaker boardMoveMaker){
-            this.boardMoveMaker = boardMoveMaker;
-        }
-
-        @Override
-        public void changed(ObservableValue<? extends PlayerMadeMoveEvent> observable, PlayerMadeMoveEvent oldValue, PlayerMadeMoveEvent newValue) {
-            this.boardMoveMaker.makeMove(observable.getValue().getPlayer(), observable.getValue().getMove());
-            observable.removeListener(this);
-        }
-    }
 }

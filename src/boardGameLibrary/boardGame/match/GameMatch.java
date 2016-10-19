@@ -2,14 +2,12 @@ package boardGameLibrary.boardGame.match;
 
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
+import boardGameLibrary.eventWrappers.PlayerMadeMoveEvent;
 import boardGameLibrary.player.Player;
-import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 /**
  * Created by August on 2016-09-30.
@@ -29,17 +27,37 @@ public abstract class GameMatch {
     }
 
     public void run() {
-        turn(this.board);
+        turn(this.nextPlayer());
 
         this.board.getBoardMoveEventObjectProperty().addListener(e -> {
             if(!this.board.getBoardMoveEventObjectProperty().get().getMadeLegalMove())
-                this.previousPlayer();
-
-            turn(this.board);
+                turn(this.currentPlayer());
+            else
+                turn(this.nextPlayer());
         });
     }
 
-    protected abstract void turn(BoardMoveMaker board);
+    public void turn(Player player) {
+        ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty = new SimpleObjectProperty<>();
+        madeMoveProperty.addListener(new MadeMoveListener(board));
+
+        player.makeMove(madeMoveProperty, this.cellClickProperty());
+    }
+
+    private class MadeMoveListener implements ChangeListener<PlayerMadeMoveEvent> {
+
+        private BoardMoveMaker boardMoveMaker;
+
+        public MadeMoveListener(BoardMoveMaker boardMoveMaker){
+            this.boardMoveMaker = boardMoveMaker;
+        }
+
+
+        public void changed(ObservableValue<? extends PlayerMadeMoveEvent> observable, PlayerMadeMoveEvent oldValue, PlayerMadeMoveEvent newValue) {
+            this.boardMoveMaker.makeMove(observable.getValue().getPlayer(), observable.getValue().getMove());
+            observable.removeListener(this);
+        }
+    }
 
     public BoardMoveMaker getBoardMoveMaker(){
         return this.board;
@@ -58,12 +76,7 @@ public abstract class GameMatch {
         return nextPlayer;
     }
 
-    protected Player previousPlayer(){
-        this.currentPlayerIndex--;
-
-        if(this.currentPlayerIndex < 0)
-            this.currentPlayerIndex = this.players.length-1;
-
+    protected Player currentPlayer(){
         return this.players[this.currentPlayerIndex];
     }
 }
