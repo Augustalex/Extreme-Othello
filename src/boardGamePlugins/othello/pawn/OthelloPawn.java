@@ -13,4 +13,5 @@ public class OthelloPawn extends Pawn {
     public OthelloPawn(Player owner){
         super(owner, new PawnDisplayModel(new Circle(), owner.getColor()));
     }
+
 }

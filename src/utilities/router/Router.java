@@ -1,7 +1,12 @@
 package utilities.router;
 
+import utilities.HistoryTracker.History;
+import utilities.callbackLibrary.ArrayCallback;
+import utilities.callbackLibrary.Callback;
 import utilities.router.exceptions.NoRouterSetException;
+import utilities.router.paneRouter.PaneViewController;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -11,11 +16,55 @@ public abstract class Router {
 
     private static Router applicationRouter = null;
 
-    public abstract void route(String viewId, Map data);
+    /**
+     * History object, part of the HistoryTracker package, is a memento like object
+     * able to store and recall function calls. In part with this class the History
+     * object is used to recall previous routes, thus enabling back and forward routing
+     * functionality.
+     */
+    protected History history;
 
-    public abstract void previous();
+    public Router(){
+        this.history = new History();
+    }
 
-    public abstract void next();
+    public void route(String viewId, Map data) {
+        routeToView(viewId, data);
+
+        Method method = null;
+        for(Method m : this.getClass().getDeclaredMethods()){
+            if(m.getName().contains("route"))
+                method = m;
+        }
+
+        this.history.store(new ArrayCallback<>(method, this, new Object[]{viewId, data}));
+    }
+
+    public abstract void routeToView(String viewId, Map data);
+
+    public void previous() {
+        this.history.revertTo(this.history.getCursorPosition()-1);
+        Callback call = this.history.get();
+
+        try{
+            call.invoke();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void next() {
+        this.history.revertTo(this.history.getCursorPosition()+1);
+        Callback call = this.history.get();
+
+        try {
+            call.invoke();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public static void setApplicationRouter(Router router) {
         Router.applicationRouter = router;

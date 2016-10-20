@@ -40,8 +40,9 @@ public abstract class BoardMoveMaker{
      *
      * API for method is not set and is not functioning.
      * @return
+     * @param player
      */
-    public abstract Move[] getAvailableMoves();
+    public abstract Move[] getAvailableMoves(Player player);
 
     /**
      * Given a {@link Player} and a {@link Move}, this method will lock the makeMove method with the key field.

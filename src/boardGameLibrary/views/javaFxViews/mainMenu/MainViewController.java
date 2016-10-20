@@ -2,13 +2,11 @@ package boardGameLibrary.views.javaFxViews.mainMenu;
 
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import utilities.router.Router;
-import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 
 import java.net.URL;
 import java.util.HashMap;

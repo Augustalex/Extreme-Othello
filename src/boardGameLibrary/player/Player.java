@@ -1,8 +1,7 @@
 package boardGameLibrary.player;
 
-import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
+import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.eventWrappers.CellClickEvent;
-import boardGameLibrary.eventWrappers.PlayerMadeMoveEvent;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.paint.Color;
 
@@ -19,7 +18,7 @@ public abstract class Player{
         this.color = color;
     }
 
-    public abstract void makeMove(ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty, ObjectProperty<CellClickEvent> cellClickProperty);
+    public abstract void makeMove(BoardMoveMaker boardMoveMaker, ObjectProperty<CellClickEvent> cellClickProperty);
 
     public Color getColor(){
         return this.color;

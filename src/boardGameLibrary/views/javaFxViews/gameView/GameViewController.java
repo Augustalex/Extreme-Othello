@@ -1,6 +1,7 @@
 package boardGameLibrary.views.javaFxViews.gameView;
 
 import boardGameLibrary.boardGame.board.GameBoard;
+import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.LocalGameMatch;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
@@ -35,12 +36,12 @@ public class GameViewController extends FXMLViewController{
     
     private static final String fxmlFileName = "GameView.fxml";
 
-    private LocalGameMatch match;
+    private GameMatch match;
 
     @FXML
     private HBox gameBoardContainer;
     
-    public GameViewController(Pane container, LocalGameMatch match){
+    public GameViewController(Pane container, GameMatch match){
         super(container, GameViewController.fxmlFileName);
         this.match = match;
     }

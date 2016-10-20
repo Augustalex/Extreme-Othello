@@ -18,7 +18,7 @@ public class Move {
      * the class constructor.
      * @return
      */
-    public PlayerAction[] getMove(){
+    public PlayerAction[] getActions(){
         return this.actions;
     }
 }

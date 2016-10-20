@@ -1,7 +1,7 @@
 package boardGameLibrary.player;
 
+import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.eventWrappers.CellClickEvent;
-import boardGameLibrary.eventWrappers.PlayerMadeMoveEvent;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.paint.Color;
 
@@ -15,7 +15,7 @@ public class RemotePlayer extends Player {
     }
 
     @Override
-    public void makeMove(ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty, ObjectProperty<CellClickEvent> cellClickProperty) {
+    public void makeMove(BoardMoveMaker boardMoveMaker, ObjectProperty<CellClickEvent> cellClickProperty) {
 
     }
 }

@@ -1,9 +1,12 @@
 package boardGameLibrary.player;
 
+import boardGameLibrary.boardGame.board.BoardMoveMaker;
+import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.eventWrappers.CellClickEvent;
-import boardGameLibrary.eventWrappers.PlayerMadeMoveEvent;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.paint.Color;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by August on 2016-09-30.
@@ -15,7 +18,13 @@ public class ComputerPlayer extends Player{
     }
 
     @Override
-    public void makeMove(ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty, ObjectProperty<CellClickEvent> cellClickProperty) {
+    public void makeMove(BoardMoveMaker boardMoveMaker, ObjectProperty<CellClickEvent> cellClickProperty) {
+        Move[] legalMoves = boardMoveMaker.getAvailableMoves(this);
 
+        if(legalMoves.length == 0)
+            throw new RuntimeException("No available moves for Player: " + this.getName());
+
+        int choice = ThreadLocalRandom.current().nextInt(0, legalMoves.length);
+        boardMoveMaker.makeMove(this, legalMoves[choice]);
     }
 }

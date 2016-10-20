@@ -17,22 +17,9 @@ import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
  */
 public class Cell extends StackPane {
     // Indicate the row and column of this cell in the board
-
     private static final double CELL_MARKER_PADDING_FACTOR = 0.85;
     public Cell() {
       this.setId("gameBoardCell");
-
-    }
-
-    private void handleMouseClick() {
-        /**throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates. */ 
-        System.out.println("lalala");
-        Circle circle = new Circle();
-        circle.setFill(Color.BLACK);
-
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(Color.WHITE);
-        markCell(CellMarker.createCellMarker(circle));
 
     }
 

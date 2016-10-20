@@ -27,9 +27,10 @@ public class LocalGameMatch implements GameMatch{
     }
 
     public void run() {
-        turn(this.nextPlayer());
+        turn(this.currentPlayer());
 
         this.board.getBoardMoveEventObjectProperty().addListener(e -> {
+            System.out.println("Current player: " + this.currentPlayer().getName() + ", legal move? " + this.board.getBoardMoveEventObjectProperty().get().getMadeLegalMove());
             if(!this.board.getBoardMoveEventObjectProperty().get().getMadeLegalMove())
                 turn(this.currentPlayer());
             else
@@ -39,18 +40,7 @@ public class LocalGameMatch implements GameMatch{
 
     public void turn(Player player) {
         System.out.println("Current player: " + player.getName());
-        ObjectProperty<PlayerMadeMoveEvent> madeMoveProperty = new SimpleObjectProperty<>();
-
-        ChangeListener<PlayerMadeMoveEvent> madeMoveListener = (observableValue, oldValue, newValue) -> {
-            this.board.makeMove(observableValue.getValue().getPlayer(), observableValue.getValue().getMove());
-        };
-
-        madeMoveProperty.addListener(e -> {
-            madeMoveListener.changed(madeMoveProperty, null, madeMoveProperty.get());
-            madeMoveProperty.removeListener(madeMoveListener);
-        });
-
-        player.makeMove(madeMoveProperty, this.cellClickProperty());
+        player.makeMove(this.getBoardMoveMaker(), this.cellClickProperty());
     }
 
     public BoardMoveMaker getBoardMoveMaker(){
@@ -62,12 +52,12 @@ public class LocalGameMatch implements GameMatch{
     }
 
     private Player nextPlayer(){
-        Player nextPlayer = this.players[this.currentPlayerIndex++];
+        this.currentPlayerIndex += 1;
 
         if(this.currentPlayerIndex == this.players.length)
             this.currentPlayerIndex = 0;
 
-        return nextPlayer;
+        return this.players[this.currentPlayerIndex];
     }
 
     private Player currentPlayer(){

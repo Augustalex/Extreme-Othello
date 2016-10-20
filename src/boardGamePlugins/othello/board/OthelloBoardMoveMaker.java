@@ -9,6 +9,7 @@ import boardGamePlugins.othello.pawn.OthelloPawn;
 import boardGamePlugins.othello.board.exceptions.IllegalMoveException;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * Created by August on 2016-10-02.
@@ -33,49 +34,105 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
      * If a player owned pawn is crossed beyond a distance of 1 cell, it is a legal move. Otherwise,
      * it is a non-legal move.
      *
-     * @param player
-     * @param move
-     * @return
+     * @param player {@link Player}
+     * @param move {@link Move}
+     * @return boolean
      */
     @Override
     public boolean isLegalMove(Player player, Move move) {
-        if(move.getMove().length < 1)
+        if(!isLegalOthelloMoveContainer(move))
             throw new IllegalMoveException(move);
 
-        PlayerAction action = move.getMove()[0];
-        Point startPosition = new Point(action.getX(), action.getY());
+        //Require position of new pawn placement.
+        Point startPosition = new Point(move.getActions()[0].getX(), move.getActions()[0].getY());
 
-        if(this.board.withinBounds(startPosition) && this.board.isEmpty(startPosition))
-            for(Direction direction : Direction.values()){
-
-                Point position = movePoint(direction, startPosition);
-                int distance = 1;
-
-                while(this.board.withinBounds(position) && !this.board.isEmpty(position)){
-                    if(this.board.getPawn(position).getOwner().equals(player)) {
-                        if (distance > 1)
-                            return true;
-                        else
-                            continue;
-                    }
-
-                    position = movePoint(direction, position);
-                    distance++;
-                }
-            }
+        //Check in all directions for any legal move.
+        for(Direction direction : Direction.values())
+            if(isLegalMoveInDirection(player, startPosition, direction))
+                return true;
 
         return false;
     }
 
     /**
-     * Returns an array of available {@link Move}s from which a player can make a decision on which move to apply.
-     * @return
+     * Check in a direction from a given direction and in perspective of a certain {@link Player}
+     * whether arguments represent a legal move.
+     *
+     * @param player The Player performing the move.
+     * @param position The origin position of the new pawn.
+     * @param direction The heading direction of the current legal move search.
+     * @return Whether arguments represents a legal move.
      */
-    @Override
-    public Move[] getAvailableMoves() {
-        return null;
+    private boolean isLegalMoveInDirection(Player player, Point position, Direction direction){
+        /*  If the move is on an already occupied cell, then it is not a legal move.
+            If the move is outside the game board, it is not a legal move. */
+        if(!this.board.withinBounds(position) || !this.board.isEmpty(position))
+            return false;
+
+        /*  The next player owned pawn need to separated from the new pawn by at least 1 cell.
+            Thus a minimum distance of 2. */
+        final int minLegalMoveDistance = 2;
+        int distance = 0;
+
+        /*  Traverses the board in specified direction as long as the current position at any given
+            loop is not void of player ownership (pawn is empty). */
+        do{
+            position = movePoint(direction, position);
+            distance++;
+
+            //If the new position is out of bounds, then it is not a legal move.
+            if(!this.board.withinBounds(position))
+                break;
+
+            /*  If a player owned pawned is encountered the move is legal depending on
+                the current distance from the position of the new pawn. */
+            if(this.board.getPawn(position).getOwner().equals(player))
+                return distance >= minLegalMoveDistance;
+
+        }while(!this.board.isEmpty(position));
+
+        //If no legal move was found during the traversal loop, it is not a legal move.
+        return false;
     }
 
+    /**
+     * Checks whether a move is a legal Othello {@link Move}. That is, that the move only contains
+     * one single {@link PlayerAction}.
+     *
+     * @param move Move class containing player actions.
+     * @return boolean
+     */
+    private boolean isLegalOthelloMoveContainer(Move move){
+        return (move.getActions().length == 1);
+    }
+
+    /**
+     * Returns an array of available {@link Move}s from which a player can make a decision on which move to apply.
+     *
+     * @return An array of {@link Move}s.
+     * @param player The Player planning on making a move.
+     */
+    @Override
+    public Move[] getAvailableMoves(Player player) {
+        ArrayList<Move> legalMoves = new ArrayList<>();
+
+        for(int y = 0; y < this.getGameBoard().getBoundaries().height; y++){
+            for(int x = 0; x < this.getGameBoard().getBoundaries().width; x++){
+                Move move = new Move(new PlayerAction[]{new PlayerAction(x, y)});
+                if(isLegalMove(player, move))
+                    legalMoves.add(move);
+            }
+        }
+
+        Move[] result = new Move[legalMoves.size()];
+        return legalMoves.toArray(result);
+    }
+
+    /**
+     * Applies a {@link Move} to the board. Uses a recursive approach to find and flip pawns.
+     * @param player the {@link Player} applying the move.
+     * @param move the {@link Move} being applied.
+     */
     @Override
     public void makeMove(Player player, Move move) {
         synchronized (this.key) {
@@ -83,7 +140,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
                 this.setMadeMove(false);
             else {
 
-                PlayerAction action = move.getMove()[0];
+                PlayerAction action = move.getActions()[0];
                 Point startPosition = new Point(action.getX(), action.getY());
 
                 this.board.setPawn(startPosition, new OthelloPawn(player));
@@ -117,12 +174,25 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
         }
     }
 
+    /**
+     * Given a point (position of x and y) and a direction, it will return a new point
+     * one unit further in the given direction.
+     *
+     * @param direction the current heading.
+     * @param origin the start position.
+     * @return a new point towards the new direction.
+     */
     private Point movePoint(Direction direction, Point origin){
         int speed = 1;
         return new Point((int)Math.round(origin.x + speed * Math.cos(direction.getRadianAngle())),
                 (int)Math.round(origin.y + speed * Math.sin(direction.getRadianAngle())));
     }
 
+    /**
+     * Set game starting positions. Requires all players in the game.
+     *
+     * @param players all Players in the current game.
+     */
     @Override
     public void setStartPawns(Player[] players){
         Player white = players[0];

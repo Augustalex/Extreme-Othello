@@ -1,12 +1,11 @@
 package utilities.router.paneRouter;
 
-import boardGameLibrary.boardGame.match.LocalGameMatch;
+import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.views.javaFxViews.gameView.GameViewController;
 import boardGameLibrary.views.javaFxViews.mainMenu.MainViewController;
 import boardGameLibrary.views.javaFxViews.newGame.NewGameViewController;
 import javafx.scene.layout.Pane;
 import utilities.router.ViewController;
-import utilities.router.paneRouter.exceptions.NoContainerPaneSetException;
 
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public abstract class PaneViewController implements ViewController {
 
         if(dependencies.containsKey("GameMatch")) {
             if (viewId.equals("GameView"))
-                return new GameViewController(container, (LocalGameMatch) dependencies.get("GameMatch"));
+                return new GameViewController(container, (GameMatch) dependencies.get("GameMatch"));
         }
 
         if(viewId.equals("NewGameView"))
