@@ -166,9 +166,9 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
         while(!this.board.getPawn(position).getOwner().equals(player)){
             this.board.setPawn(position, new OthelloPawn(player));
 
-            for(Direction findDirection : Direction.values())
+            /*for(Direction findDirection : Direction.values())
                 if(!findDirection.equals(direction) || !findDirection.equals(direction.getOppositeDirection()))
-                    findMove(player, movePoint(findDirection, position), findDirection);
+                    findMove(player, movePoint(findDirection, position), findDirection);*/
 
             position = movePoint(direction, position);
         }

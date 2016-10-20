@@ -3,6 +3,7 @@ package boardGameLibrary.player;
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.eventWrappers.CellClickEvent;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.paint.Color;
 
@@ -25,6 +26,14 @@ public class ComputerPlayer extends Player{
             throw new RuntimeException("No available moves for Player: " + this.getName());
 
         int choice = ThreadLocalRandom.current().nextInt(0, legalMoves.length);
-        boardMoveMaker.makeMove(this, legalMoves[choice]);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(800);
+                Platform.runLater(() -> boardMoveMaker.makeMove(this, legalMoves[choice]));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
