@@ -2,9 +2,10 @@ package boardGamePlugins.othello.board;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.boardGame.board.Direction;
+import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.move.PlayerAction;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 import boardGamePlugins.othello.pawn.OthelloPawn;
 import boardGamePlugins.othello.board.exceptions.IllegalMoveException;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class OthelloBoardMoveMaker extends BoardMoveMaker {
 
     /**
-     * Recieves an instantiated {@link OthelloBoard} that is accessible from
+     * Receives an instantiated {@link OthelloBoard} that is accessible from
      * a protected field inside this class.
      * @param board
      */
@@ -32,7 +33,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
      *
      * For all possible directions it passes down a straight path from the starting position.
      * If a player owned pawn is crossed beyond a distance of 1 cell, it is a legal move. Otherwise,
-     * it is a non-legal move.
+     * it is a illegal move.
      *
      * @param player {@link Player}
      * @param move {@link Move}
@@ -113,7 +114,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
      * @param player The Player planning on making a move.
      */
     @Override
-    public Move[] getAvailableMoves(Player player) {
+    public ArrayList<CalculatedMove> getAvailableMoves(Player player) {
         ArrayList<Move> legalMoves = new ArrayList<>();
 
         for(int y = 0; y < this.getGameBoard().getBoundaries().height; y++){
@@ -124,8 +125,12 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
             }
         }
 
-        Move[] result = new Move[legalMoves.size()];
-        return legalMoves.toArray(result);
+        ArrayList<CalculatedMove> calculatedMoves = new ArrayList<>();
+
+        for(Move move : legalMoves)
+            calculatedMoves.add(new CalculatedMove(move.getActions(), this.getMoveScore(player, move)));
+
+        return calculatedMoves;
     }
 
     /**
@@ -136,8 +141,10 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
     @Override
     public void makeMove(Player player, Move move) {
         synchronized (this.key) {
-            if (!isLegalMove(player, move))
-                this.setMadeMove(false);
+            if(this.getAvailableMoves(player).size() == 0)
+                this.setMadeMove(false, true);
+            else if (!isLegalMove(player, move))
+                this.setMadeMove(false, false);
             else {
 
                 PlayerAction action = move.getActions()[0];
@@ -149,7 +156,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
                     findMove(player, movePoint(direction, startPosition), direction);
                 }
 
-                this.setMadeMove(true);
+                this.setMadeMove(true, false);
             }
         }
     }
@@ -195,13 +202,67 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
      */
     @Override
     public void setStartPawns(Player[] players){
-        Player white = players[0];
-        Player black = players[1];
+        int topX = (int)Math.floor(this.board.getBoundaries().width / 2) - players.length/2;
+        int topY = (int)Math.floor(this.board.getBoundaries().height / 2) - players.length/2;
 
-        this.board.setPawn(new Point(3, 3), new OthelloPawn(white));
-        this.board.setPawn(new Point(4,4), new OthelloPawn(white));
-        this.board.setPawn(new Point(3, 4), new OthelloPawn(black));
-        this.board.setPawn(new Point(4, 3), new OthelloPawn(black));
+        int width = players.length;
+        int height = players.length;
+
+        int playerIndex = 0;
+
+        for(int i = 0; i < width*height; i++){
+            if(playerIndex == players.length)
+                playerIndex = 0;
+
+            int x = topX + ((i+1)%width);
+            int y = topY + (int)Math.floor(i/width);
+
+            if(y%2 == 1)
+                this.board.setPawn(new Point(x, y), new OthelloPawn(players[players.length - playerIndex - 1]));
+            else
+                this.board.setPawn(new Point(x, y), new OthelloPawn(players[playerIndex]));
+
+            playerIndex++;
+        }
     }
 
+    @Override
+    public int getMoveScore(Player player, Move move) {
+        PlayerAction action = move.getActions()[0];
+        Point startPosition = new Point(action.getX(), action.getY());
+
+        int score = 0;
+
+        //Check in all directions
+        for(Direction direction : Direction.values()){
+            Point position = movePoint(direction, startPosition);
+            while(this.board.withinBounds(position) && !this.board.isEmpty(position)){
+                if(this.board.getPawn(position).getOwner().equals(player)){
+                    score += getMoveScoreInDirection(startPosition, position, direction.getOppositeDirection());
+                    break;
+                }
+
+                position = movePoint(direction, position);
+            }
+        }
+
+        return score;
+    }
+
+    private int getMoveScoreInDirection(Point startPosition, Point playerOwnedPosition, Direction oppositeDirection){
+        int score = 0;
+        Point position = movePoint(oppositeDirection, playerOwnedPosition);
+
+        while(this.board.withinBounds(position)){
+            if(startPosition.getX() == position.getX() && startPosition.getY() == position.getY())
+                return score;
+            else if(this.board.isEmpty(position))
+                break;
+
+            score += 1;
+            position = movePoint(oppositeDirection, position);
+        }
+
+        throw new IndexOutOfBoundsException("Cannot get Move Score from incorrect move. Recursion reached end of board.");
+    }
 }

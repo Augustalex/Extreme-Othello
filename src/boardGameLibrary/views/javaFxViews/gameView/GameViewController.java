@@ -2,7 +2,8 @@ package boardGameLibrary.views.javaFxViews.gameView;
 
 import boardGameLibrary.boardGame.board.GameBoard;
 import boardGameLibrary.boardGame.match.GameMatch;
-import boardGameLibrary.boardGame.match.LocalGameMatch;
+import boardGameLibrary.boardGame.move.CalculatedMove;
+import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
@@ -12,15 +13,16 @@ import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
-import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
@@ -66,6 +68,7 @@ public class GameViewController extends FXMLViewController{
         // Doing boardGame logic here, hellooo, gosh.
         listenToGameBoardView(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.cellClickProperty());
         bindViewToGameBoardModel(this.match.getBoardMoveMaker().getGameBoard(), gameBoard);
+        bindDisplayAvailableMoves(gameBoard, this.match.legalMovesProperty(), boundaries);
 
         match.run();
     }
@@ -145,6 +148,45 @@ public class GameViewController extends FXMLViewController{
             }
         }
 
+    }
+
+    private void bindDisplayAvailableMoves(Pane boardView, ObjectProperty<ArrayList<CalculatedMove>> availableMoves, Dimension boardBoundaries){
+        availableMoves.addListener(e -> {
+
+            boardView.getChildren().stream().filter(node -> node instanceof Cell).forEach(node -> {
+                Cell cell = (Cell) node;
+                cell.removeHighlight();
+            });
+
+            double highestScore = 0;
+            for(CalculatedMove move : availableMoves.get())
+                if(move.getScore() > highestScore)
+                    highestScore = move.getScore();
+
+            for(CalculatedMove move : availableMoves.get()){
+                Point position = new Point(move.getActions()[0].getX(), move.getActions()[0].getY());
+
+                Cell cell;
+                Node node = boardView.getChildren().get((position.y * boardBoundaries.width) + position.x);
+
+                if(!(node instanceof Cell))
+                    return;
+
+                cell = (Cell) node;
+
+                Circle highlight = new Circle();
+
+                highlight.setFill(Color.TRANSPARENT);
+                highlight.setStroke(Color.YELLOWGREEN);
+
+                highlight.setOpacity((double)move.getScore() / highestScore);
+
+                highlight.setStrokeWidth(3);
+                CellMarker marker = CellMarker.createCellMarker(highlight);
+
+                cell.highlightCell(marker);
+            }
+        });
     }
 
 }

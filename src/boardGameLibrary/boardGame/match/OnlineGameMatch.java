@@ -1,9 +1,12 @@
 package boardGameLibrary.boardGame.match;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
+import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.eventWrappers.CellClickEvent;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 import javafx.beans.property.ObjectProperty;
+
+import java.util.ArrayList;
 
 /**
  * Created by August on 2016-10-19.
@@ -27,6 +30,11 @@ public class OnlineGameMatch implements GameMatch {
 
     @Override
     public ObjectProperty<CellClickEvent> cellClickProperty() {
+        return null;
+    }
+
+    @Override
+    public ObjectProperty<ArrayList<CalculatedMove>> legalMovesProperty() {
         return null;
     }
 }

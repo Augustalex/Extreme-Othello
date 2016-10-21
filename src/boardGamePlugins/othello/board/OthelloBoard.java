@@ -1,7 +1,7 @@
 package boardGamePlugins.othello.board;
 
 import boardGameLibrary.boardGame.board.GameBoard;
-import boardGameLibrary.player.VoidPlayer;
+import boardGameLibrary.players.VoidPlayer;
 import boardGamePlugins.othello.pawn.OthelloPawn;
 
 import java.awt.*;
@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class OthelloBoard extends GameBoard {
 
-    private static final int width = 8;
-    private static final int height = 8;
+    private static final int width = 10;
+    private static final int height = 10;
 
     public OthelloBoard() {
         super(OthelloBoard.width, OthelloBoard.height);

@@ -1,6 +1,6 @@
 package boardGameLibrary.boardGame.pawn;
 
-import boardGameLibrary.player.VoidPlayer;
+import boardGameLibrary.players.VoidPlayer;
 import javafx.scene.paint.Color;
 
 /**

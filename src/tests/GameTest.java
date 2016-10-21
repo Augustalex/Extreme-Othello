@@ -2,9 +2,8 @@ package tests;
 
 import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.GameMatchFactory;
-import boardGameLibrary.player.ComputerPlayer;
-import boardGameLibrary.player.LocalPlayer;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.*;
+import boardGamePlugins.othello.players.NaturalAI;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,6 +13,7 @@ import javafx.stage.Stage;
 import utilities.router.Router;
 import utilities.router.paneRouter.PaneRouter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,10 +36,22 @@ public class GameTest extends Application {
 
         Map map = new HashMap();
 
-        Player player1 = new LocalPlayer("August", Color.WHITE);
-        Player player2 = new ComputerPlayer("Björn", Color.BLACK);
+        ArrayList<Player> players = new ArrayList<>();
 
-        GameMatch match = GameMatchFactory.createGameMatch("Othello", new Player[]{player1, player2}, false);
+        //Creating test players
+        players.add(new LocalPlayer("August", Color.WHITE));
+        players.add(new NaturalAI("Björn", Color.BLACK));
+        players.add(new NaturalAI("Dipshit", Color.RED));
+        players.add(new NaturalAI("Nick", Color.PURPLE));
+        players.add(new NaturalAI("Superman", Color.BLUE));
+        players.add(new NaturalAI("Aqua Dude", Color.BROWN));
+
+        //Converting to regular array.
+        Player[] actingPlayers = new Player[players.size()];
+        actingPlayers = players.toArray(actingPlayers);
+
+        //Creating Match object and initiating view through a Router.
+        GameMatch match = GameMatchFactory.createGameMatch("Othello", actingPlayers, false);
         map.put("GameMatch", match);
         router.route("GameView", map);
 

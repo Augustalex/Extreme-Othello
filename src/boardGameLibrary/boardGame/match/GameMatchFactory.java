@@ -1,7 +1,7 @@
 package boardGameLibrary.boardGame.match;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 import boardGamePlugins.othello.board.OthelloBoard;
 import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
 

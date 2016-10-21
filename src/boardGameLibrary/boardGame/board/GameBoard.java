@@ -2,7 +2,7 @@ package boardGameLibrary.boardGame.board;
 
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
-import boardGameLibrary.player.VoidPlayer;
+import boardGameLibrary.players.VoidPlayer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

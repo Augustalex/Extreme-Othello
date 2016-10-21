@@ -2,17 +2,13 @@ package boardGameLibrary.views.consoleViews.gameView;
 
 import boardGameLibrary.boardGame.board.GameBoard;
 import boardGameLibrary.boardGame.match.GameMatch;
-import boardGameLibrary.boardGame.pawn.Pawn;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
-import boardGameLibrary.player.Player;
-import boardGameLibrary.viewModel.gameBoard.cell.Cell;
-import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
+import boardGameLibrary.players.Player;
 import boardGameLibrary.views.consoleViews.GameConsoleViewController;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
-import javafx.scene.shape.*;
 
 import java.awt.*;
 

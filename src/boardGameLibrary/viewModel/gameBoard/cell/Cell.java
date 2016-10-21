@@ -6,9 +6,6 @@
 package boardGameLibrary.viewModel.gameBoard.cell;
 
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
 
 /**
@@ -17,16 +14,37 @@ import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
  */
 public class Cell extends StackPane {
     // Indicate the row and column of this cell in the board
-    private static final double CELL_MARKER_PADDING_FACTOR = 0.85;
-    public Cell() {
-      this.setId("gameBoardCell");
+    private static final double CELL_MARK_PADDING_FACTOR = 0.85;
+    private static final double CELL_HIGHLIGHT_PADDING_FACTOR = 0.75;
 
+    private StackPane markLayer;
+    private StackPane highlightLayer;
+
+    public Cell() {
+        this.setId("gameBoardCell");
+
+        this.markLayer = new StackPane();
+        this.highlightLayer = new StackPane();
+
+        this.getChildren().add(this.markLayer);
+        this.getChildren().add(this.highlightLayer);
     }
 
     public void markCell(CellMarker marker){
-        this.getChildren().setAll(marker.getShape());
+        this.markLayer.getChildren().setAll(marker.getShape());
 
-        marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_MARKER_PADDING_FACTOR));
-        marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_MARKER_PADDING_FACTOR));
+        marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_MARK_PADDING_FACTOR));
+        marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_MARK_PADDING_FACTOR));
+    }
+
+    public void highlightCell(CellMarker marker){
+        this.highlightLayer.getChildren().setAll(marker.getShape());
+
+        marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_HIGHLIGHT_PADDING_FACTOR));
+        marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_HIGHLIGHT_PADDING_FACTOR));
+    }
+
+    public void removeHighlight(){
+        this.highlightLayer.getChildren().clear();
     }
 }

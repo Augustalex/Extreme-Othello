@@ -1,7 +1,7 @@
 package boardGameLibrary.eventWrappers;
 
 import boardGameLibrary.boardGame.move.Move;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 
 /**
  * Created by August on 2016-10-15.

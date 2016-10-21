@@ -1,6 +1,6 @@
 package boardGameLibrary.boardGame.pawn;
 
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 
 /**
  * Created by August on 2016-09-30.

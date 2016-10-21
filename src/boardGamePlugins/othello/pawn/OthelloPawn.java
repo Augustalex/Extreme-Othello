@@ -2,7 +2,7 @@ package boardGamePlugins.othello.pawn;
 
 import boardGameLibrary.boardGame.pawn.Pawn;
 import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 import javafx.scene.shape.Circle;
 
 /**

@@ -1,4 +1,4 @@
-package boardGameLibrary.player.exceptions;
+package boardGameLibrary.players.exceptions;
 
 /**
  * Created by August on 2016-10-15.

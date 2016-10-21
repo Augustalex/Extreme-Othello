@@ -1,10 +1,14 @@
 package boardGameLibrary.boardGame.board;
 
+import boardGameLibrary.boardGame.move.CalculatedMove;
+import boardGameLibrary.boardGame.move.MoveScore;
 import boardGameLibrary.eventWrappers.BoardMoveEvent;
 import boardGameLibrary.boardGame.move.Move;
-import boardGameLibrary.player.Player;
+import boardGameLibrary.players.Player;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import java.util.ArrayList;
 
 /**
  * BoardMoveMaker is responsible for making moves based on a {@link Move} and a
@@ -13,7 +17,7 @@ import javafx.beans.property.SimpleObjectProperty;
  * BoardMoveMaker is instantiated with a reference to a GameBoard which contains all {@link boardGameLibrary.boardGame.pawn.Pawn}
  * relevant to the game.
  */
-public abstract class BoardMoveMaker{
+public abstract class BoardMoveMaker implements MoveScore{
 
     protected GameBoard board;
 
@@ -42,7 +46,7 @@ public abstract class BoardMoveMaker{
      * @return
      * @param player
      */
-    public abstract Move[] getAvailableMoves(Player player);
+    public abstract ArrayList<CalculatedMove> getAvailableMoves(Player player);
 
     /**
      * Given a {@link Player} and a {@link Move}, this method will lock the makeMove method with the key field.
@@ -73,9 +77,9 @@ public abstract class BoardMoveMaker{
      * legal or not is obtain from within the Property.
      * @param wasLegalMove
      */
-    protected void setMadeMove(boolean wasLegalMove){
+    protected void setMadeMove(boolean wasLegalMove, boolean noMoreMoves){
         System.out.println("Move Made! Move was " + (wasLegalMove ? "legal" : "not legal"));
-        this.getBoardMoveEventObjectProperty().set(new BoardMoveEvent(wasLegalMove));
+        this.getBoardMoveEventObjectProperty().set(new BoardMoveEvent(wasLegalMove, noMoreMoves));
     }
 
     /**
