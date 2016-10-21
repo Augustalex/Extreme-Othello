@@ -35,7 +35,6 @@ public abstract class ComputerPlayer extends Player{
 
         new Thread(() -> {
             try {
-
                 Platform.runLater(() -> legalMovesProperty.set(new ArrayList<>()));
 
                 if(boardMoveMaker.getAvailableMoves(this).size() == 0) {

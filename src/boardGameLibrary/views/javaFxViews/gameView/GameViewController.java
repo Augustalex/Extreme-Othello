@@ -7,6 +7,7 @@ import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
+import boardGameLibrary.viewModel.ViewDimensionBinder;
 import boardGameLibrary.viewModel.gameBoard.cell.Cell;
 import boardGameLibrary.viewModel.gameBoard.GameBoardFactory;
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
@@ -60,10 +61,10 @@ public class GameViewController extends FXMLViewController{
         gameBoardContainer.getChildren().setAll(gameBoard);
 
         //Fixing boardGame board dimension properties
-        gameBoardContainer.widthProperty().addListener((e) -> squareBindTo(gameBoard, gameBoardContainer));
-        gameBoardContainer.heightProperty().addListener((e) -> squareBindTo(gameBoard, gameBoardContainer));
+        gameBoardContainer.widthProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer));
+        gameBoardContainer.heightProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer));
 
-        squareBindTo(gameBoard, gameBoardContainer);
+        ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer);
 
         // Doing boardGame logic here, hellooo, gosh.
         listenToGameBoardView(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.cellClickProperty());
@@ -96,36 +97,6 @@ public class GameViewController extends FXMLViewController{
             }
 
         });
-    }
-
-    private void fixedBindTo(Region binder, Region container){
-        binder.minWidthProperty().bind(container.widthProperty());
-        binder.maxWidthProperty().bind(container.widthProperty());
-
-        binder.minHeightProperty().bind(container.heightProperty());
-        binder.maxHeightProperty().bind(container.heightProperty());
-    }
-    
-    private void squareBindTo(Region binder, Region container){
-        if(container.widthProperty().get() > container.heightProperty().get()){
-            bindTwoToOneDimensions(binder, container.heightProperty());
-        }
-        else{
-            bindTwoToOneDimensions(binder, container.widthProperty());
-        }
-    }
-    
-    private void bindTwoToOneDimensions(Region binder, ReadOnlyDoubleProperty bindTo){
-        bindOneToOneDimension(binder.minWidthProperty(), binder.maxWidthProperty(), bindTo);
-        bindOneToOneDimension(binder.minHeightProperty(), binder.maxHeightProperty(), bindTo);
-    }
-    
-    private void bindOneToOneDimension(DoubleProperty minDimension, DoubleProperty maxDimension, ReadOnlyDoubleProperty bindTo){
-        minDimension.unbind();
-        minDimension.bind(bindTo);
-
-        maxDimension.unbind();
-        maxDimension.bind(bindTo);
     }
 
     private void listenToGameBoardView(Pane boardView, GameBoard board, ObjectProperty<CellClickEvent> cellClickProperty){

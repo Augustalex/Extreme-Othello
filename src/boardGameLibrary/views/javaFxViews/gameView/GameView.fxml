@@ -10,13 +10,13 @@
     <top>
         <BorderPane id="gameTitle">
             <left>
-                <Label text="AUGUST" />
+                <Label text="LAST HUMAN" />
             </left>
             <center>
                 <Label text="V.S." />
             </center>
             <right>
-                <Label text="BJORN" />
+                <Label text="S.K.Y.N.E.T" />
             </right>
         </BorderPane>
     </top>

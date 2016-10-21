@@ -217,7 +217,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
             int x = topX + ((i+1)%width);
             int y = topY + (int)Math.floor(i/width);
 
-            if(y%2 == 1)
+            if(y%2 == 0)
                 this.board.setPawn(new Point(x, y), new OthelloPawn(players[players.length - playerIndex - 1]));
             else
                 this.board.setPawn(new Point(x, y), new OthelloPawn(players[playerIndex]));
