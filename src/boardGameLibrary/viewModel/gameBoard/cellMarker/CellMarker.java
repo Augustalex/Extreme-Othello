@@ -1,17 +1,31 @@
 package boardGameLibrary.viewModel.gameBoard.cellMarker;
 
+import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
+import boardGameLibrary.viewModel.gameBoard.cellMarker.shapeMarkers.CircleMarker;
+import boardGameLibrary.viewModel.gameBoard.cellMarker.shapeMarkers.RectangleMarker;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import boardGameLibrary.viewModel.gameBoard.cellMarker.exceptions.InvalidCellMarkerShapeException;
 
 /**
- * Created by August on 2016-10-12.
+ * Used to mark a cell in the {@link boardGameLibrary.views.javaFxViews.gameView.GameViewController}.
+ *
+ * There a different static creator functions within this class, one of
+ * which is a special highlighting marker that comes styled (decorated).
  */
-public interface CellMarker {
+public interface CellMarker{
 
-    static CellMarker createCellMarker(Shape shape){
+    /**
+     * Given a Shape (from a set of legal shapes seen in the method)
+     * it creates a suiting marker with the shape as its construction
+     * argument.
+     * @param shape The decorated Shape used to create a Marker.
+     * @return a new CellMarker.
+     */
+    static CellMarker create(Shape shape){
         if(shape instanceof Rectangle)
             return new RectangleMarker((Rectangle)shape);
         else if(shape instanceof Circle)
@@ -20,10 +34,54 @@ public interface CellMarker {
             throw new InvalidCellMarkerShapeException();
     }
 
+    /**
+     * Given a displayModel it will with it create a decorated shape
+     * and then use that to create a new CellMarker.
+     * @param displayModel from a {@link boardGameLibrary.boardGame.pawn.Pawn}.
+     * @return a new CellMarker.
+     */
+    static CellMarker create(PawnDisplayModel displayModel){
+        Shape shape = displayModel.getShape();
+        shape.setFill(displayModel.getPaint());
+
+        return CellMarker.create(shape);
+    }
+
+    /**
+     * Creates a new special pre-decorated Highlight marker.
+     * @param opacity can be an illustration of the importance of the new highlight.
+     * @return a new CellMarker (which is distinct from other CellMarkers).
+     */
+    static CellMarker newHighlightMarker(double opacity){
+        Circle highlight = new Circle();
+
+        highlight.setFill(Color.TRANSPARENT);
+        highlight.setStroke(Color.YELLOWGREEN);
+
+        highlight.setOpacity(opacity);
+
+        highlight.setStrokeWidth(3);
+
+        return CellMarker.create(highlight);
+    }
+
+    /**
+     * Returns a width property. In case of a Shape without a widthProperty
+     * a substitute will be used to represent it (i.e. the radius of a circle).
+     * @return a DoubleProperty to control width.
+     */
     DoubleProperty getWidthProperty();
 
+    /**
+     * Returns a height property. In case of a Shape without a heightProperty
+     * a substitute will be used to represent it (i.e. the radius of a circle).
+     * @return a DoubleProperty to control height.
+     */
     DoubleProperty getHeightProperty();
 
+    /**
+     * Returns the shape representing the marker.
+     * @return a Shape.
+     */
     Shape getShape();
-
 }

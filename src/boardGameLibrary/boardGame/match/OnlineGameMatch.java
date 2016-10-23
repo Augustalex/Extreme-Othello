@@ -1,6 +1,7 @@
 package boardGameLibrary.boardGame.match;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
+import boardGameLibrary.boardGame.match.propertyWrappers.MoveProperties;
 import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.players.Player;
@@ -29,12 +30,7 @@ public class OnlineGameMatch implements GameMatch {
     }
 
     @Override
-    public ObjectProperty<CellClickEvent> cellClickProperty() {
-        return null;
-    }
-
-    @Override
-    public ObjectProperty<ArrayList<CalculatedMove>> legalMovesProperty() {
+    public MoveProperties getMoveProperties() {
         return null;
     }
 }

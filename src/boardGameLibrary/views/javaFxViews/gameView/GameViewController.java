@@ -4,6 +4,7 @@ import boardGameLibrary.boardGame.board.GameBoard;
 import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.boardGame.move.Move;
+import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
@@ -55,9 +56,8 @@ public class GameViewController extends FXMLViewController{
         //Game board boundaries
         Dimension boundaries = this.match.getBoardMoveMaker().getGameBoard().getBoundaries();
 
-        //Creating boardGame board
+        //Creating GameBoard (view object) and adding it to the container.
         Pane gameBoard = GameBoardFactory.createBoard(gameBoardContainer, boundaries.width);
-
         gameBoardContainer.getChildren().setAll(gameBoard);
 
         //Fixing boardGame board dimension properties
@@ -66,10 +66,10 @@ public class GameViewController extends FXMLViewController{
 
         ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer);
 
-        // Doing boardGame logic here, hellooo, gosh.
-        listenToGameBoardView(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.cellClickProperty());
+        // Binding view to model
+        listenToGameBoardView(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.getMoveProperties().cellClickProperty());
         bindViewToGameBoardModel(this.match.getBoardMoveMaker().getGameBoard(), gameBoard);
-        bindDisplayAvailableMoves(gameBoard, this.match.legalMovesProperty(), boundaries);
+        bindDisplayAvailableMoves(gameBoard, this.match.getMoveProperties().legalMovesProperty(), boundaries);
 
         match.run();
     }
@@ -92,7 +92,7 @@ public class GameViewController extends FXMLViewController{
                 Shape shape = pawn.getDisplayModel().getShape();
                 shape.setFill(pawn.getDisplayModel().getPaint());
 
-                cell.markCell(CellMarker.createCellMarker(shape));
+                cell.markCell(CellMarker.create(shape));
 
             }
 
@@ -113,9 +113,12 @@ public class GameViewController extends FXMLViewController{
                 });
 
                 Cell cell = (Cell) viewCells.get((y*boundaries.width) + x);
-                Shape shape = board.getPawn(position).getDisplayModel().getShape();
-                shape.setFill(board.getPawn(position).getDisplayModel().getPaint());
-                cell.markCell(CellMarker.createCellMarker(shape));
+
+                //Mark cell with new CellMarker from the PawnDisplayModel
+                PawnDisplayModel displayModel = board.getPawn(position).getDisplayModel();
+                CellMarker marker = CellMarker.create(displayModel);
+                cell.markCell(marker);
+
             }
         }
 
@@ -137,25 +140,13 @@ public class GameViewController extends FXMLViewController{
             for(CalculatedMove move : availableMoves.get()){
                 Point position = new Point(move.getActions()[0].getX(), move.getActions()[0].getY());
 
-                Cell cell;
                 Node node = boardView.getChildren().get((position.y * boardBoundaries.width) + position.x);
 
                 if(!(node instanceof Cell))
                     return;
 
-                cell = (Cell) node;
-
-                Circle highlight = new Circle();
-
-                highlight.setFill(Color.TRANSPARENT);
-                highlight.setStroke(Color.YELLOWGREEN);
-
-                highlight.setOpacity((double)move.getScore() / highestScore);
-
-                highlight.setStrokeWidth(3);
-                CellMarker marker = CellMarker.createCellMarker(highlight);
-
-                cell.highlightCell(marker);
+                double highlightOpacity = (double)move.getScore() / highestScore;
+                ((Cell)node).highlightCell(CellMarker.newHighlightMarker(highlightOpacity));
             }
         });
     }

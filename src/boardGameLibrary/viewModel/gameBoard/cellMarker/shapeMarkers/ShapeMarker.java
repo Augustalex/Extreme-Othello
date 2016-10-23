@@ -1,9 +1,11 @@
-package boardGameLibrary.viewModel.gameBoard.cellMarker;
+package boardGameLibrary.viewModel.gameBoard.cellMarker.shapeMarkers;
 
+import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.shape.Shape;
 
 /**
- * Created by August on 2016-10-12.
+ * Created by August on 2016-10-22.
  */
 public abstract class ShapeMarker implements CellMarker {
 
@@ -14,9 +16,7 @@ public abstract class ShapeMarker implements CellMarker {
     }
 
     @Override
-    public Shape getShape(){
+    public Shape getShape() {
         return this.shape;
     }
-
-
 }

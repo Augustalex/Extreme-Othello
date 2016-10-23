@@ -1,12 +1,10 @@
 package boardGameLibrary.players;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
-import boardGameLibrary.boardGame.move.CalculatedMove;
+import boardGameLibrary.boardGame.match.propertyWrappers.MoveProperties;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.move.PlayerAction;
-import boardGameLibrary.eventWrappers.CellClickEvent;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
@@ -27,15 +25,14 @@ public abstract class ComputerPlayer extends Player{
      *
      * The algorithm that calculates a Move is selected as the available move which flips the most {@link boardGameLibrary.boardGame.pawn.Pawn}s.
      * @param boardMoveMaker Used to apply a calculated {@link Move}
-     * @param cellClickProperty Not used in this certain class.
-     * @param legalMovesProperty
+     * @param moveProperties
      */
     @Override
-    public void makeMove(BoardMoveMaker boardMoveMaker, ObjectProperty<CellClickEvent> cellClickProperty, ObjectProperty<ArrayList<CalculatedMove>> legalMovesProperty) {
+    public void makeMove(BoardMoveMaker boardMoveMaker, MoveProperties moveProperties) {
 
         new Thread(() -> {
             try {
-                Platform.runLater(() -> legalMovesProperty.set(new ArrayList<>()));
+                Platform.runLater(() -> moveProperties.legalMovesProperty().set(new ArrayList<>()));
 
                 if(boardMoveMaker.getAvailableMoves(this).size() == 0) {
                     boardMoveMaker.makeMove(this, new Move(new PlayerAction[]{(new PlayerAction(0, 0))}));
@@ -44,7 +41,7 @@ public abstract class ComputerPlayer extends Player{
 
                 final Move choice = this.makeChoice(boardMoveMaker);
 
-                Thread.sleep(1200);
+                Thread.sleep(300);
 
                 Platform.runLater(() -> boardMoveMaker.makeMove(this, choice));
 

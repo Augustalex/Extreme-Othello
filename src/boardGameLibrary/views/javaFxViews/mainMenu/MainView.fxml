@@ -8,20 +8,23 @@
         xmlns:fx="http://javafx.com/fxml"
         stylesheets="/boardGameLibrary/viewModel/main.css" id="mainViewWindow">
     <top>
-        <TextFlow>
-            <Label fx:id="mainTitle" id="mainTitle" text="OTHELLO"/>
-        </TextFlow>
+        <VBox>
+            <TextFlow styleClass="titleBar">
+                <Label fx:id="mainTitle" id="mainTitle" text="OTHELLO"/>
+            </TextFlow>
+            <TextFlow styleClass="titleBar">
+                <Label id="subTitle" fx:id="subTitle" />
+            </TextFlow>
+        </VBox>
     </top>
     <center>
-            <HBox fx:id="buttonContainer">
+            <VBox id="mainMenuButtonContainer" fx:id="buttonContainer">
                 <Button text="NEW GAME" fx:id="newGameButton"/>
                 <Button text="SETTINGS" />
-                <Button text="REPLAYS" />
-                <Button text="STATISTICS" />
-            </HBox>
+            </VBox>
     </center>
     <bottom>
-        <TextFlow fx:id="bottom">
+        <TextFlow styleClass="titleBar" fx:id="bottom">
             <Label fx:id="creatorName" id="creatorName" text="Created by: Jacob Berqvist, Björn Andersson and August Alexandersson."/>
         </TextFlow>
     </bottom>

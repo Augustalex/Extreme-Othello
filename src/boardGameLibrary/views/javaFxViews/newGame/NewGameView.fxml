@@ -6,18 +6,17 @@
 
 <BorderPane
         xmlns:fx="http://javafx.com/fxml"
-        stylesheets="/boardGameLibrary/viewModel/main.css" id="window">
+        stylesheets="/boardGameLibrary/viewModel/main.css" id="newGameWindow">
     <top>
-        <TextFlow textAlignment="CENTER">
+        <TextFlow styleClass="titleBar" textAlignment="CENTER">
             <Label fx:id="windowTitle" id="windowTitle" text="Create a new Game"/>
         </TextFlow>
     </top>
     <center>
-        <VBox alignment="CENTER">
-            <Label fx:id="firstPlayerBoxLabel"/>
-            <ComboBox fx:id="firstPlayerBox"/>
-            <Label fx:id="secondPlayerBoxLabel" />
-            <ComboBox fx:id="secondPlayerBox" />
+        <VBox alignment="CENTER" fx:id="newGameContainer">
+            <TextFlow styleClass="newGameHeader">
+                <Label id="newGamePrompt" text="Pick your players:" />
+            </TextFlow>
         </VBox>
     </center>
     <bottom>

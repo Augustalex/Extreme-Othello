@@ -6,10 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import utilities.router.Router;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
@@ -23,10 +25,14 @@ public class MainViewController extends FXMLViewController{
     private Label mainTitle;
 
     @FXML
+    private Label subTitle;
+
+    @FXML
     private Button newGameButton;
 
     @FXML
-    private HBox buttonContainer;
+    private VBox buttonContainer;
+
 
     public MainViewController(Pane container){
         super(container, MainViewController.fxmlFileName);
@@ -41,6 +47,7 @@ public class MainViewController extends FXMLViewController{
     public void initialize(URL location, ResourceBundle resources) {
         strifeMenuButtonSize();
         setupButtonRouting();
+        printSubTitleMessage();
     }
 
     private void strifeMenuButtonSize(){
@@ -62,5 +69,21 @@ public class MainViewController extends FXMLViewController{
                 ex.printStackTrace();
             }
         });
+    }
+
+    private void printSubTitleMessage(){
+        String[] message = new String[]{
+                "IT'S NOT WORKING OUT",
+                "GAME OF THE YEAR EDITION",
+                "EXTREME EDITION",
+                "PATRICK EDITION",
+                "UNLIMITED EDITION",
+                "BEYOND COMPREHENSION EDITION",
+                "KANELBULLE EDITION"
+        };
+
+        Random random = new Random(System.currentTimeMillis());
+
+        this.subTitle.setText(message[random.nextInt(message.length-1)+1]);
     }
 }

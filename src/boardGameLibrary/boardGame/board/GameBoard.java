@@ -43,7 +43,7 @@ public class GameBoard{
         this.board[position.x][position.y] = newPawn;
         this.cellChangeObserver.add(new CellChangeEvent(position));
         this.cellChangeObserver.clear();
-        System.out.println("Flipped: " + position);
+        //System.out.println("Flipped: " + position);
     }
 
     public boolean isEmpty(Point position){

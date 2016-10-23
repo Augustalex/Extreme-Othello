@@ -1,15 +1,10 @@
 package boardGameLibrary.boardGame.match;
 
-import boardGameLibrary.boardGame.move.CalculatedMove;
-import boardGameLibrary.boardGame.move.Move;
-import boardGameLibrary.eventWrappers.CellClickEvent;
+import boardGameLibrary.boardGame.match.propertyWrappers.MoveProperties;
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.players.Player;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Created by August on 2016-09-30.
@@ -21,8 +16,7 @@ public class LocalGameMatch implements GameMatch{
 
     protected BoardMoveMaker board;
 
-    private ObjectProperty<ArrayList<CalculatedMove>> legalMovesProperty = new SimpleObjectProperty<>();
-    private ObjectProperty<CellClickEvent> cellClickProperty = new SimpleObjectProperty<>();
+    private MoveProperties moveProperties = new MoveProperties();
 
     public LocalGameMatch(BoardMoveMaker board, Player[] players){
         this.board = board;
@@ -49,21 +43,16 @@ public class LocalGameMatch implements GameMatch{
     }
 
     public void turn(Player player) {
-
         System.out.println("Current player: " + player.getName());
-        player.makeMove(this.getBoardMoveMaker(), this.cellClickProperty(), this.legalMovesProperty());
+        player.makeMove(this.getBoardMoveMaker(), this.getMoveProperties());
     }
 
     public BoardMoveMaker getBoardMoveMaker(){
         return this.board;
     }
 
-    public ObjectProperty<CellClickEvent> cellClickProperty(){
-        return this.cellClickProperty;
-    }
-
-    public ObjectProperty<ArrayList<CalculatedMove>> legalMovesProperty(){
-        return this.legalMovesProperty;
+    public MoveProperties getMoveProperties(){
+        return this.moveProperties;
     }
 
     private Player nextPlayer(){

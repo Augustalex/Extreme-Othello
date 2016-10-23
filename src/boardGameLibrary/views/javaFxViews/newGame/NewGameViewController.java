@@ -1,19 +1,39 @@
 package boardGameLibrary.views.javaFxViews.newGame;
 
+import boardGameLibrary.boardGame.match.GameMatch;
+import boardGameLibrary.boardGame.match.LocalGameMatch;
+import boardGameLibrary.players.LocalPlayer;
+import boardGameLibrary.players.Player;
+import boardGameLibrary.viewModel.playerSelection.PlayerSelectionPane;
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
+import boardGamePlugins.othello.board.OthelloBoard;
+import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
+import boardGamePlugins.othello.players.GreedyAI;
+import boardGamePlugins.othello.players.NaturalAI;
+import boardGamePlugins.othello.players.RandomAI;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import utilities.router.Router;
 import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 import utilities.router.paneRouter.PaneViewController;
 import utilities.router.paneRouter.exceptions.NoContainerPaneSetException;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by August on 2016-09-29.
@@ -23,16 +43,7 @@ public class NewGameViewController extends FXMLViewController{
     private static final String fxmlFileName = "NewGameView.fxml";
 
     @FXML
-    private Label firstPlayerBoxLabel;
-
-    @FXML
-    private ComboBox firstPlayerBox;
-
-    @FXML
-    private Label secondPlayerBoxLabel;
-
-    @FXML
-    private ComboBox secondPlayerBox;
+    private VBox newGameContainer;
 
     @FXML
     private Button back;
@@ -49,17 +60,28 @@ public class NewGameViewController extends FXMLViewController{
     }
 
     private void setupPlayerComboBoxes(){
-        String[] playerChoices = new String[]{
-                "Local Player",
-                "Remote Player",
-                "Computer AI",
-                "Bob Smith"
+
+        Player[] players = new Player[]{
+            new LocalPlayer("August", Color.WHITE),
+            new NaturalAI("Björn", Color.BLACK),
+            new NaturalAI("Jacob", Color.RED),
+            new NaturalAI("Nick", Color.YELLOW),
+            new NaturalAI("Bosco", Color.ORANGE),
+            new NaturalAI("Elvir", Color.BLUE),
+            new NaturalAI("Mackan", Color.TURQUOISE),
         };
 
-        firstPlayerBoxLabel.setText("Choose first player: ");
-        firstPlayerBox.getItems().setAll(playerChoices);
+        PlayerSelectionPane playerSelectionPane = new PlayerSelectionPane(players, 5);
+        this.newGameContainer.getChildren().add(playerSelectionPane);
 
-        secondPlayerBoxLabel.setText("Choose second player: ");
-        secondPlayerBox.getItems().setAll(playerChoices);
+        playerSelectionPane.allPlayersSetProperty().addListener(e -> {
+            //Create new match from selected players
+            GameMatch gameMatch = GameMatch.createGameMatch("Othello", playerSelectionPane.getSelectedPlayers(), false);
+            Map<String, Object> map = new HashMap<>();
+            map.put("GameMatch", gameMatch);
+
+            //Route to GameView with the new GameMatch object.
+            Router.getApplicationRouter().route("GameView", map);
+        });
     }
 }

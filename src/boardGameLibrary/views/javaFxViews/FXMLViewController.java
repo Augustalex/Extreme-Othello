@@ -25,8 +25,9 @@ public abstract class FXMLViewController extends PaneViewController implements I
             this.fxmlPaneLoader.loadFXMLWith(this);
         }
         catch(Exception e){
-            System.out.println(e.getMessage());
-            throw new ViewNotLoadedException();
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+            //throw new ViewNotLoadedException();
         }
     }
 }

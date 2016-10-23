@@ -5,86 +5,90 @@
  */
 package boardGameLibrary.viewModel.gameBoard.cell;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.scene.Node;
+import boardGameLibrary.viewModel.animation.MarkerAnimator;
+import boardGameLibrary.viewModel.gameBoard.cellMarker.MarkerLayer;
+import boardGameLibrary.viewModel.gameBoard.cellMarker.MarkerToParentTuple;
 import javafx.scene.layout.StackPane;
 import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
-import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 /**
+ * A Cell is a StackPane with two additional layered StackPanes.
+ * The first and lowest layered is a layer for {@link CellMarker}s.
+ * The second and above the mark layer, is a highlight layer.
  *
- * @author S132063
+ * The highlight layer contain {@link CellMarker}s.
  */
 public class Cell extends StackPane {
     // Indicate the row and column of this cell in the board
     private static final double CELL_MARK_PADDING_FACTOR = 0.85;
     private static final double CELL_HIGHLIGHT_PADDING_FACTOR = 0.75;
 
-    private StackPane markLayer;
-    private StackPane highlightLayer;
+    private MarkerLayer markLayer;
+    private MarkerLayer highlightLayer;
 
+    /**
+     * Creates a new Cell and adds to it an ID that can be
+     * used for styling it with CSS.
+     */
     public Cell() {
         this.setId("gameBoardCell");
 
-        this.markLayer = new StackPane();
-        this.highlightLayer = new StackPane();
+        this.markLayer = new MarkerLayer();
+        this.highlightLayer = new MarkerLayer();
 
         this.getChildren().add(this.markLayer);
         this.getChildren().add(this.highlightLayer);
     }
 
+    /**
+     * Marks the current cell with a {@link CellMarker}. It also removes
+     * any preexisting marker in the mark layer.
+     *
+     * If there is already a mark in the mark layer, an animation will be activated.
+     * Otherwise it will simple add the marker to the layer without animation.
+     * @param marker
+     */
     public void markCell(CellMarker marker) {
-
-
         if (this.markLayer.getChildren().size() > 0) {
-            final Timeline timeline = new Timeline();
-            timeline.setCycleCount(1);
-            timeline.setAutoReverse(false);
-            final KeyValue originKv = new KeyValue(this.markLayer.getChildren().get(0).scaleXProperty(), 1);
-            final KeyValue kv = new KeyValue(this.markLayer.getChildren().get(0).scaleXProperty(), 0);
-            final KeyFrame kf = new KeyFrame(Duration.millis(180), kv);
-            timeline.getKeyFrames().add(kf);
-            timeline.play();
-            timeline.setOnFinished(e -> {
-
-                final Timeline returnTimeline = new Timeline();
-                returnTimeline.setCycleCount(1);
-                returnTimeline.setAutoReverse(false);
-                final KeyValue originKeyValue = new KeyValue(marker.getShape().scaleXProperty(), 0);
-                final KeyValue destinationKeyValue = new KeyValue(marker.getShape().scaleXProperty(), 1);
-                //final KeyFrame startFrame = new KeyFrame(Duration.millis(0), originKeyValue);
-                final KeyFrame endFrame = new KeyFrame(Duration.millis(100), destinationKeyValue);
-                //returnTimeline.getKeyFrames().add(startFrame);
-                returnTimeline.getKeyFrames().add(endFrame);
-
-                this.markLayer.getChildren().setAll(marker.getShape());
-                marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_MARK_PADDING_FACTOR));
-                marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_MARK_PADDING_FACTOR));
-                marker.getShape().scaleXProperty().set(0);
-                returnTimeline.play();
-
-
-            });
-        } else {
-            this.markLayer.getChildren().setAll(marker.getShape());
-
-
-            marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_MARK_PADDING_FACTOR));
-            marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_MARK_PADDING_FACTOR));
+            MarkerAnimator markerAnimator = new MarkerAnimator();
+            markerAnimator.setMarkerLayer(this.markLayer);
+            markerAnimator.setActors(this.markLayer.getMarkers().get(0), marker);
+            markerAnimator.setAnimationTiming(180, 100);
+            markerAnimator.playAnimation();
+        }
+        else {
+            replaceMarker(marker);
         }
     }
 
-    public void highlightCell(CellMarker marker){
-        this.highlightLayer.getChildren().setAll(marker.getShape());
-
-        marker.getWidthProperty().bind(this.widthProperty().multiply(CELL_HIGHLIGHT_PADDING_FACTOR));
-        marker.getHeightProperty().bind(this.heightProperty().multiply(CELL_HIGHLIGHT_PADDING_FACTOR));
+    /**
+     * Replaces all children of the highlight layer with a new highlight ({@link CellMarker}).
+     * It also binds its width and height properties to fit the Cell.
+     *
+     * @param marker the CellMarker to be used as a highlighter.
+     */
+    public void highlightCell(CellMarker marker) {
+        this.highlightLayer.setSingleMarker(marker);
+        MarkerToParentTuple.create(marker, this.highlightLayer)
+                .bindDimensions(CELL_HIGHLIGHT_PADDING_FACTOR);
     }
 
+    /**
+     * Removes the children of the highlight layer.
+     */
     public void removeHighlight(){
         this.highlightLayer.getChildren().clear();
     }
+
+    /**
+     * Replaces all children of the Marker layer with a new {@link CellMarker}.
+     * It also binds its width and height properties to fit the Cell.
+     * @param marker
+     */
+    private void replaceMarker(CellMarker marker){
+        this.markLayer.setSingleMarker(marker);
+        MarkerToParentTuple.create(marker, this.markLayer)
+                .bindDimensions(CELL_MARK_PADDING_FACTOR);
+    }
+
 }

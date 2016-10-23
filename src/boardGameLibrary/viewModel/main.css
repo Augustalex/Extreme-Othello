@@ -6,11 +6,9 @@ ComboBox{
 
 BorderPane#mainViewWindow{
     -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
-    -fx-border-width: 2px;
-    -fx-border-color: black;
-    -fx-background-image: url("../../tests/reversi2.png");
-    -fx-background-size: auto 100%;
+    -fx-background-image: url("../../tests/img/wormhole.gif");
     -fx-background-position: center;
+    -fx-background-size: 100% 100%;
 }
 
 
@@ -22,14 +20,30 @@ Label#mainTitle{
     -fx-text-alignment: center;
 }
 
+Label#subTitle{
+    -fx-font-size: 32;
+    -fx-font-family: 'Helvetica Neue', monospace;
+    -fx-text-alignment: center;
+    -fx-font-style: italic;
+}
+
 /* Generic properties for text. */
 
-TextFlow{
-    -fx-background-color: linear-gradient(rgb(33, 108, 51), rgb(17, 77, 26));
+.titleBar{
+    /*-fx-background-color: linear-gradient(rgb(48, 173, 74), rgb(18, 97, 27));*/
     -fx-text-alignment: center;
     -fx-column-halignment: center;
     -fx-padding: 0.5em;
     -fx-font-family: 'Helvetica Neue', monospace;
+}
+
+.titleBar > Label{
+    -fx-text-fill: white;
+}
+
+VBox#mainMenuButtonContainer{
+    -fx-alignment: top-center;
+    -fx-padding: 3em;
 }
 
 /* Properties for buttons in application. */
@@ -37,31 +51,23 @@ TextFlow{
 Button {
     -fx-font-size: 2em;
     -fx-font-family: 'Helvetica Neue', monospace;
-    -fx-background-color: linear-gradient(rgb(60, 198, 93), rgb(24, 103, 34));
-    -fx-padding: 0.5em;
-    -fx-border-insets: 1, 1, 1, 1;
-    -fx-background-insets: 2, 2, 2, 2;
+    -fx-background-color: transparent;
+    -fx-padding: 1em 2em;
+    -fx-border-insets: 10, 10, 10, 10;
+    -fx-background-insets: 10, 10, 10, 10;
+    -fx-text-fill: white;
 }
 
 /* Light up effect for buttons when you hover over. */
 
 .button:hover {
-    -fx-background-color: linear-gradient(rgb(72, 255, 108), rgb(18, 97, 27));
+    -fx-background-color: linear-gradient(rgb(46, 163, 70), rgb(25, 136, 38));
 }
 
 /* Gameboard */
 
 Cell#gameBoardCell{
     -fx-border-color: black;
-    -fx-background-color: green;
-}
-
-Cell#gameBoardCellEven{
-    -fx-background-color: yellow;
-}
-
-Cell#gameBoardCellOdd{
-    -fx-background-color: blue;
 }
 
 BorderPane#gameViewWindow{
@@ -87,4 +93,29 @@ BorderPane#gameTitle{
 BorderPane#gameViewStatusBar{
     -fx-pref-height: 20;
 
+}
+
+/*          NEW GAME VIEW       */
+
+BorderPane#newGameWindow{
+    -fx-background-image: url("../../tests/img/andromeda.gif");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: bottom;
+}
+
+PlayerSelectionRow{
+    -fx-alignment: center;
+    -fx-spacing: 3em;
+    -fx-padding: 1em;
+}
+
+TextFlow.newGameHeader{
+    -fx-text-alignment: center;
+    -fx-font-size: 2.6em;
+    -fx-font-family: 'Helvetica Neue', monospace;
+    -fx-padding: 1em;
+}
+
+TextFlow > Label{
+    -fx-text-fill: white;
 }

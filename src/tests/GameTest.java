@@ -1,7 +1,6 @@
 package tests;
 
 import boardGameLibrary.boardGame.match.GameMatch;
-import boardGameLibrary.boardGame.match.GameMatchFactory;
 import boardGameLibrary.players.*;
 import boardGamePlugins.othello.players.NaturalAI;
 import javafx.application.Application;
@@ -24,7 +23,7 @@ public class GameTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         StackPane content = new StackPane();
-        content.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, CornerRadii.EMPTY, Insets.EMPTY)));
+        //content.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, CornerRadii.EMPTY, Insets.EMPTY)));
 
         content.minWidthProperty().bind(primaryStage.widthProperty());
         content.maxWidthProperty().bind(primaryStage.widthProperty());
@@ -51,9 +50,9 @@ public class GameTest extends Application {
         actingPlayers = players.toArray(actingPlayers);
 
         //Creating Match object and initiating view through a Router.
-        GameMatch match = GameMatchFactory.createGameMatch("Othello", actingPlayers, false);
+        GameMatch match = GameMatch.createGameMatch("Othello", actingPlayers, false);
         map.put("GameMatch", match);
-        router.route("GameView", map);
+        router.route("MainView", map);
 
         primaryStage.show();
     }

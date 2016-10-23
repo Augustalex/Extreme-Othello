@@ -11,8 +11,8 @@ import java.awt.*;
  */
 public class OthelloBoard extends GameBoard {
 
-    private static final int width = 10;
-    private static final int height = 10;
+    private static final int width = 12;
+    private static final int height = 12;
 
     public OthelloBoard() {
         super(OthelloBoard.width, OthelloBoard.height);
