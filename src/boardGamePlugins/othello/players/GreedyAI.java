@@ -48,7 +48,7 @@ public class GreedyAI extends ComputerPlayer {
             }
             else
                 return true;
-        }
+        }n
         else if(candidate.getScore() > standing.getScore())
             return true;
 

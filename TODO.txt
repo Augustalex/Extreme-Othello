@@ -29,7 +29,7 @@
 	
 #New Game Menu
 	#Access database
-		#Pick remote players
+		#Pick remote players	
 			#Start remote game
 	#Pick variable number of players for a game
 	#Pick local players $
@@ -54,7 +54,6 @@ CODE STRUCTURE
 	
 #Flaggor för metoder...
 	#Få bort dem!!!
-	
 
 	
 # BUGS BUGS BUGS #
@@ -79,3 +78,4 @@ FRÅGA PÅ HANDLEDNING
 
 - MoveProperties
 - Abstraktion från JavaFX, mer interfaces?
+- FXML och klasser för JavaFX komponenter
