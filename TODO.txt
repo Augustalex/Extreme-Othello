@@ -1,0 +1,81 @@
+
+#Game
+	#Othello AI $
+	#Meddelande när spelet är över
+	#Display Available moves $
+	#Animationer $
+	#Stats
+		#Visa totalt antal nuvarande poäng (antal ägda brickor)
+			#Visa denna information om alla spelare
+	
+
+#Server
+	#Koppla upp mot databas
+		#Lägga till HOST som aktiv spelare i databasen
+		#Hämta aktiva spelare
+			#Skicka till HOST-klient
+	#Koppla upp mot x antal klienter
+		#Skicka information mellan klienter
+			#Skicka information
+				#Skicka DRAG (dvs klick-koordinater)
+				#Ev. Skicka om en spelare åkt ut
+				#Ev. Skicka om någon har vunnit	
+
+#Databas
+	#Koppla upp mot server från inuti Java
+	#Ladda upp användare mot databas
+	#Ladda ner lista av användare från databas
+	
+	
+#New Game Menu
+	#Access database
+		#Pick remote players
+			#Start remote game
+	#Pick variable number of players for a game
+	#Pick local players $
+		#Start local game $
+	#Pick AI Players $
+		#Start remote/local game with AI $
+	#Confirm player selection to start game $
+		#Check if legal choices (in comboboxes)
+
+#Main Menu
+	#Settings menu
+		#Create profile (local player)
+			#Local player shows up in NewGame
+	#Ev. Replays
+	
+CODE STRUCTURE
+#JavaFX kopplat till modellen
+	#Mer interfaces för view models
+	
+#För många argument till metoder!!
+	#Wrappers?
+	
+#Flaggor för metoder...
+	#Få bort dem!!!
+	
+
+	
+# BUGS BUGS BUGS #
+
+	Listeners not removed - SOLVED $$$ -
+#Listeners for cellclick and move made in Player
+is not removed after activated. Resulting in console
+overflow after a couple of moves.
+Probably because faulty use of lambdas.
+
+	Incorrect moves (Faulty move logic)
+A move can be made below a player owned pawn.
+Alternatively it can be that intermediary pawn might be ignored
+in a move. But that is less likely than the first alternative.
+
+	RandomAI crash
+Random AI crashes when trying to generate random int. Cannot use bound below zero
+(that is the max bound on the nextInt() method). This is after a check has been made to ensure
+that the listSize it uses to calculate the bound, is above zero.
+-----------------------------------------
+FRÅGA PÅ HANDLEDNING
+
+- MoveProperties
+- Abstraktion från JavaFX, mer interfaces?

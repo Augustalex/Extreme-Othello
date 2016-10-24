@@ -23,12 +23,17 @@ public class RandomAI extends ComputerPlayer {
 
         ArrayList<CalculatedMove> legalMoves = boardMoveMaker.getAvailableMoves(this);
 
-        if(legalMoves.size() == 0)
+        if(legalMoves.size() <= 0)
             throw new RuntimeException("No available moves for Player: " + this.getName());
+        else {
+            Random rand = new Random();
+            int choice;
 
-        Random rand = new Random();
-        int choice = rand.nextInt(legalMoves.size()-1);
-
-        return legalMoves.get(choice);
+            if(legalMoves.size() > 0) {
+                choice = rand.nextInt(legalMoves.size() - 1);
+                return legalMoves.get(choice);
+            }
+            throw new RuntimeException("No available moves for player.");
+        }
     }
 }

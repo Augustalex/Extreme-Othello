@@ -33,4 +33,9 @@ public class OnlineGameMatch implements GameMatch {
     public MoveProperties getMoveProperties() {
         return null;
     }
+
+    @Override
+    public Player[] getPlayers() {
+        return new Player[0];
+    }
 }

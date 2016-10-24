@@ -9,15 +9,9 @@
         stylesheets="/boardGameLibrary/viewModel/main.css" id="gameViewWindow">
     <top>
         <BorderPane id="gameTitle">
-            <left>
-                <Label text="LAST HUMAN" />
-            </left>
             <center>
-                <Label text="V.S." />
+                <Label fx:id="playerNameHolder" />
             </center>
-            <right>
-                <Label text="S.K.Y.N.E.T" />
-            </right>
         </BorderPane>
     </top>
     <center>

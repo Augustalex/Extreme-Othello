@@ -11,6 +11,7 @@ import boardGamePlugins.othello.board.exceptions.IllegalMoveException;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by August on 2016-10-02.
@@ -125,12 +126,9 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
             }
         }
 
-        ArrayList<CalculatedMove> calculatedMoves = new ArrayList<>();
-
-        for(Move move : legalMoves)
-            calculatedMoves.add(new CalculatedMove(move.getActions(), this.getMoveScore(player, move)));
-
-        return calculatedMoves;
+        return legalMoves.stream()
+                .map(move -> new CalculatedMove(move.getActions(), this.getMoveScore(player, move)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**

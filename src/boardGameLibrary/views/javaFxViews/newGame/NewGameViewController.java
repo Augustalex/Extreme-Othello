@@ -63,12 +63,12 @@ public class NewGameViewController extends FXMLViewController{
 
         Player[] players = new Player[]{
             new LocalPlayer("August", Color.WHITE),
-            new NaturalAI("Björn", Color.BLACK),
-            new NaturalAI("Jacob", Color.RED),
-            new NaturalAI("Nick", Color.YELLOW),
-            new NaturalAI("Bosco", Color.ORANGE),
-            new NaturalAI("Elvir", Color.BLUE),
-            new NaturalAI("Mackan", Color.TURQUOISE),
+            new RandomAI("Björn", Color.BLACK),
+            new RandomAI("Jacob", Color.RED),
+            new RandomAI("Nick", Color.YELLOW),
+            new RandomAI("Bosco", Color.ORANGE),
+            new GreedyAI("Elvir", Color.BLUE),
+            new RandomAI("Mackan", Color.TURQUOISE),
         };
 
         PlayerSelectionPane playerSelectionPane = new PlayerSelectionPane(players, 5);

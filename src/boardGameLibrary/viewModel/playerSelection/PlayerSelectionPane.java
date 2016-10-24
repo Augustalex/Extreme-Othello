@@ -51,15 +51,14 @@ public class PlayerSelectionPane extends VBox {
                 if(this.occupied.contains(newValue)){
                     //TODO add message alert window
                     System.out.println("Player already selected.");
-
-
-
+                    button.selectedProperty().set(false);
                 }
-
-                if(newValue != null)
-                    this.occupied.add(newValue);
-                else
-                    this.occupied.remove(oldValue);
+                else {
+                    if (newValue != null)
+                        this.occupied.add(newValue);
+                    else
+                        this.occupied.remove(oldValue);
+                }
             });
         }
 

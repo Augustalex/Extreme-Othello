@@ -55,6 +55,11 @@ public class LocalGameMatch implements GameMatch{
         return this.moveProperties;
     }
 
+    @Override
+    public Player[] getPlayers() {
+        return this.players.toArray(new Player[this.players.size()]);
+    }
+
     private Player nextPlayer(){
         this.currentPlayerIndex += 1;
 

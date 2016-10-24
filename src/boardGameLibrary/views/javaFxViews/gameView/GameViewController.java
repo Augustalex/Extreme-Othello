@@ -8,6 +8,7 @@ import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
 import boardGameLibrary.boardGame.pawn.Pawn;
+import boardGameLibrary.players.Player;
 import boardGameLibrary.viewModel.ViewDimensionBinder;
 import boardGameLibrary.viewModel.gameBoard.cell.Cell;
 import boardGameLibrary.viewModel.gameBoard.GameBoardFactory;
@@ -16,6 +17,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -44,6 +46,9 @@ public class GameViewController extends FXMLViewController{
 
     @FXML
     private HBox gameBoardContainer;
+
+    @FXML
+    private Label playerNameHolder;
     
     public GameViewController(Pane container, GameMatch match){
         super(container, GameViewController.fxmlFileName);
@@ -71,6 +76,17 @@ public class GameViewController extends FXMLViewController{
         bindViewToGameBoardModel(this.match.getBoardMoveMaker().getGameBoard(), gameBoard);
         bindDisplayAvailableMoves(gameBoard, this.match.getMoveProperties().legalMovesProperty(), boundaries);
 
+        String nameHolder = "";
+
+        Player[] players = this.match.getPlayers();
+        for(int i = 0; i < players.length; i++){
+            if(i == players.length-1)
+                nameHolder += players[i].getName();
+            else
+                nameHolder += players[i].getName() + " v.s. ";
+        }
+
+        playerNameHolder.setText(nameHolder);
         match.run();
     }
 

@@ -42,4 +42,6 @@ public interface GameMatch {
 
     MoveProperties getMoveProperties();
 
+    Player[] getPlayers();
+
 }
