@@ -3,11 +3,13 @@ package boardGameLibrary.views.javaFxViews.newGame;
 import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.LocalGameMatch;
 import boardGameLibrary.boardGame.match.MatchSetup;
+import boardGameLibrary.playerProfileStore.PlayerProfileStore;
 import boardGameLibrary.players.LocalPlayer;
 import boardGameLibrary.players.Player;
 import boardGameLibrary.viewModel.playerSelection.NumberOfPlayersSelection;
 import boardGameLibrary.viewModel.playerSelection.PlayerSelectionPane;
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
+import boardGameLibrary.views.javaFxViews.settingsView.profileSettings.ProfileSettingsViewController;
 import boardGamePlugins.othello.board.OthelloBoard;
 import boardGamePlugins.othello.board.OthelloBoardMoveMaker;
 import boardGamePlugins.othello.players.GreedyAI;
@@ -46,14 +48,18 @@ public class NewGameViewController extends FXMLViewController{
 
     private static final String fxmlFileName = "NewGameView.fxml";
 
+    private PlayerProfileStore store;
+
     @FXML
     private VBox newGameContainer;
 
     @FXML
     private Button back;
 
-    public NewGameViewController(Pane container) {
+    public NewGameViewController(Pane container, PlayerProfileStore store) {
         super(container, NewGameViewController.fxmlFileName);
+
+        this.store = store;
     }
 
     @Override
@@ -65,7 +71,7 @@ public class NewGameViewController extends FXMLViewController{
 
     private void setupPlayerComboBoxes(){
 
-        Player[] players = new Player[]{
+        /*Player[] players = new Player[]{
             new LocalPlayer("August", Color.WHITE),
             new LocalPlayer("Björn", Color.BLACK),
             new NaturalAI("Jacob", Color.BURLYWOOD),
@@ -87,7 +93,10 @@ public class NewGameViewController extends FXMLViewController{
             new NaturalAI("Andreas", Color.TOMATO),
             new NaturalAI("Kristoffer", Color.THISTLE)
 
-        };
+        };*/
+
+        Player[] players = this.store.toPlayers();
+
 
         NumberOfPlayersSelection numberOfPlayersSelection = new NumberOfPlayersSelection(16);
         this.newGameContainer.getChildren().add(numberOfPlayersSelection);

@@ -5,7 +5,6 @@ import boardGameLibrary.boardGame.match.BoardSnapshot;
 import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.MatchSetup;
 import boardGameLibrary.boardGame.move.CalculatedMove;
-import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
 import boardGameLibrary.eventWrappers.CellChangeEvent;
 import boardGameLibrary.eventWrappers.CellClickEvent;
@@ -21,8 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 import java.awt.Dimension;
@@ -30,11 +27,9 @@ import java.awt.Point;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
+
 import javafx.fxml.FXML;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import boardGameLibrary.viewModel.gameBoard.cellMarker.CellMarker;
 
 /**
@@ -73,32 +68,42 @@ public class GameViewController extends FXMLViewController{
         Pane gameBoard = GameBoardFactory.createBoard(gameBoardContainer, boundaries.width);
         gameBoardContainer.getChildren().setAll(gameBoard);
 
-        //Fixing boardGame board dimension properties
-        gameBoardContainer.widthProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer));
-        gameBoardContainer.heightProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer));
+        //Bind dimensions of pane containers.
+        bindContainerDimensionsToBoard(gameBoardContainer, gameBoard);
 
-        ViewDimensionBinder.squareBindTo(gameBoard, gameBoardContainer);
+        //Setup changing information updates and notifiers
+        alertControllerOnBoardViewInteraction(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.getMoveProperties().cellClickProperty());
+        updateViewOnBoardChanges(this.match.getBoardMoveMaker().getGameBoard(), gameBoard);
+        alwaysDisplayAvailableMoves(gameBoard, this.match.getMoveProperties().legalMovesProperty(), boundaries);
 
-        // Binding view to model
-        listenToGameBoardView(gameBoard, this.match.getBoardMoveMaker().getGameBoard(), match.getMoveProperties().cellClickProperty());
-        bindViewToGameBoardModel(this.match.getBoardMoveMaker().getGameBoard(), gameBoard);
-        bindDisplayAvailableMoves(gameBoard, this.match.getMoveProperties().legalMovesProperty(), boundaries);
+        //Display game statistics and information
+        displayPlayerNames(this.match.getPlayers(), playerNameHolder);
 
-        String nameHolder = "";
 
-        Player[] players = this.match.getPlayers();
-        for(int i = 0; i < players.length; i++){
-            if(i == players.length-1)
-                nameHolder += players[i].getName();
-            else
-                nameHolder += players[i].getName() + " v.s. ";
-        }
-
-        playerNameHolder.setText(nameHolder);
         match.run();
+
+
     }
 
-    public void bindViewToGameBoardModel(GameBoard board, Pane boardView){
+    private void displayPlayerNames(Player[] players, Label nameHolder){
+        String nameHolderText = "";
+
+        for(int i = 0; i < players.length; i++)
+            if(i == players.length-1)
+                nameHolderText += players[i].getName();
+            else
+                nameHolderText += players[i].getName() + " v.s. ";
+
+        nameHolder.setText(nameHolderText);
+    }
+
+    public void bindContainerDimensionsToBoard(Pane boardContainer, Pane board){
+        boardContainer.widthProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(board, boardContainer));
+        boardContainer.heightProperty().addListener((e) -> ViewDimensionBinder.squareBindTo(board, boardContainer));
+        ViewDimensionBinder.squareBindTo(board, boardContainer);
+    }
+
+    public void updateViewOnBoardChanges(GameBoard board, Pane boardView){
         Dimension boundaries = board.getBoundaries();
         ObservableList<Node> viewCells = boardView.getChildren();
 
@@ -125,7 +130,7 @@ public class GameViewController extends FXMLViewController{
         });
     }
 
-    private void listenToGameBoardView(Pane boardView, GameBoard board, ObjectProperty<CellClickEvent> cellClickProperty){
+    private void alertControllerOnBoardViewInteraction(Pane boardView, GameBoard board, ObjectProperty<CellClickEvent> cellClickProperty){
         ObservableList<Node> viewCells = boardView.getChildren();
 
         Dimension boundaries = board.getBoundaries();
@@ -150,7 +155,7 @@ public class GameViewController extends FXMLViewController{
 
     }
 
-    private void bindDisplayAvailableMoves(Pane boardView, ObjectProperty<ArrayList<CalculatedMove>> availableMoves, Dimension boardBoundaries){
+    private void alwaysDisplayAvailableMoves(Pane boardView, ObjectProperty<ArrayList<CalculatedMove>> availableMoves, Dimension boardBoundaries){
         availableMoves.addListener(e -> {
 
             boardView.getChildren().stream().filter(node -> node instanceof Cell).forEach(node -> {

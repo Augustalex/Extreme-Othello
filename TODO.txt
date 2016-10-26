@@ -24,11 +24,12 @@
 	#Koppla upp mot databasserver från inuti Java $
 		# initisering av databas tabel $
 		# Metadata check om tabel finns $
-	#Ladda upp användare mot databas 
+		# Abstraherat ut den till en egen metod $
+	#Ladda upp användare mot databas $
 		#Insert för att lägga in användare i db $
-	#Ladda ner lista av användare från databas
+		#Finns som metod $
+	#Ladda ner lista av användare från databas $
 		#Select sats för att hämta användare $
-	
 	
 #New Game Menu
 	#Access database
