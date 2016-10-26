@@ -24,10 +24,8 @@
 	#Koppla upp mot databasserver från inuti Java $
 		# initisering av databas tabel $
 		# Metadata check om tabel finns $
-		
 	#Ladda upp användare mot databas 
 		#Insert för att lägga in användare i db $
-	
 	#Ladda ner lista av användare från databas
 		#Select sats för att hämta användare $
 	
@@ -43,11 +41,17 @@
 		#Start remote/local game with AI $
 	#Confirm player selection to start game $
 		#Check if legal choices (in comboboxes)
+			#Wait for remote player accept
+				#Be able to cancel request
+				#Be able to kick player
+				#Be able for remote player to leave by checking out button
+			#Check for duplicate selection $
 
 #Main Menu
-	#Settings menu
-		#Create profile (local player)
-			#Local player shows up in NewGame
+	#Settings menu $
+		#Create profile (local player) $
+			#Local player shows up in NewGame $
+		#Make settings menu pretty
 	#Ev. Replays
 	
 #Settings Menu
@@ -59,11 +63,14 @@
 #Profile Settings Menu
 	#Set name $
 	#Pick color $
-	#Create new player from choices
+	#Create new player from choices $
 		#Store player in local data store $
 		
 #Local data store (Global storage) $
 	#Store player profiles $
+	
+#State
+	#Store game state in every view $
 	
 CODE STRUCTURE
 #JavaFX kopplat till modellen
@@ -97,6 +104,9 @@ does not scale down and stay big.
 When the player is already selected the confirmation check is removed. But checking the box again
 will not trigger another alert and corrupts the list of selected players. After that, the game cannot
 start without resetting the page (i.e. by selecting a new amount of players).
+
+	Restored state in GameView only works once
+Second time a state is restored into GameView som information of boardstate is either overwritten or lost.
 -----------------------------------------
 FRÅGA PÅ HANDLEDNING
 
