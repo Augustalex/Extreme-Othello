@@ -21,9 +21,14 @@
 				#Ev. Skicka om någon har vunnit	
 
 #Databas
-	#Koppla upp mot server från inuti Java
-	#Ladda upp användare mot databas
+	#Koppla upp mot databasserver från inuti Java $
+		# initisering av databas tabel $
+		
+	#Ladda upp användare mot databas 
+		#Insert för att lägga in användare i db $
+	
 	#Ladda ner lista av användare från databas
+		#Select sats för att hämta användare $
 	
 	
 #New Game Menu
