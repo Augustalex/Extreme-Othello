@@ -44,8 +44,8 @@
 		#Check if legal choices (in comboboxes)
 
 #Main Menu
-	#Settings menu
-		#Create profile (local player)
+	#Settings menu $
+		#Create profile (local player) $
 			#Local player shows up in NewGame
 	#Ev. Replays
 	
