@@ -45,19 +45,19 @@
 	#Ev. Replays
 	
 #Settings Menu
-	#List of profiles
-		#Add profile
-		#Remove profile
-		#Edit profile
+	#List of profiles $
+		#Add profile $
+		#Remove profile $
+		#Edit profile $
 
 #Profile Settings Menu
-	#Set name
-	#Pick color
+	#Set name $
+	#Pick color $
 	#Create new player from choices
-		#Store player in local data store
+		#Store player in local data store $
 		
-#Local data store (Global storage)
-	#Store player profiles
+#Local data store (Global storage) $
+	#Store player profiles $
 	
 CODE STRUCTURE
 #JavaFX kopplat till modellen
@@ -87,7 +87,7 @@ that the listSize it uses to calculate the bound, is above zero.
 When scaling up the CellMarkers looks fine. But when scaling down the window, the CellMarkers
 does not scale down and stay big.
 
-	Player Already Selected
+	Player Already Selected - SOLVED $$$ -
 When the player is already selected the confirmation check is removed. But checking the box again
 will not trigger another alert and corrupts the list of selected players. After that, the game cannot
 start without resetting the page (i.e. by selecting a new amount of players).
