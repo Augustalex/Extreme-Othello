@@ -29,13 +29,13 @@ public class LocalGameMatch implements GameMatch{
     public void run() {
         turn(this.currentPlayer());
 
-        this.board.getBoardMoveEventObjectProperty().addListener(e -> {
-            System.out.println("Current player: " + this.currentPlayer().getName() + ", legal move? " + this.board.getBoardMoveEventObjectProperty().get().getMadeLegalMove());
-            if(this.board.getBoardMoveEventObjectProperty().get().getNoMoreMoves()) {
+        this.board.BoardMoveEventProperty().addListener(e -> {
+            System.out.println("Current player: " + this.currentPlayer().getName() + ", legal move? " + this.board.BoardMoveEventProperty().get().getMadeLegalMove());
+            if(this.board.BoardMoveEventProperty().get().getNoMoreMoves()) {
                 this.players.remove(this.currentPlayerIndex--);
                 turn(this.nextPlayer());
             }
-            else if(!this.board.getBoardMoveEventObjectProperty().get().getMadeLegalMove())
+            else if(!this.board.BoardMoveEventProperty().get().getMadeLegalMove())
                 turn(this.currentPlayer());
             else
                 turn(this.nextPlayer());

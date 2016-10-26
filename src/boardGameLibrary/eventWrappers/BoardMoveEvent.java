@@ -8,9 +8,21 @@ public class BoardMoveEvent {
     private boolean madeLegalMove;
     private boolean noMoreMoves;
 
-    public BoardMoveEvent(boolean madeLegalMove, boolean noMoreMoves){
+    private BoardMoveEvent(boolean madeLegalMove, boolean noMoreMoves){
         this.madeLegalMove = madeLegalMove;
         this.noMoreMoves = noMoreMoves;
+    }
+
+    public static BoardMoveEvent illegalMove(){
+        return new BoardMoveEvent(false, false);
+    }
+
+    public static BoardMoveEvent legalMove(){
+        return new BoardMoveEvent(true, false);
+    }
+
+    public static BoardMoveEvent noMoreMoves(){
+        return new BoardMoveEvent(false, true);
     }
 
     public boolean getMadeLegalMove(){
@@ -20,4 +32,5 @@ public class BoardMoveEvent {
     public boolean getNoMoreMoves(){
         return this.noMoreMoves;
     }
+
 }

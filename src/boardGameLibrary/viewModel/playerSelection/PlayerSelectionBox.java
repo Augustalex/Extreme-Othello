@@ -7,7 +7,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.paint.Color;
 
 /**
- * Created by August on 2016-10-23.
+ * Decorator class of SelectionBox. Instantiates a SelectionBox of type
+ * {@link Player} with a pre-configured Cell Factory. This factory displays
+ * all options in the SelectionBox as the names of respective player.
  */
 public class PlayerSelectionBox extends ComboBox<Player> {
 

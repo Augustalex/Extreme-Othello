@@ -1,7 +1,9 @@
 package boardGameLibrary.views.javaFxViews.gameView;
 
 import boardGameLibrary.boardGame.board.GameBoard;
+import boardGameLibrary.boardGame.match.BoardSnapshot;
 import boardGameLibrary.boardGame.match.GameMatch;
+import boardGameLibrary.boardGame.match.MatchSetup;
 import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.pawn.PawnDisplayModel;
@@ -44,15 +46,21 @@ public class GameViewController extends FXMLViewController{
 
     private GameMatch match;
 
+    private MatchSetup setup;
+
     @FXML
     private HBox gameBoardContainer;
 
     @FXML
     private Label playerNameHolder;
     
-    public GameViewController(Pane container, GameMatch match){
+    public GameViewController(Pane container, MatchSetup setup){
         super(container, GameViewController.fxmlFileName);
-        this.match = match;
+
+        this.setup = setup;
+        this.match = GameMatch.setupNewMatch(setup);
+
+        setup.setBoardSnapshot(new BoardSnapshot(this.match.getBoardMoveMaker().getGameBoard().getBoundaries()));
     }
 
     @Override
@@ -94,13 +102,13 @@ public class GameViewController extends FXMLViewController{
         Dimension boundaries = board.getBoundaries();
         ObservableList<Node> viewCells = boardView.getChildren();
 
-        board.getCellChangeObserver().addListener((ListChangeListener.Change<? extends CellChangeEvent> c) -> {
+        board.getCellChangeObserver().addListener((ListChangeListener<CellChangeEvent>) c -> {
 
             for(CellChangeEvent cellChange : c.getList()){
 
                 Point position = cellChange.getPosition();
 
-                System.out.println("FLIPPED PAWN AT " + position);
+                //System.out.println("FLIPPED PAWN AT " + position);
 
                 Pawn pawn = board.getPawn(position);
                 Cell cell = (Cell) viewCells.get((position.y * boundaries.width) + position.x);
@@ -109,6 +117,8 @@ public class GameViewController extends FXMLViewController{
                 shape.setFill(pawn.getDisplayModel().getPaint());
 
                 cell.markCell(CellMarker.create(shape));
+
+                this.setup.getSnapshot().setOwnerAt(pawn.getOwner(), position);
 
             }
 

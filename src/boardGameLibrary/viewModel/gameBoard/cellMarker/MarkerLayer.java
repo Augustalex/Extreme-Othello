@@ -2,6 +2,7 @@ package boardGameLibrary.viewModel.gameBoard.cellMarker;
 
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +21,15 @@ public class MarkerLayer extends StackPane {
                 .collect(Collectors
                         .toList());
 
-        this.getChildren().addAll(this.markers.stream()
+        System.out.println(markers.toString());
+
+        Node[] nodes = this.markers.stream()
                 .map(CellMarker::getShape)
-                .toArray(Node[]::new));
+                .toArray(Node[]::new);
+
+        System.out.println(nodes.toString());
+
+        this.getChildren().addAll(nodes);
     }
 
     public void setSingleMarker(CellMarker marker){

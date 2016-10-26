@@ -8,7 +8,6 @@
 		#Visa totalt antal nuvarande poäng (antal ägda brickor)
 			#Visa denna information om alla spelare
 	
-
 #Server
 	#Koppla upp mot databas
 		#Lägga till HOST som aktiv spelare i databasen
@@ -29,9 +28,9 @@
 	
 #New Game Menu
 	#Access database
-		#Pick remote players	
+		#Pick remote players
 			#Start remote game
-	#Pick variable number of players for a game
+	#Pick variable number of players for a game $
 	#Pick local players $
 		#Start local game $
 	#Pick AI Players $
@@ -45,15 +44,25 @@
 			#Local player shows up in NewGame
 	#Ev. Replays
 	
+#Settings Menu
+	#List of profiles
+		#Add profile
+		#Remove profile
+		#Edit profile
+
+#Profile Settings Menu
+	#Set name
+	#Pick color
+	#Create new player from choices
+		#Store player in local data store
+		
+#Local data store (Global storage)
+	#Store player profiles
+	
 CODE STRUCTURE
 #JavaFX kopplat till modellen
 	#Mer interfaces för view models
-	
-#För många argument till metoder!!
-	#Wrappers?
-	
-#Flaggor för metoder...
-	#Få bort dem!!!
+	#Separera views från controllers
 
 	
 # BUGS BUGS BUGS #
@@ -73,9 +82,18 @@ in a move. But that is less likely than the first alternative.
 Random AI crashes when trying to generate random int. Cannot use bound below zero
 (that is the max bound on the nextInt() method). This is after a check has been made to ensure
 that the listSize it uses to calculate the bound, is above zero.
+
+	CellMarkers does not scale down
+When scaling up the CellMarkers looks fine. But when scaling down the window, the CellMarkers
+does not scale down and stay big.
+
+	Player Already Selected
+When the player is already selected the confirmation check is removed. But checking the box again
+will not trigger another alert and corrupts the list of selected players. After that, the game cannot
+start without resetting the page (i.e. by selecting a new amount of players).
 -----------------------------------------
 FRÅGA PÅ HANDLEDNING
 
-- MoveProperties
+- MoveProperties (Wrapper-klasser)
 - Abstraktion från JavaFX, mer interfaces?
 - FXML och klasser för JavaFX komponenter

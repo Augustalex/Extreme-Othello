@@ -7,10 +7,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.io.Serializable;
+
 /**
  * Created by August on 2016-10-15.
  */
-public class PawnDisplayModel {
+public class PawnDisplayModel implements Serializable{
 
     private Shape shape = new Rectangle();
     private Paint paint;

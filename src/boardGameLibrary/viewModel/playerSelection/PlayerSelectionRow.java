@@ -1,5 +1,6 @@
 package boardGameLibrary.viewModel.playerSelection;
 
+import boardGameLibrary.viewModel.playerSelection.selectionConfirmation.SelectionConfirmationButton;
 import javafx.scene.layout.HBox;
 
 /**

@@ -1,5 +1,6 @@
 package boardGameLibrary.views.javaFxViews.mainMenu;
 
+import boardGameLibrary.playerProfileStore.PlayerProfileStore;
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import utilities.router.Router;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -20,6 +22,8 @@ import java.util.ResourceBundle;
 public class MainViewController extends FXMLViewController{
 
     private static final String fxmlFileName = "MainView.fxml";
+
+    private PlayerProfileStore store;
 
     @FXML
     private Label mainTitle;
@@ -31,13 +35,23 @@ public class MainViewController extends FXMLViewController{
     private Button newGameButton;
 
     @FXML
+    private Button settingsButton;
+
+    @FXML
     private VBox buttonContainer;
 
 
     public MainViewController(Pane container){
         super(container, MainViewController.fxmlFileName);
+
+        this.store = new PlayerProfileStore();
     }
 
+    public MainViewController(Pane container, PlayerProfileStore store){
+        super(container, MainViewController.fxmlFileName);
+
+        this.store = store;
+    }
     /**
      * This function runs when the FXML and CSS is loaded, and only then.
      * @param location
@@ -61,14 +75,19 @@ public class MainViewController extends FXMLViewController{
     }
 
     private void setupButtonRouting(){
-        newGameButton.setOnAction((e)->{
-            try {
-                Router.getApplicationRouter().route("NewGameView", new HashMap());
-            }
-            catch(Exception ex){
-                ex.printStackTrace();
-            }
-        });
+        newGameButton.setOnAction((e)-> routeToNewGameView());
+        settingsButton.setOnAction(e -> routeToSettingsView());
+    }
+
+    private void routeToNewGameView(){
+        Router.getApplicationRouter().route("NewGameView", new HashMap());
+    }
+
+    private void routeToSettingsView(){
+        Map<String, Object> dependencies = new HashMap<>();
+        dependencies.put("PlayerProfileStore", this.store);
+        System.out.println(this.store.toString());
+        Router.getApplicationRouter().route("SettingsView", dependencies);
     }
 
     private void printSubTitleMessage(){

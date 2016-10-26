@@ -2,8 +2,10 @@ package boardGameLibrary.views.javaFxViews.newGame;
 
 import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.LocalGameMatch;
+import boardGameLibrary.boardGame.match.MatchSetup;
 import boardGameLibrary.players.LocalPlayer;
 import boardGameLibrary.players.Player;
+import boardGameLibrary.viewModel.playerSelection.NumberOfPlayersSelection;
 import boardGameLibrary.viewModel.playerSelection.PlayerSelectionPane;
 import boardGameLibrary.views.javaFxViews.FXMLViewController;
 import boardGamePlugins.othello.board.OthelloBoard;
@@ -15,6 +17,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -23,9 +26,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import utilities.router.Router;
 import boardGameLibrary.views.javaFxViews.FXMLPaneLoader;
 import utilities.router.paneRouter.PaneViewController;
@@ -63,25 +67,65 @@ public class NewGameViewController extends FXMLViewController{
 
         Player[] players = new Player[]{
             new LocalPlayer("August", Color.WHITE),
-            new RandomAI("Björn", Color.BLACK),
-            new RandomAI("Jacob", Color.RED),
-            new RandomAI("Nick", Color.YELLOW),
-            new RandomAI("Bosco", Color.ORANGE),
+            new LocalPlayer("Björn", Color.BLACK),
+            new NaturalAI("Jacob", Color.BURLYWOOD),
+            new NaturalAI("Nick", Color.YELLOW),
+            new NaturalAI("Bosco", Color.ORANGE),
             new GreedyAI("Elvir", Color.BLUE),
             new RandomAI("Mackan", Color.TURQUOISE),
+            new RandomAI("Carlos", Color.DARKCYAN),
+            new GreedyAI("Patrick", Color.RED),
+            new NaturalAI("Simon", Color.PURPLE),
+            new RandomAI("Viktor", Color.ANTIQUEWHITE),
+            new GreedyAI("Victor", Color.ALICEBLUE),
+            new NaturalAI("Robin", Color.AZURE),
+            new NaturalAI("Johan", Color.CADETBLUE),
+            new NaturalAI("Mössjohan", Color.DARKMAGENTA),
+            new NaturalAI("Okan", Color.PINK),
+            new NaturalAI("Alex", Color.DEEPPINK),
+            new NaturalAI("Sebastian", Color.YELLOWGREEN),
+            new NaturalAI("Andreas", Color.TOMATO),
+            new NaturalAI("Kristoffer", Color.THISTLE)
+
         };
 
-        PlayerSelectionPane playerSelectionPane = new PlayerSelectionPane(players, 5);
-        this.newGameContainer.getChildren().add(playerSelectionPane);
+        NumberOfPlayersSelection numberOfPlayersSelection = new NumberOfPlayersSelection(16);
+        this.newGameContainer.getChildren().add(numberOfPlayersSelection);
 
-        playerSelectionPane.allPlayersSetProperty().addListener(e -> {
+        final ChangeListener<Boolean> selectionPaneListener = (observable, oldValue, newValue) -> {
             //Create new match from selected players
-            GameMatch gameMatch = GameMatch.createGameMatch("Othello", playerSelectionPane.getSelectedPlayers(), false);
+            MatchSetup setup = new MatchSetup(
+                    "Othello",
+                    getSelectionPane().chosenPlayersProperty().removeAndReturnAllSelectedPlayers()
+            );
+
             Map<String, Object> map = new HashMap<>();
-            map.put("GameMatch", gameMatch);
+            map.put("MatchSetup", setup);
 
             //Route to GameView with the new GameMatch object.
             Router.getApplicationRouter().route("GameView", map);
+        };
+
+        numberOfPlayersSelection.selectedValue().addListener(e -> {
+            System.out.println("IT WORKED!");
+            this.newGameContainer.getChildren().remove(this.getSelectionPane());
+
+            PlayerSelectionPane selectionPane = new PlayerSelectionPane(players, numberOfPlayersSelection.selectedValue().get());
+            setSelectionPane(selectionPane);
+
+            selectionPane.chosenPlayersProperty().onAllPlayersSelected(selectionPaneListener);
+
+            this.newGameContainer.getChildren().add(selectionPane);
         });
+    }
+
+    private PlayerSelectionPane selectionPane = null;
+
+    public void setSelectionPane(PlayerSelectionPane pane){
+        this.selectionPane = pane;
+    }
+
+    public PlayerSelectionPane getSelectionPane(){
+        return this.selectionPane;
     }
 }

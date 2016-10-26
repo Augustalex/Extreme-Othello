@@ -20,7 +20,7 @@
     <center>
             <VBox id="mainMenuButtonContainer" fx:id="buttonContainer">
                 <Button text="NEW GAME" fx:id="newGameButton"/>
-                <Button text="SETTINGS" />
+                <Button text="SETTINGS" fx:id="settingsButton" />
             </VBox>
     </center>
     <bottom>

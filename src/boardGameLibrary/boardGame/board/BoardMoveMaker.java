@@ -8,6 +8,7 @@ import boardGameLibrary.players.Player;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * BoardMoveMaker is instantiated with a reference to a GameBoard which contains all {@link boardGameLibrary.boardGame.pawn.Pawn}
  * relevant to the game.
  */
-public abstract class BoardMoveMaker implements MoveScore{
+public abstract class BoardMoveMaker implements MoveScore, Serializable{
 
     protected GameBoard board;
 
@@ -67,19 +68,8 @@ public abstract class BoardMoveMaker implements MoveScore{
      */
     public abstract void setStartPawns(Player[] players);
 
-    public ObjectProperty<BoardMoveEvent> getBoardMoveEventObjectProperty(){
+    public ObjectProperty<BoardMoveEvent> BoardMoveEventProperty(){
         return this.boardMoveEventObjectProperty;
-    }
-
-    /**
-     * This method is called when a move has been made and all calculations are finished regarding
-     * it. This method is called no matter if a move is legal or not. The issue whether the move was
-     * legal or not is obtain from within the Property.
-     * @param wasLegalMove
-     */
-    protected void setMadeMove(boolean wasLegalMove, boolean noMoreMoves){
-        System.out.println("Move Made! Move was " + (wasLegalMove ? "legal" : "not legal"));
-        this.getBoardMoveEventObjectProperty().set(new BoardMoveEvent(wasLegalMove, noMoreMoves));
     }
 
     /**

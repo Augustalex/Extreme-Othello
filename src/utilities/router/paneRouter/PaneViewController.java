@@ -1,9 +1,15 @@
 package utilities.router.paneRouter;
 
 import boardGameLibrary.boardGame.match.GameMatch;
+import boardGameLibrary.boardGame.match.MatchSetup;
+import boardGameLibrary.playerProfileStore.PlayerProfile;
+import boardGameLibrary.playerProfileStore.PlayerProfileStore;
 import boardGameLibrary.views.javaFxViews.gameView.GameViewController;
 import boardGameLibrary.views.javaFxViews.mainMenu.MainViewController;
 import boardGameLibrary.views.javaFxViews.newGame.NewGameViewController;
+import boardGameLibrary.views.javaFxViews.settingsView.SettingsViewController;
+import boardGameLibrary.views.javaFxViews.settingsView.profileSettings.AddProfileViewController;
+import boardGameLibrary.views.javaFxViews.settingsView.profileSettings.EditPlayerViewController;
 import javafx.scene.layout.Pane;
 import utilities.router.ViewController;
 
@@ -20,9 +26,21 @@ public abstract class PaneViewController implements ViewController {
         if(dependencies == null)
             throw new IllegalArgumentException();
 
-        if(dependencies.containsKey("GameMatch")) {
+        if(dependencies.containsKey("MatchSetup")) {
             if (viewId.equals("GameView"))
-                return new GameViewController(container, (GameMatch) dependencies.get("GameMatch"));
+                return new GameViewController(container, (MatchSetup) dependencies.get("MatchSetup"));
+        }
+        else if(dependencies.containsKey("PlayerProfileStore")){
+            if(viewId.equals("MainView"))
+                return new MainViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
+            else if(viewId.equals("SettingsView"))
+                return new SettingsViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
+            else if(viewId.equals("ProfileSettingsView"))
+                return new AddProfileViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
+        }
+        else if(dependencies.containsKey("PlayerProfile")){
+            if(viewId.equals("ProfileSettingsView"))
+                return new EditPlayerViewController(container, (PlayerProfile) dependencies.get("PlayerProfile"));
         }
 
         if(viewId.equals("NewGameView"))

@@ -3,10 +3,12 @@ package utilities.HistoryTracker;
 import utilities.HistoryTracker.exceptions.NoHistoryException;
 import utilities.callbackLibrary.Callback;
 
+import java.io.Serializable;
+
 /**
  * Created by August on 2016-10-10.
  */
-public class History{
+public class History implements Serializable{
 
     private static final int maxHistorySize = 1000;
 

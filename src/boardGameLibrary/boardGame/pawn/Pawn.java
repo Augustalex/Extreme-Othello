@@ -2,10 +2,12 @@ package boardGameLibrary.boardGame.pawn;
 
 import boardGameLibrary.players.Player;
 
+import java.io.Serializable;
+
 /**
  * Created by August on 2016-09-30.
  */
-public abstract class Pawn {
+public abstract class Pawn implements Serializable {
     protected Player owner;
     protected PawnDisplayModel displayModel;
 

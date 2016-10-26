@@ -34,7 +34,7 @@ public class GameConsoleController extends GameConsoleViewController {
     }
 
     private void coupleBoards(GameBoard board, ConsoleViewBoard viewBoard){
-        board.getCellChangeObserver().addListener((ListChangeListener.Change<? extends CellChangeEvent> c) -> {
+        board.getCellChangeObserver().addListener((ListChangeListener<CellChangeEvent>) c -> {
 
             for(CellChangeEvent cellChange : c.getList()){
                 Point position = cellChange.getPosition();

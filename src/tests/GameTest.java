@@ -29,30 +29,18 @@ public class GameTest extends Application {
         content.maxWidthProperty().bind(primaryStage.widthProperty());
         primaryStage.setScene(new Scene(content, 600, 600));
 
-        Router router = new PaneRouter(content);
+        PaneRouter router = new PaneRouter(content);
+        router.setupSaveOnClose(primaryStage);
         //Router router = new ConsoleRouter();
         Router.setApplicationRouter(router);
 
-        Map map = new HashMap();
+        try{
+            router.load();
+        }
+        catch(Exception e){
+            router.route("MainView", new HashMap());
+        }
 
-        ArrayList<Player> players = new ArrayList<>();
-
-        //Creating test players
-        players.add(new LocalPlayer("August", Color.WHITE));
-        players.add(new NaturalAI("Björn", Color.BLACK));
-        players.add(new NaturalAI("Dipshit", Color.RED));
-        players.add(new NaturalAI("Nick", Color.PURPLE));
-        players.add(new NaturalAI("Superman", Color.BLUE));
-        players.add(new NaturalAI("Aqua Dude", Color.BROWN));
-
-        //Converting to regular array.
-        Player[] actingPlayers = new Player[players.size()];
-        actingPlayers = players.toArray(actingPlayers);
-
-        //Creating Match object and initiating view through a Router.
-        GameMatch match = GameMatch.createGameMatch("Othello", actingPlayers, false);
-        map.put("GameMatch", match);
-        router.route("MainView", map);
 
         primaryStage.show();
     }

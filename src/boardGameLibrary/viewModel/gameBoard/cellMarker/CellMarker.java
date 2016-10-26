@@ -41,28 +41,16 @@ public interface CellMarker{
      * @return a new CellMarker.
      */
     static CellMarker create(PawnDisplayModel displayModel){
-        Shape shape = displayModel.getShape();
-        shape.setFill(displayModel.getPaint());
-
-        return CellMarker.create(shape);
+        return new PawnDisplayMarker(displayModel);
     }
 
     /**
-     * Creates a new special pre-decorated Highlight marker.
+     * Creates a new special decorated Highlight marker.
      * @param opacity can be an illustration of the importance of the new highlight.
      * @return a new CellMarker (which is distinct from other CellMarkers).
      */
     static CellMarker newHighlightMarker(double opacity){
-        Circle highlight = new Circle();
-
-        highlight.setFill(Color.TRANSPARENT);
-        highlight.setStroke(Color.YELLOWGREEN);
-
-        highlight.setOpacity(opacity);
-
-        highlight.setStrokeWidth(3);
-
-        return CellMarker.create(highlight);
+        return new HighlightMarker(opacity);
     }
 
     /**

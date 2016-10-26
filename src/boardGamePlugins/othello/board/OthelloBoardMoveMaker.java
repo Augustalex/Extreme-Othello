@@ -5,6 +5,7 @@ import boardGameLibrary.boardGame.board.Direction;
 import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.move.PlayerAction;
+import boardGameLibrary.eventWrappers.BoardMoveEvent;
 import boardGameLibrary.players.Player;
 import boardGamePlugins.othello.pawn.OthelloPawn;
 import boardGamePlugins.othello.board.exceptions.IllegalMoveException;
@@ -140,9 +141,9 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
     public void makeMove(Player player, Move move) {
         synchronized (this.key) {
             if(this.getAvailableMoves(player).size() == 0)
-                this.setMadeMove(false, true);
+                this.BoardMoveEventProperty().set(BoardMoveEvent.noMoreMoves());
             else if (!isLegalMove(player, move))
-                this.setMadeMove(false, false);
+                this.BoardMoveEventProperty().set(BoardMoveEvent.illegalMove());
             else {
 
                 PlayerAction action = move.getActions()[0];
@@ -154,7 +155,7 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
                     findMove(player, movePoint(direction, startPosition), direction);
                 }
 
-                this.setMadeMove(true, false);
+                this.BoardMoveEventProperty().set(BoardMoveEvent.legalMove());
             }
         }
     }
