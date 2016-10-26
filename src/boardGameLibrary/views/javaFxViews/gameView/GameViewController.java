@@ -81,6 +81,8 @@ public class GameViewController extends FXMLViewController{
 
 
         match.run();
+
+
     }
 
     private void displayPlayerNames(Player[] players, Label nameHolder){
