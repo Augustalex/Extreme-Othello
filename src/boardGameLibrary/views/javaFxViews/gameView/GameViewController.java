@@ -1,5 +1,6 @@
 package boardGameLibrary.views.javaFxViews.gameView;
 
+import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.boardGame.board.GameBoard;
 import boardGameLibrary.boardGame.match.BoardSnapshot;
 import boardGameLibrary.boardGame.match.GameMatch;
@@ -20,6 +21,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
 
 import java.awt.Dimension;
@@ -48,6 +50,9 @@ public class GameViewController extends FXMLViewController{
 
     @FXML
     private Label playerNameHolder;
+
+    @FXML
+    private HBox statsContainer;
     
     public GameViewController(Pane container, MatchSetup setup){
         super(container, GameViewController.fxmlFileName);
@@ -78,11 +83,9 @@ public class GameViewController extends FXMLViewController{
 
         //Display game statistics and information
         displayPlayerNames(this.match.getPlayers(), playerNameHolder);
-
+        displayStats(this.match);
 
         match.run();
-
-
     }
 
     private void displayPlayerNames(Player[] players, Label nameHolder){
@@ -180,6 +183,28 @@ public class GameViewController extends FXMLViewController{
                 ((Cell)node).highlightCell(CellMarker.newHighlightMarker(highlightOpacity));
             }
         });
+    }
+
+    public void displayStats(GameMatch match){
+        ScoreStatsController scoreStatsController = new ScoreStatsController();
+        statsContainer.getChildren().add(scoreStatsController.getPane());
+
+        ViewDimensionBinder.bindOneToOneDimension(
+                scoreStatsController.getPane().minWidthProperty(),
+                scoreStatsController.getPane().maxWidthProperty(),
+                statsContainer.widthProperty()
+        );
+
+        ViewDimensionBinder.bindOneToOneDimension(
+                statsContainer.minWidthProperty(),
+                statsContainer.maxWidthProperty(),
+                this.getContainer().widthProperty()
+        );
+
+        for(Player player : match.getPlayers()){
+            scoreStatsController.addPlayerScoreRow(player);
+            scoreStatsController.updateRowsOnMove(match.getBoardMoveMaker());
+        }
     }
 
 }

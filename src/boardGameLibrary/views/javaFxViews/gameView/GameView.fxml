@@ -21,7 +21,9 @@
     <bottom>
         <BorderPane id="gameViewStatusBar">
             <left>
-                <Label text="Available move" />
+                <HBox fx:id="statsContainer" id="statsContainer">
+
+                </HBox>
             </left>
             <right>
                 <Label text="Stats here" />

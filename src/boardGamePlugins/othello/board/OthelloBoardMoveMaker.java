@@ -10,7 +10,7 @@ import boardGameLibrary.players.Player;
 import boardGamePlugins.othello.pawn.OthelloPawn;
 import boardGamePlugins.othello.board.exceptions.IllegalMoveException;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -263,5 +263,18 @@ public class OthelloBoardMoveMaker extends BoardMoveMaker {
         }
 
         throw new IndexOutOfBoundsException("Cannot get Move Score from incorrect move. Recursion reached end of board.");
+    }
+
+    @Override
+    public int numberOfPawnsOwned(Player player){
+        Dimension boundaries = this.getGameBoard().getBoundaries();
+
+        int numberOfPawns = 0;
+        for(int y = 0; y < boundaries.height; y++)
+            for(int x = 0; x < boundaries.width; x++)
+                if(this.board.getPawn(new Point(x, y)).getOwner().equals(player))
+                    numberOfPawns++;
+
+        return numberOfPawns;
     }
 }

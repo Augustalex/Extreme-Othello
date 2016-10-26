@@ -2,12 +2,24 @@ package boardGameLibrary.viewModel;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.scene.Node;
 import javafx.scene.layout.Region;
 
 /**
  * Created by August on 2016-10-21.
  */
 public class ViewDimensionBinder {
+
+    public static void adaptWidthTo(Node binder, ReadOnlyDoubleProperty changingProperty){
+        changingProperty.addListener(e -> {
+            binder.maxWidth(changingProperty.get());
+            binder.minWidth(changingProperty.get());
+        });
+    }
+
+    public static void adaptHeightTo(Node binder, ReadOnlyDoubleProperty changingProperty){
+        changingProperty.addListener(e -> binder.maxHeight(changingProperty.get()));
+    }
 
     public static void fixedBindTo(Region binder, Region container){
         binder.minWidthProperty().bind(container.widthProperty());

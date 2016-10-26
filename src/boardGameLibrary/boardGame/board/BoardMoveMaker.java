@@ -81,4 +81,6 @@ public abstract class BoardMoveMaker implements MoveScore, Serializable{
         return this.board;
     }
 
+    public abstract int numberOfPawnsOwned(Player player);
+
 }

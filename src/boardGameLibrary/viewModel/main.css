@@ -91,9 +91,28 @@ BorderPane#gameTitle{
 }
 
 BorderPane#gameViewStatusBar{
-    -fx-pref-height: 20;
+    -fx-pref-height: 150;
 
 }
+
+#statsContainer{
+    -fx-background-color: red;
+
+}
+
+#scoreStatsPane{
+    -fx-alignment: center;
+}
+
+.playerStatsLabel{
+    -fx-font-size: 2em;
+    -fx-text-fill: blue;
+    -fx-text-alignment: center;
+    -fx-background-color: #42191b;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+}
+
 
 /*          NEW GAME VIEW       */
 
