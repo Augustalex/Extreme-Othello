@@ -37,15 +37,15 @@ public abstract class PaneViewController implements ViewController {
                 return new SettingsViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
             else if(viewId.equals("ProfileSettingsView"))
                 return new AddProfileViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
+            else if(viewId.equals("NewGameView"))
+                return new NewGameViewController(container, (PlayerProfileStore) dependencies.get("PlayerProfileStore"));
         }
         else if(dependencies.containsKey("PlayerProfile")){
             if(viewId.equals("ProfileSettingsView"))
                 return new EditPlayerViewController(container, (PlayerProfile) dependencies.get("PlayerProfile"));
         }
 
-        if(viewId.equals("NewGameView"))
-            return new NewGameViewController(container);
-        else if(viewId.equals("MainView"))
+        if(viewId.equals("MainView"))
             return new MainViewController(container);
 
         throw new IllegalArgumentException("Cannot create a view from incorrect view id and dependencies.");

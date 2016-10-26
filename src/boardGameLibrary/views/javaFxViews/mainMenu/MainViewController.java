@@ -80,7 +80,9 @@ public class MainViewController extends FXMLViewController{
     }
 
     private void routeToNewGameView(){
-        Router.getApplicationRouter().route("NewGameView", new HashMap());
+        Map<String, Object> dependencies = new HashMap<>();
+        dependencies.put("PlayerProfileStore", this.store);
+        Router.getApplicationRouter().route("NewGameView", dependencies);
     }
 
     private void routeToSettingsView(){

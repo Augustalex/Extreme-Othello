@@ -25,7 +25,6 @@
 	#Ladda upp användare mot databas
 	#Ladda ner lista av användare från databas
 	
-	
 #New Game Menu
 	#Access database
 		#Pick remote players
