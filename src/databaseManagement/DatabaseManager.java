@@ -59,22 +59,22 @@ public class DatabaseManager  {
     
     public void insertPlayer(String playerName, String ipv4, String color) throws SQLException{
         //Den raden under här hade i strängen sånna enkel quotes -> '  i början och slutet.. Tog bort dem!
-        String values = "values(" +playerName + "','"+ ipv4 +"','"+ color +")";
+        String values = "values(" + "\'"+ playerName + "','"+ ipv4 +"','"+ color + "\')";
 
         Statement statement = this.sqlConnection.getStatement();
-        statement.addBatch("insert into ActivePlayers(playerID,playerName, ipv4, color)\n" + values);
+        statement.addBatch("insert into ActivePlayers(playerName, ipv4, color)\n" + values);
         statement.executeBatch();
 
         System.out.println("Player Added to the DB..");
     }
     
     private void createTables() throws SQLException{
-        this.tableManager.createTable("ActivePlayers");
+        this.tableManager.createActivePlayersTables();
     }
 
     public void printResultset(ResultSet resultSet) throws SQLException{
         while (resultSet.next()) {
-            System.out.println("Player ID: " + resultSet.getString(1) + " PlayerName: " + resultSet.getString(2)+ " IPV4: "+resultSet.getString(3)+ " Color: " + resultSet.getString(4));
+            System.out.println(" PlayerName: " + resultSet.getString(1)+ " IPV4: "+resultSet.getString(2)+ " Color: " + resultSet.getString(3));
         }
     }
 }

@@ -27,17 +27,17 @@ public class TableManager {
         return this.resultSet.next();
     }
 
-    public void createTable(String tableName) throws SQLException {
+    public void createActivePlayersTables() throws SQLException {
 
         Statement statement = this.sql.getStatement();
 
-        statement.addBatch("create table " + tableName + "(\n"+
-                "playerID int Primary key,\n"+
-                "playerName varchar(40) not null unique,\n"+
-                "ipv4 varchar(30) NOT NULL,\n"+
-                "color varchar(30) NOT NULL, \n"+
+        statement.addBatch(
+                "create table ActivePlayers( \n" +
+                "playerName varchar(40) not null Primary key,\n" +
+                "ipv4 varchar(30) NOT NULL,\n" +
+                "color varchar(30) NOT NULL,\n" +
                 ")"
-                );
+        );
 
         statement.executeBatch();
 
