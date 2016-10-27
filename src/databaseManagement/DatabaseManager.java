@@ -23,58 +23,68 @@ import java.util.logging.Logger;
  * @author S132063
  */
 public class DatabaseManager  {
-    
-    public final static String connectionUrl = "jdbc:sqlserver://hitsql-db.hb.se:56077;" +
-			"databaseName=oomuht1603;user=oomuht1603; password=bagg66";
 
     private TableManager tableManager;
     private SQLConnection sqlConnection;
 
     // Declare the JDBC objects.
     //DatabaseMetaData dbMetaData = null;
-    public DatabaseManager(){
+
+    public DatabaseManager(String connectionUrl){
         try {
-            this.sqlConnection = new SQLConnection(DatabaseManager.connectionUrl);
+            this.sqlConnection = new SQLConnection(connectionUrl);
             this.tableManager = new TableManager(this.sqlConnection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void initateDatabas() throws SQLException {
-        // Establish the connection.
-        if(!this.tableManager.doesTableExist("ActivePlayers"))
-            createTables();
 
+    public SQLConnection getSqlConnection(){
+        return this.sqlConnection;
     }
     
-    public ResultSet getPlayerData() throws SQLException, NotConnectedException {
+    public ResultSet getTableData(String tableName) throws SQLException, NotConnectedException {
         return this.sqlConnection
                 .connect()
                 .ifConnected()
                 .getStatement()
-                .executeQuery("select * from ActivePlayers");
+                .executeQuery("select * from " + tableName);
     }
 
-    
-    public void insertPlayer(String playerName, String ipv4, String color) throws SQLException{
-        //Den raden under här hade i strängen sånna enkel quotes -> '  i början och slutet.. Tog bort dem!
-        String values = "values(" + "\'"+ playerName + "','"+ ipv4 +"','"+ color + "\')";
-
+    public void runStatement(String sqlStatement) throws SQLException {
         Statement statement = this.sqlConnection.getStatement();
-        statement.addBatch("insert into ActivePlayers(playerName, ipv4, color)\n" + values);
-        statement.executeBatch();
 
-        System.out.println("Player Added to the DB..");
+        statement.addBatch(sqlStatement);
+        statement.executeBatch();
     }
-    
-    private void createTables() throws SQLException{
-        this.tableManager.createActivePlayersTables();
+
+    public void createTable(String tableName, String columns) throws SQLException {
+        this.tableManager.createTable(tableName, columns);
+    }
+
+    public void insertInto(String sqlTableIdentifier, String[] values) throws SQLException {
+        Statement statement = this.sqlConnection.getStatement();
+
+        statement.addBatch(
+                "insert into " + sqlTableIdentifier + "\n"
+                + this.createSQLValueStringFromArray(values)
+        );
+
+        statement.executeBatch();
     }
 
     public void printResultset(ResultSet resultSet) throws SQLException{
         while (resultSet.next()) {
             System.out.println(" PlayerName: " + resultSet.getString(1)+ " IPV4: "+resultSet.getString(2)+ " Color: " + resultSet.getString(3));
         }
+    }
+
+    private String createSQLValueStringFromArray(String[] values){
+        String valuesString = "values(\'";
+        for(String value : values)
+            valuesString += value + ", ";
+        valuesString += "\')";
+
+        return valuesString;
     }
 }

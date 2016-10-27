@@ -1,6 +1,5 @@
 package databaseManagement;
 
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,28 +19,20 @@ public class TableManager {
     public boolean doesTableExist(String tableName) throws SQLException {
         connectIfNotConnected();
 
-        this.resultSet = this.sql.getConnection()
-                .getMetaData()
-                .getTables("oomuht1603", "dbo", tableName, new String[]{"TABLE"});
+        this.resultSet =
+                this.sql
+                    .getConnection()
+                    .getMetaData()
+                    .getTables("oomuht1603", "dbo", tableName, new String[]{"TABLE"});
 
         return this.resultSet.next();
     }
 
-    public void createActivePlayersTables() throws SQLException {
-
+    public void createTable(String tableName, String columns) throws SQLException {
         Statement statement = this.sql.getStatement();
 
-        statement.addBatch(
-                "create table ActivePlayers( \n" +
-                "playerName varchar(40) not null Primary key,\n" +
-                "ipv4 varchar(30) NOT NULL,\n" +
-                "color varchar(30) NOT NULL,\n" +
-                ")"
-        );
-
+        statement.addBatch("create table " + tableName + "( \n" + columns);
         statement.executeBatch();
-
-        System.out.println("Database Tabels have been created");
     }
 
     public void close(){
