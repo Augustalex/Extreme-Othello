@@ -30,6 +30,8 @@
 		#Finns som metod $
 	#Ladda ner lista av användare från databas $
 		#Select sats för att hämta användare $
+	#Ta bort spelare ur databas
+		#Funktionalitet för det skapat $
 	
 #New Game Menu
 	#Access database
