@@ -7,16 +7,9 @@ package databaseManagement;
 
 import databaseManagement.exceptions.NotConnectedException;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Optional;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -67,7 +60,7 @@ public class DatabaseManager  {
 
         statement.addBatch(
                 "insert into " + sqlTableIdentifier + "\n"
-                + this.createSQLValueStringFromArray(values)
+                + this.createSQLStringValuesFromArray(values)
         );
 
         statement.executeBatch();
@@ -79,11 +72,13 @@ public class DatabaseManager  {
         }
     }
 
-    private String createSQLValueStringFromArray(String[] values){
+    private String createSQLStringValuesFromArray(String[] values){
         String valuesString = "values(\'";
-        for(String value : values)
-            valuesString += value + ", ";
-        valuesString += "\')";
+
+        for(int i = 0; i < values.length-1; i++)
+            valuesString += "\'" + values[i] + "\', ";
+
+        valuesString += values[values.length-1] + "\')";
 
         return valuesString;
     }
