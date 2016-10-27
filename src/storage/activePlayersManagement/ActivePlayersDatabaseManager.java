@@ -1,8 +1,8 @@
-package storageAndCommunication.activePlayersManagement;
+package storage.activePlayersManagement;
 
 import boardGameLibrary.players.Player;
-import storageAndCommunication.databaseManagement.DatabaseManager;
-import storageAndCommunication.exceptions.NotConnectedException;
+import storage.databaseManagement.DatabaseManager;
+import storage.exceptions.NotConnectedException;
 import javafx.scene.paint.Color;
 
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package storageAndCommunication.exceptions;
+package storage.exceptions;
 
 /**
  * Created by August on 2016-10-27.

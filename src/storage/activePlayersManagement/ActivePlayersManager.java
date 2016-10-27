@@ -1,4 +1,4 @@
-package storageAndCommunication.activePlayersManagement;
+package storage.activePlayersManagement;
 
 import boardGameLibrary.players.Player;
 import boardGameLibrary.players.RemotePlayer;

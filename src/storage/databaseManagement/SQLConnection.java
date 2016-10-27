@@ -1,6 +1,6 @@
-package storageAndCommunication.databaseManagement;
+package storage.databaseManagement;
 
-import storageAndCommunication.exceptions.NotConnectedException;
+import storage.exceptions.NotConnectedException;
 
 import java.sql.*;
 

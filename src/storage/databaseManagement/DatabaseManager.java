@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package storageAndCommunication.databaseManagement;
+package storage.databaseManagement;
 
-import storageAndCommunication.exceptions.NotConnectedException;
+import storage.exceptions.NotConnectedException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
