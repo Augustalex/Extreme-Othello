@@ -1,4 +1,4 @@
-package databaseManagement.exceptions;
+package storageAndCommunication.exceptions;
 
 /**
  * Created by August on 2016-10-27.

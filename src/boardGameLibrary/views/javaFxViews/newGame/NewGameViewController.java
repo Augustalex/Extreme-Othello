@@ -95,8 +95,15 @@ public class NewGameViewController extends FXMLViewController{
 
         };*/
 
-        Player[] players = this.store.toPlayers();
+        Player[] p = this.store.toPlayers();
+        List<Player> allPlayers = new ArrayList<>();
+        Collections.addAll(allPlayers, p);
+        allPlayers.add(new NaturalAI("Jacob", Color.BURLYWOOD));
+        allPlayers.add(new GreedyAI("Patrick", Color.RED));
+        allPlayers.add(new GreedyAI("Victor", Color.ALICEBLUE));
+        allPlayers.add(new NaturalAI("Mackan", Color.TURQUOISE));
 
+        Player[] players = allPlayers.stream().toArray(Player[]::new);
 
         NumberOfPlayersSelection numberOfPlayersSelection = new NumberOfPlayersSelection(16);
         this.newGameContainer.getChildren().add(numberOfPlayersSelection);

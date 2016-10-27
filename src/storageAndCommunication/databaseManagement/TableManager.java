@@ -1,4 +1,4 @@
-package databaseManagement;
+package storageAndCommunication.databaseManagement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
