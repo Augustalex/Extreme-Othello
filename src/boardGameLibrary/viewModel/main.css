@@ -96,7 +96,8 @@ BorderPane#gameViewStatusBar{
 }
 
 #statsContainer{
-    -fx-background-color: red;
+    -fx-alignment: center;
+    -fx-padding: 1em 0;
 
 }
 
@@ -108,9 +109,6 @@ BorderPane#gameViewStatusBar{
     -fx-font-size: 2em;
     -fx-text-fill: blue;
     -fx-text-alignment: center;
-    -fx-background-color: #42191b;
-    -fx-pref-width: 100px;
-    -fx-pref-height: 100px;
 }
 
 

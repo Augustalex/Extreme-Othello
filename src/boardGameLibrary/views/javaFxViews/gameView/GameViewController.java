@@ -1,6 +1,5 @@
 package boardGameLibrary.views.javaFxViews.gameView;
 
-import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.boardGame.board.GameBoard;
 import boardGameLibrary.boardGame.match.BoardSnapshot;
 import boardGameLibrary.boardGame.match.GameMatch;
@@ -21,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Shape;
 
 import java.awt.Dimension;
@@ -189,17 +187,18 @@ public class GameViewController extends FXMLViewController{
         ScoreStatsController scoreStatsController = new ScoreStatsController();
         statsContainer.getChildren().add(scoreStatsController.getPane());
 
-        ViewDimensionBinder.bindOneToOneDimension(
-                scoreStatsController.getPane().minWidthProperty(),
-                scoreStatsController.getPane().maxWidthProperty(),
-                statsContainer.widthProperty()
+        double margin = 0.05;
+        ViewDimensionBinder.bindWidthWithPadding(
+                scoreStatsController.getPane(),
+                statsContainer,
+                ViewDimensionBinder.margin(margin, margin)
         );
-
+/*
         ViewDimensionBinder.bindOneToOneDimension(
                 statsContainer.minWidthProperty(),
                 statsContainer.maxWidthProperty(),
                 this.getContainer().widthProperty()
-        );
+        );*/
 
         for(Player player : match.getPlayers()){
             scoreStatsController.addPlayerScoreRow(player);

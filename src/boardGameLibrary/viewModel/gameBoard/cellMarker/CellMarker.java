@@ -22,7 +22,7 @@ public interface CellMarker{
      * Given a Shape (from a set of legal shapes seen in the method)
      * it creates a suiting marker with the shape as its construction
      * argument.
-     * @param shape The decorated Shape used to create a Marker.
+     * @param shape The decorated Shape used to margin a Marker.
      * @return a new CellMarker.
      */
     static CellMarker create(Shape shape){
@@ -35,8 +35,8 @@ public interface CellMarker{
     }
 
     /**
-     * Given a displayModel it will with it create a decorated shape
-     * and then use that to create a new CellMarker.
+     * Given a displayModel it will with it margin a decorated shape
+     * and then use that to margin a new CellMarker.
      * @param displayModel from a {@link boardGameLibrary.boardGame.pawn.Pawn}.
      * @return a new CellMarker.
      */

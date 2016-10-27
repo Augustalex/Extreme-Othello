@@ -3,6 +3,7 @@ package boardGameLibrary.boardGame.match;
 import boardGameLibrary.boardGame.match.propertyWrappers.MoveProperties;
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
 import boardGameLibrary.players.Player;
+import utilities.router.Router;
 
 import java.util.ArrayList;
 
@@ -31,8 +32,14 @@ public class LocalGameMatch implements GameMatch{
 
         this.board.BoardMoveEventProperty().addListener(e -> {
             System.out.println("Current player: " + this.currentPlayer().getName() + ", legal move? " + this.board.BoardMoveEventProperty().get().getMadeLegalMove());
+
             if(this.board.BoardMoveEventProperty().get().getNoMoreMoves()) {
                 this.players.remove(this.currentPlayerIndex--);
+
+                /*
+                if(this.players.size() <= 0)
+                    Router.getApplicationRouter().previous();
+                */
                 turn(this.nextPlayer());
             }
             else if(!this.board.BoardMoveEventProperty().get().getMadeLegalMove())

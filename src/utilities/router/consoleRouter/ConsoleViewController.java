@@ -30,7 +30,7 @@ public abstract class ConsoleViewController implements ViewController{
         else if(viewId.equals("MainView"))
             return new MainConsoleController();
 
-        throw new IllegalArgumentException("Cannot create a view from incorrect view id and dependencies.");
+        throw new IllegalArgumentException("Cannot margin a view from incorrect view id and dependencies.");
 
     }
 }

@@ -48,7 +48,7 @@ public abstract class PaneViewController implements ViewController {
         if(viewId.equals("MainView"))
             return new MainViewController(container);
 
-        throw new IllegalArgumentException("Cannot create a view from incorrect view id and dependencies.");
+        throw new IllegalArgumentException("Cannot margin a view from incorrect view id and dependencies.");
     }
 
     public void setContainer(Pane container){

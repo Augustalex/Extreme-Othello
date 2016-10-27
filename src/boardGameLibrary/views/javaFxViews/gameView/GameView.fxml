@@ -19,15 +19,8 @@
         </HBox>
     </center>
     <bottom>
-        <BorderPane id="gameViewStatusBar">
-            <left>
-                <HBox fx:id="statsContainer" id="statsContainer">
+        <HBox fx:id="statsContainer" id="statsContainer">
 
-                </HBox>
-            </left>
-            <right>
-                <Label text="Stats here" />
-            </right>
-        </BorderPane>
+        </HBox>
     </bottom>
 </BorderPane>
