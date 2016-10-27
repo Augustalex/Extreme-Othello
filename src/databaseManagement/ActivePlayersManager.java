@@ -21,7 +21,10 @@ public abstract class ActivePlayersManager {
     }
 
     public void removeActivePlayer(Player player) {
-
+        String values ="\'" + playerName + "\'";
+        statement.addBatch("Delete FROM ActivePlayers where playerName like " + values);
+        statement.executeBatch();
+        System.out.println("Player Removed from the DB..");
     }
 
     public Player[] getActivePlayers(){
