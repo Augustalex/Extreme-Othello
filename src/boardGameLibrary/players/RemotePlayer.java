@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
  */
 public class RemotePlayer extends Player {
 
+    private String ip;
+
     public RemotePlayer(String name, Color color) {
         super(name, color);
     }
@@ -16,5 +18,10 @@ public class RemotePlayer extends Player {
     @Override
     public void makeMove(BoardMoveMaker boardMoveMaker, MoveProperties moveProperties) {
 
+    }
+
+    public RemotePlayer setIP(String ipv4){
+        this.ip = ipv4;
+        return this;
     }
 }

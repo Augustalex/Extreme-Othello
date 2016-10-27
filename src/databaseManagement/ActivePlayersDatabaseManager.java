@@ -6,6 +6,7 @@ import databaseManagement.exceptions.NotConnectedException;
 import javafx.scene.paint.Color;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ActivePlayersDatabaseManager {
 
     public ActivePlayersDatabaseManager() throws SQLException {
         this.databaseManager = new DatabaseManager(ActivePlayersManager.connectionUrl);
-        this.createActivePlayersTables();
+        this.createActivePlayersTable();
     }
 
     public static String toRGBCode(Color color ) {
@@ -59,14 +60,36 @@ public class ActivePlayersDatabaseManager {
 
     public Player[] getActivePlayers() throws NotConnectedException, SQLException {
         ResultSet resultSet = this.databaseManager.getTableData(ActivePlayersDatabaseManager.tableName);
+        ResultSetMetaData metaData = resultSet.getMetaData();
 
         List<Player> players = new ArrayList<>();
+
         while(resultSet.next()) {
+            List<Object> columns = new ArrayList<>();
+            for(int i = 0; i < metaData.getColumnCount(); i++)
+                columns.add(resultSet.getObject(0));
+
+            players.add(createPlayerFromRow(columns.stream().toArray(Object[]::new)));
         }
-        return null;
+
+        return players.stream().toArray(Player[]::new);
     }
 
-    private void createActivePlayersTables() throws SQLException {
+    private Player createPlayerFromRow(Object[] row){
+        if(row.length < 3)
+            throw new IllegalArgumentException();
+        else
+            try {
+                return new RemotePlayer((String) row[0], Color.web((String) row[2])).setIP((String) row[1]);
+            }
+            catch(Exception e){
+                System.out.println("Illegal columns in row.");
+                e.printStackTrace();
+                throw new IllegalArgumentException();
+            }
+    }
+
+    private void createActivePlayersTable() throws SQLException {
         this.databaseManager.createTable(
                 ActivePlayersDatabaseManager.tableName,
                 "create table ActivePlayers( \n" +
