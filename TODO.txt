@@ -4,14 +4,14 @@
 	#Meddelande när spelet är över
 	#Display Available moves $
 	#Animationer $
-	#Stats
-		#Visa totalt antal nuvarande poäng (antal ägda brickor)
-			#Visa denna information om alla spelare
+	#Stats $
+		#Visa totalt antal nuvarande poäng (antal ägda brickor) $
+			#Visa denna information om alla spelare $
 	
 #Server
 	#Koppla upp mot databas
-		#Lägga till HOST som aktiv spelare i databasen
-		#Hämta aktiva spelare
+		#Lägga till HOST som aktiv spelare i databasen 
+		#Hämta aktiva spelare 
 			#Skicka till HOST-klient
 	#Koppla upp mot x antal klienter
 		#Skicka information mellan klienter
@@ -30,20 +30,24 @@
 		#Finns som metod $
 	#Ladda ner lista av användare från databas $
 		#Select sats för att hämta användare $
-	#Ta bort spelare ur databas
+	#Ta bort spelare ur databas $
 		#Funktionalitet för det skapat $
 	
 #New Game Menu
-	#Access database
-		#Pick remote players
-			#Start remote game
+	#Logon to server
+		#Logon with local Player profile
+			#Check if current name is not in conflict
+			#Check if online game is possible
+		#Get available remote players
+	#Pick remote players
+		#Start remote game 
 	#Pick variable number of players for a game $
 	#Pick local players $
 		#Start local game $
 	#Pick AI Players $
 		#Start remote/local game with AI $
 	#Confirm player selection to start game $
-		#Check if legal choices (in comboboxes)
+		#Check if legal choices (in comboboxes) 
 			#Wait for remote player accept
 				#Be able to cancel request
 				#Be able to kick player
