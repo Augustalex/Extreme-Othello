@@ -8,9 +8,14 @@ package communication.sender;
  */
 public class Package {
 
+    private String delimiter = "|";
     private String senderAddress = "";
     private String receiverAddress = "";
     private String[] requests = new String[]{""};
+
+    public static String getDelimiter(String payload){
+        return payload.substring(0,1);
+    }
 
     public Package senderAddress(String address){
         this.senderAddress = address;
@@ -27,17 +32,23 @@ public class Package {
         return this;
     }
 
+    public String getSenderAddress(){
+        return this.senderAddress;
+    }
+
+    public String getReceiverAddress(){
+        return this.receiverAddress;
+    }
+
+    public String[] getRequests(){
+        return this.requests;
+    }
+
+    public String getDelimiter(){
+        return this.delimiter;
+    }
+
     public String toString(){
-        String output = "";
-        String delimiter = "|";
-
-        output += delimiter;
-        output += this.receiverAddress + delimiter;
-        output += this.senderAddress + delimiter;
-
-        for(String request : this.requests)
-            output += request + delimiter;
-
-        return output;
+        return PackageCompiler.encode(this);
     }
 }

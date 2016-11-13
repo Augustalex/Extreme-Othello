@@ -12,4 +12,14 @@ public class Request {
         this.message = message;
         this.type = type;
     }
+
+    public static boolean validateRequestMessage(String requestMessage){
+
+        String typeIdentifier = requestMessage.substring(0, 1);
+
+        if(!RequestType.validateTypeIdentifier(typeIdentifier))
+            return false;
+
+        return true;
+    }
 }

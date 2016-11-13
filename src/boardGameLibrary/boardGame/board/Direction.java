@@ -17,6 +17,12 @@ public enum Direction {
     private final int angle;
 
     /**
+     * A static initialization of the direction hash map used in returning opposite directions
+     * from another calling Direction enum.
+     */
+    private static Map<Integer, Direction> directionsMap = new HashMap<>();
+
+    /**
      * Takes an angle in degrees and returns an instantiated Direction
      * enum. In the Java programming language, zero degrees point EAST.
      * @param angle in degrees
@@ -25,11 +31,6 @@ public enum Direction {
         this.angle = angle;
     }
 
-    /**
-     * A static initialization of the direction hash map used in returning opposite directions
-     * from another calling Direction enum.
-     */
-    private static Map<Integer, Direction> directionsMap = new HashMap<>();
 
     static{
         for(Direction direction : Direction.values())

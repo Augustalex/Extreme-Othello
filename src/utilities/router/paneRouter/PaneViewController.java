@@ -1,15 +1,14 @@
 package utilities.router.paneRouter;
 
-import boardGameLibrary.boardGame.match.GameMatch;
 import boardGameLibrary.boardGame.match.MatchSetup;
 import boardGameLibrary.playerProfileStore.PlayerProfile;
 import boardGameLibrary.playerProfileStore.PlayerProfileStore;
-import boardGameLibrary.views.javaFxViews.gameView.GameViewController;
-import boardGameLibrary.views.javaFxViews.mainMenu.MainViewController;
-import boardGameLibrary.views.javaFxViews.newGame.NewGameViewController;
-import boardGameLibrary.views.javaFxViews.settingsView.SettingsViewController;
-import boardGameLibrary.views.javaFxViews.settingsView.profileSettings.AddProfileViewController;
-import boardGameLibrary.views.javaFxViews.settingsView.profileSettings.EditPlayerViewController;
+import boardGameLibrary.views.gameView.GameViewController;
+import boardGameLibrary.views.mainMenu.MainViewController;
+import boardGameLibrary.views.newGame.NewGameViewController;
+import boardGameLibrary.views.settingsView.SettingsViewController;
+import boardGameLibrary.views.settingsView.profileSettings.AddProfileViewController;
+import boardGameLibrary.views.settingsView.profileSettings.EditPlayerViewController;
 import javafx.scene.layout.Pane;
 import utilities.router.ViewController;
 

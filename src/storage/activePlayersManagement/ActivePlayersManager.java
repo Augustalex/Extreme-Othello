@@ -3,6 +3,7 @@ package storage.activePlayersManagement;
 import boardGameLibrary.players.Player;
 import boardGameLibrary.players.RemotePlayer;
 import javafx.scene.paint.Color;
+import storage.IActivePlayerManagement;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by August on 2016-10-27.
  */
-public abstract class ActivePlayersManager {
+public abstract class ActivePlayersManager implements IActivePlayerManagement{
 
     public final static String connectionUrl = "jdbc:sqlserver://hitsql-db.hb.se:56077;" +
             "databaseName=oomuht1603;user=oomuht1603; password=bagg66";
@@ -27,6 +28,7 @@ public abstract class ActivePlayersManager {
         }
     }
 
+    @Override
     public void addActivePlayer(Player player) {
         try {
             this.playerDatabaseManager.addActivePlayer(player, "192.168.1.2");
@@ -36,6 +38,7 @@ public abstract class ActivePlayersManager {
         }
     }
 
+    @Override
     public void removeActivePlayer(Player player) {
         try {
             this.playerDatabaseManager.removeActivePlayer(player);
@@ -45,6 +48,7 @@ public abstract class ActivePlayersManager {
         }
     }
 
+    @Override
     public Player[] getActivePlayers(){
         try {
             List<Player> players = new ArrayList<>();
