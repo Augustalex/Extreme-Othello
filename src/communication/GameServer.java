@@ -1,11 +1,11 @@
 package communication;
 
 import boardGameLibrary.players.Player;
-import communication.connection.inputConnections.InputConnection;
 import communication.connection.inputConnections.RequestInputSocket;
 import communication.receiver.delivery.Delivery;
 import communication.requests.GameRequest;
-import storage.activePlayersManagement.ActivePlayersManager;
+import storage.activePlayersManagement.IActivePlayersManagement;
+import storage.activePlayersManagement.OfflineActivePlayersManager;
 
 import java.io.IOException;
 
@@ -14,16 +14,16 @@ import java.io.IOException;
  */
 public class GameServer {
 
-    private InputConnection requestConnection;
+    private RequestInputSocket requestConnection;
     private RequestReceiver requestReceiver;
-    private ActivePlayersManager activePlayersManager;
+    private IActivePlayersManagement activePlayersManager = new OfflineActivePlayersManager();
 
     public GameServer(int port) throws IOException {
         this.requestConnection = new RequestInputSocket(port);
         this.requestReceiver = new RequestReceiver(this.requestConnection);
     }
 
-    public ActivePlayersManager activeplayersManager(){
+    public IActivePlayersManagement activePlayersManager(){
         return this.activePlayersManager;
 
     }

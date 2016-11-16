@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * Composes the {@link PackageInputSocket} to return a List of {@link Request}s
  * instead of {@link Package}s.
  */
-public class RequestInputSocket implements InputConnection<List<Request>> {
+public class RequestInputSocket implements InputConnection<Request[]> {
 
     private PackageInputSocket packageSocket;
 
@@ -28,14 +28,14 @@ public class RequestInputSocket implements InputConnection<List<Request>> {
     }
 
     @Override
-    public List<Request> receive() throws Exception {
+    public Request[] receive() throws Exception {
         Package payload = this.packageSocket.receive();
 
         return(
                 Stream
                 .of(payload.getRequests())
                 .map(RequestCompiler::decode)
-                .collect(Collectors.toList())
+                .toArray(Request[]::new)
         );
     }
 

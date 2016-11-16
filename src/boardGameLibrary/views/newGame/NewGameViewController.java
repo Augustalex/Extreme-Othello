@@ -18,8 +18,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import utilities.router.Router;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by August on 2016-09-29.
@@ -41,12 +44,13 @@ public class NewGameViewController extends FXMLViewController{
 
     public NewGameViewController(Pane container, PlayerProfileStore store) {
         super(container, NewGameViewController.fxmlFileName);
-/*
+
         try {
             this.server = new GameServer(1337);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
+        
         this.store = store;
     }
 
@@ -121,6 +125,7 @@ public class NewGameViewController extends FXMLViewController{
 
     private Player[] getAvailablePlayers() {
         Player[] p = this.store.toPlayers();
+
         List<Player> allPlayers = new ArrayList<>();
         Collections.addAll(allPlayers, p);
         allPlayers.add(new NaturalAI("Jacob", Color.BURLYWOOD));
@@ -128,9 +133,10 @@ public class NewGameViewController extends FXMLViewController{
         allPlayers.add(new GreedyAI("Felix", Color.ALICEBLUE));
         allPlayers.add(new NaturalAI("Mackan", Color.TURQUOISE));
 
-        Player[] players = allPlayers.stream().toArray(Player[]::new);
+        Player[] activePlayers = this.server.activePlayersManager().getActivePlayers();
+        allPlayers.addAll(Stream.of(activePlayers).collect(Collectors.toList()));
 
-        return players;
+        return allPlayers.stream().toArray(Player[]::new);
     }
 
     public void setSelectionPane(PlayerSelectionPane pane){

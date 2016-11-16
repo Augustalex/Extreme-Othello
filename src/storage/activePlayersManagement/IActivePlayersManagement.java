@@ -1,11 +1,11 @@
-package storage;
+package storage.activePlayersManagement;
 
 import boardGameLibrary.players.Player;
 
 /**
- * Created by August on 2016-10-30.
+ * Interface for handling active players.
  */
-public interface IActivePlayerManagement {
+public interface IActivePlayersManagement {
 
     void addActivePlayer(Player player);
 

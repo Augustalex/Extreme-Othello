@@ -15,17 +15,17 @@ import java.util.List;
  */
 public class ActivePlayersDatabaseManager {
 
-    public final static String connectionUrl = "jdbc:sqlserver://hitsql-db.hb.se:56077;" +
+    private final static String connectionUrl = "jdbc:sqlserver://hitsql-db.hb.se:56077;" +
             "databaseName=oomuht1603;user=oomuht1603; password=bagg66";
 
-    public final static String tableName = "ActivePlayers";
-    public final static String[] tableColumnNames = {
+    private final static String tableName = "ActivePlayers";
+    private final static String[] tableColumnNames = {
             "playerName",
             "ipv4",
             "color"
     };
 
-    public final static String uniqueIdentifierColumnName = ActivePlayersDatabaseManager.tableColumnNames[0];
+    private final static String uniqueIdentifierColumnName = ActivePlayersDatabaseManager.tableColumnNames[0];
 
     private DatabaseManager databaseManager;
 

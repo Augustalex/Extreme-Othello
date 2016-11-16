@@ -52,16 +52,19 @@ public abstract class PropertyReceiver<T> implements Receiver{
      * @return
      */
     private PropertyReceiver start(){
-        try {
-            this.connection.connect();
-            waitAndReceive();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            System.out.println("Could not requestConnection. InputConnection not set");
+        new Thread(() -> {
+            try {
+                System.out.println("Trying to establish connection: " + this.connection);
+                this.connection.connect();
+                System.out.println("Established a connection.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Could not requestConnection. InputConnection not set");
 
-            this.connection = new VoidInputConnection<>();
-        }
+                this.connection = new VoidInputConnection<>();
+            }
+            waitAndReceive();
+        }).start();
 
         return this;
     }
@@ -101,7 +104,6 @@ public abstract class PropertyReceiver<T> implements Receiver{
                 payload = this.connection.receive();
                 pushToBuffer(payload);
                 waitAndReceive();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,10 +1,7 @@
 package utilities.router.paneRouter;
 
 import javafx.stage.Stage;
-import utilities.callbackLibrary.ArrayCallback;
 import javafx.scene.layout.Pane;
-import utilities.callbackLibrary.Callback;
-import utilities.HistoryTracker.History;
 import utilities.router.Router;
 import utilities.router.ViewController;
 import utilities.router.stateRestorer.StateLoader;
@@ -35,8 +32,9 @@ public class PaneRouter extends Router {
         viewController.loadView();
     }
 
-    public void setupSaveOnClose(Stage stage){
-        stage.setOnHiding(e -> this.save());
+    @Override
+    public void saveOnClose() {
+        this.container.getScene().getWindow().setOnHiding(e -> this.save());
     }
 
 }

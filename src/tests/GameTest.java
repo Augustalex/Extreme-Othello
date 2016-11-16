@@ -30,17 +30,11 @@ public class GameTest extends Application {
         primaryStage.setScene(new Scene(content, 600, 600));
 
         PaneRouter router = new PaneRouter(content);
-        router.setupSaveOnClose(primaryStage);
-        //Router router = new ConsoleRouter();
+        //router.saveOnClose();
         Router.setApplicationRouter(router);
 
-        try{
-            router.load();
-        }
-        catch(Exception e){
-            router.route("MainView", new HashMap());
-        }
-
+        //router.load();
+        router.route("MainView", new HashMap());
 
         primaryStage.show();
     }

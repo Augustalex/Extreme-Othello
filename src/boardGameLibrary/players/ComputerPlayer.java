@@ -1,7 +1,9 @@
 package boardGameLibrary.players;
 
 import boardGameLibrary.boardGame.board.BoardMoveMaker;
+import boardGameLibrary.boardGame.match.BoardSnapshot;
 import boardGameLibrary.boardGame.match.propertyWrappers.MoveProperties;
+import boardGameLibrary.boardGame.move.CalculatedMove;
 import boardGameLibrary.boardGame.move.Move;
 import boardGameLibrary.boardGame.move.PlayerAction;
 import javafx.application.Platform;
@@ -9,6 +11,7 @@ import javafx.scene.paint.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A player controlled by an algorithm. Referred to as an "AI" player.

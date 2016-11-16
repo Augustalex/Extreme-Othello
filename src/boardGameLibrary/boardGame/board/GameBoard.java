@@ -70,4 +70,14 @@ public abstract class GameBoard<T extends Pawn> implements Serializable{
 
     public abstract void restoreGameBoard(BoardSnapshot snapshot);
 
+    public BoardSnapshot copy(){
+        BoardSnapshot snapshot = new BoardSnapshot(this.getBoundaries());
+
+        for(int x = 0; x < this.getBoundaries().getWidth(); x++)
+            for(int y = 0; y < this.getBoundaries().getHeight(); y++)
+                snapshot.setOwnerAt(this.getPawn(new Point(x, y)).getOwner(), new Point(x, y));
+
+        return snapshot;
+    }
+
 }
