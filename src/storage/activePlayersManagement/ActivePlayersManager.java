@@ -2,16 +2,18 @@ package storage.activePlayersManagement;
 
 import boardGameLibrary.players.Player;
 import boardGameLibrary.players.RemotePlayer;
+import communication.ConnectionDetails;
 import javafx.scene.paint.Color;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by August on 2016-10-27.
+ * Handles Active players with a database.
  */
-public abstract class ActivePlayersManager implements IActivePlayersManagement {
+public class ActivePlayersManager implements IActivePlayersManagement {
 
     public final static String connectionUrl = "jdbc:sqlserver://hitsql-db.hb.se:56077;" +
             "databaseName=oomuht1603;user=oomuht1603; password=bagg66";
@@ -28,7 +30,7 @@ public abstract class ActivePlayersManager implements IActivePlayersManagement {
     }
 
     @Override
-    public void addActivePlayer(Player player) {
+    public void addActivePlayer(Player player, ConnectionDetails connectionDetails) {
         try {
             this.playerDatabaseManager.addActivePlayer(player, "192.168.1.2");
         } catch (SQLException e) {
@@ -48,6 +50,11 @@ public abstract class ActivePlayersManager implements IActivePlayersManagement {
     }
 
     @Override
+    public ConnectionDetails getActivePlayerConnectionDetails(Player player) {
+        return null;
+    }
+
+    @Override
     public Player[] getActivePlayers(){
         try {
             List<Player> players = new ArrayList<>();
@@ -63,6 +70,11 @@ public abstract class ActivePlayersManager implements IActivePlayersManagement {
             e.printStackTrace();
             return new Player[0];
         }
+    }
+
+    @Override
+    public Map<Player, ConnectionDetails> getAllActivePlayerConnectionDetails() {
+        return null;
     }
 
     private Player createPlayerFromRow(Object[] row){

@@ -2,11 +2,11 @@ package storage.activePlayersManagement;
 
 import boardGameLibrary.players.Player;
 import boardGamePlugins.othello.players.GreedyAI;
-import boardGamePlugins.othello.players.NaturalAI;
+import communication.ConnectionDetails;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Offline storage and management of active players.
@@ -15,16 +15,18 @@ import java.util.List;
  */
 public class OfflineActivePlayersManager implements IActivePlayersManagement {
 
-    private List<Player> activePlayers = new ArrayList<>();
+    private Map<Player, ConnectionDetails> activePlayers = new HashMap<>();
 
     public OfflineActivePlayersManager(){
-        this.activePlayers.add(new NaturalAI("Natural", Color.PINK));
-        this.activePlayers.add(new GreedyAI("Greedy Bill", Color.DARKMAGENTA));
+        this.activePlayers.put(
+                new GreedyAI("Greedy Bill", Color.DARKMAGENTA),
+                new ConnectionDetails("192.168.1.3")
+        );
     }
 
     @Override
-    public void addActivePlayer(Player player) {
-        this.activePlayers.add(player);
+    public void addActivePlayer(Player player, ConnectionDetails connectionDetails) {
+        this.activePlayers.put(player, connectionDetails);
     }
 
     @Override
@@ -33,7 +35,17 @@ public class OfflineActivePlayersManager implements IActivePlayersManagement {
     }
 
     @Override
+    public ConnectionDetails getActivePlayerConnectionDetails(Player player) {
+        return null;
+    }
+
+    @Override
     public Player[] getActivePlayers() {
-        return this.activePlayers.parallelStream().toArray(Player[]::new);
+        return this.activePlayers.keySet().parallelStream().toArray(Player[]::new);
+    }
+
+    @Override
+    public Map<Player, ConnectionDetails> getAllActivePlayerConnectionDetails() {
+        return this.activePlayers;
     }
 }
