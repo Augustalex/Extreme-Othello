@@ -12,25 +12,25 @@ public class RequestSender {
     private String senderAddress;
 
     public RequestSender(String senderAddress){
-        this.sender = new Sender();
+        //this.sender = new Sender();
         this.senderAddress = senderAddress;
     }
 
     public void sendRequest(String receiverAddress, String request){
-        this.sender.send(
+        /*this.sender.send(
                 new Package()
                 .senderAddress(this.senderAddress)
                 .receiverAddress(receiverAddress)
                 .setRequests(new String[]{request})
-        );
+        );*/
     }
 
     public void sendRequests(String receiverAddress, String[] requests){
-        this.sender.send(
+        /*this.sender.send(
                 new Package()
                 .senderAddress(this.senderAddress)
                 .receiverAddress(receiverAddress)
                 .setRequests(requests)
-        );
+        );*/
     }
 }

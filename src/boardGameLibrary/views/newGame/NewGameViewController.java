@@ -46,7 +46,7 @@ public class NewGameViewController extends FXMLViewController{
         super(container, NewGameViewController.fxmlFileName);
 
         try {
-            this.server = new GameServer(1337);
+            this.server = new GameServer(1337, 1337);
         } catch (IOException e) {
             e.printStackTrace();
         }
