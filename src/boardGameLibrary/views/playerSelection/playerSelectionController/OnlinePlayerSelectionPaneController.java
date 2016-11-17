@@ -33,6 +33,7 @@ public class OnlinePlayerSelectionPaneController implements PlayerSelectionContr
             if(newValue == null)
                 return;
 
+            System.out.println("Has set player selection listener.");
             server.requestConnection(newValue).onDelivery(new OneTimeChangeListener<>((observable1, oldValue1, delivery) -> {
                 System.out.println("DELIVERY HAS ARRIVED: " + Arrays.toString(delivery));
                 row.getConfirmationButton().confirmedSelectionProperty().set(row.getSelectionBox().getValue());

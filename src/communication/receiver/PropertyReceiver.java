@@ -89,7 +89,9 @@ public abstract class PropertyReceiver<T> implements Receiver{
     private void pushToBuffer(T payload){
         synchronized (bufferKey){
             this.buffer.add(payload);
+            System.out.println("Added " + payload + " to buffer. Setting property now.");
             this.receivedPackageNotifier.set(null);
+            System.out.println("Property set.");
         }
     }
 
@@ -102,6 +104,8 @@ public abstract class PropertyReceiver<T> implements Receiver{
             try {
                 T payload = null;
                 payload = this.connection.receive();
+
+                System.out.println("Received " + payload + ", pushing to buffer.");
                 pushToBuffer(payload);
                 waitAndReceive();
             } catch (Exception e) {
@@ -116,7 +120,10 @@ public abstract class PropertyReceiver<T> implements Receiver{
      */
     private void requestDelivery(Delivery<T> delivery){
         this.receivedPackageNotifier.addListener(new OneTimeChangeListener<>((observable, oldValue, newValue) -> {
-            delivery.deliver(this.popBuffer());
+            T incoming = this.popBuffer();
+
+            System.out.println("Delivery arrived in buffer: " + incoming);
+            delivery.deliver(incoming);
         }));
     }
 
