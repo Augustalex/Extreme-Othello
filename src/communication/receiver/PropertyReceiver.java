@@ -1,6 +1,7 @@
 package communication.receiver;
 
 import communication.OneTimeChangeListener;
+import communication.OneTimeListChangeListener;
 import communication.connection.inputConnections.InputConnection;
 import communication.connection.inputConnections.VoidInputConnection;
 import communication.receiver.delivery.Delivery;
@@ -9,6 +10,9 @@ import communication.receiver.delivery.PropertyDelivery;
 import communication.receiver.exceptions.NoPackageInBuffer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +32,10 @@ public class PropertyReceiver<T> implements Receiver<T>{
     /**
      * Notifies when an element is pushed onto the buffer.
      */
-    private final ObjectProperty<Void> receivedPackageNotifier = new SimpleObjectProperty<>(null);
+   // private final ObjectProperty<Void> receivedPackageNotifier = new SimpleObjectProperty<>(null);
 
     private final Object bufferKey = new Object();
-    private final List<T> buffer = new ArrayList<>();
+    private final ObservableList<T> buffer = FXCollections.observableArrayList();
 
     private final Queue<LoomingDelivery<T>> loomingDeliveries = new LinkedBlockingQueue<>();
 
@@ -106,7 +110,7 @@ public class PropertyReceiver<T> implements Receiver<T>{
         synchronized (bufferKey){
             this.buffer.add(payload);
             System.out.println("Added " + payload + " to buffer. Setting property now.");
-            this.receivedPackageNotifier.set(null);
+            //this.receivedPackageNotifier.set(null);
             System.out.println("Property set.");
         }
     }
@@ -135,7 +139,14 @@ public class PropertyReceiver<T> implements Receiver<T>{
      * @param delivery
      */
     private void requestDelivery(Delivery<T> delivery){
-        this.receivedPackageNotifier.addListener(new OneTimeChangeListener<>((observable, oldValue, newValue) -> {
+       /* this.receivedPackageNotifier.addListener(new OneTimeChangeListener<>((observable, oldValue, newValue) -> {
+            T incoming = this.popBuffer();
+
+            System.out.println("Delivery arrived in buffer: " + incoming);
+            delivery.deliver(incoming);
+        }));*/
+
+        this.buffer.addListener(new OneTimeListChangeListener<T>(c -> {
             T incoming = this.popBuffer();
 
             System.out.println("Delivery arrived in buffer: " + incoming);
@@ -156,6 +167,8 @@ public class PropertyReceiver<T> implements Receiver<T>{
         for(LoomingDelivery<T> loomingDelivery : this.loomingDeliveries){
             if(loomingDelivery.test(payload)){
                 loomingDelivery.deliver(payload);
+                System.out.println("Looming delivery: " + loomingDelivery);
+                System.out.println("Looming delivery payload was: " + payload);
                 return null;
             }
         }
