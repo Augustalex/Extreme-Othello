@@ -7,6 +7,7 @@ import communication.requests.GameRequest;
 import communication.requests.Request;
 import communication.requests.RequestCompiler;
 import communication.sender.Package;
+import communication.sender.PackageCompiler;
 import communication.sender.Sender;
 import storage.activePlayersManagement.IActivePlayersManagement;
 import storage.activePlayersManagement.OfflineActivePlayersManager;
@@ -45,13 +46,16 @@ public class GameServer {
 
         try {
             Sender sender = new Sender(connectionDetails, this.outPort);
-            sender.send(
-                    new Package()
+
+            Package payload = new Package()
                     .senderAddress("192.168.1.4")
                     .receiverAddress(connectionDetails.hostname)
-                    .setRequests(new String[]{RequestCompiler.encodeToString(new GameRequest())})
-            );
-            System.out.println("Package sent.");
+                    .setRequests(new String[]{RequestCompiler.encodeToString(new GameRequest())});
+
+            sender.send(payload);
+            System.out.println("Package sent: " + payload);
+            System.out.println("Encoded as: " + PackageCompiler.encode(payload));
+            System.out.println("Decoded as: " + PackageCompiler.decode(PackageCompiler.encode(payload)));
         } catch (IOException e) {
             e.printStackTrace();
         }

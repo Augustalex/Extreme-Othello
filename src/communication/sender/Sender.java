@@ -15,11 +15,13 @@ public class Sender {
     private Socket socket = null;
 
     public Sender(ConnectionDetails connectionDetails, int port) throws IOException {
-        socket = new Socket(connectionDetails.hostname, port);
+        System.out.println(connectionDetails);
+        System.out.println(port);
+        this.socket = new Socket(connectionDetails.hostname, port);
     }
 
     public void send(Package payload) throws IOException {
-        PrintStream output = (PrintStream) this.socket.getOutputStream();
+        PrintStream output = new PrintStream(this.socket.getOutputStream());
         output.print(PackageCompiler.encode(payload));
         output.flush();
     }

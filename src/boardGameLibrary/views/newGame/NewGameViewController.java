@@ -134,6 +134,10 @@ public class NewGameViewController extends FXMLViewController{
         allPlayers.add(new NaturalAI("Mackan", Color.TURQUOISE));
 
         Player[] activePlayers = this.server.activePlayersManager().getActivePlayers();
+
+        System.out.println("here");
+        this.server.requestConnection(activePlayers[0]);
+        System.out.println("Done");
         allPlayers.addAll(Stream.of(activePlayers).collect(Collectors.toList()));
 
         return allPlayers.stream().toArray(Player[]::new);

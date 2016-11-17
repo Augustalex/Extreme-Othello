@@ -20,7 +20,7 @@ public class OfflineActivePlayersManager implements IActivePlayersManagement {
     public OfflineActivePlayersManager(){
         this.activePlayers.put(
                 new GreedyAI("Greedy Bill", Color.DARKMAGENTA),
-                new ConnectionDetails("192.168.1.3")
+                new ConnectionDetails("192.168.1.4")
         );
     }
 
@@ -36,7 +36,7 @@ public class OfflineActivePlayersManager implements IActivePlayersManagement {
 
     @Override
     public ConnectionDetails getActivePlayerConnectionDetails(Player player) {
-        return null;
+        return this.activePlayers.get(player);
     }
 
     @Override
