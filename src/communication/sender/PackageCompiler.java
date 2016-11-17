@@ -2,6 +2,8 @@ package communication.sender;
 
 import communication.receiver.exceptions.InvalidPackageException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -50,11 +52,18 @@ public class PackageCompiler {
         if(tokenizer.countTokens() < 2)
             throw new InvalidPackageException();
 
+        String senderAddress = tokenizer.nextToken();
+
+        String receiverAddress = tokenizer.nextToken();
+
+        List<String> requests = new ArrayList<>();
+
+        while(tokenizer.hasMoreElements())
+            requests.add(tokenizer.nextToken());
+
         return new Package()
-                .senderAddress(tokenizer.nextToken())
-                .receiverAddress(tokenizer.nextToken())
-                .setRequests(
-                        tokenizer.nextToken("").split(delimiter)
-                );
+                .senderAddress(senderAddress)
+                .receiverAddress(receiverAddress)
+                .setRequests(requests.stream().toArray(String[]::new));
     }
 }

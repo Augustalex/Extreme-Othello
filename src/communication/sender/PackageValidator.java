@@ -15,6 +15,7 @@ public class PackageValidator {
         String senderIP = tokenizer.nextToken();
         String receiverIP = tokenizer.nextToken();
 
+        System.out.println("Validating: " + message);
         if(!PackageValidator.validateIPAddress(senderIP) || !PackageValidator.validateIPAddress(receiverIP))
             return false;
 

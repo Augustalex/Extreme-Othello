@@ -20,10 +20,9 @@ public class RequestReceiver extends PropertyReceiver<Request[]> {
     /**
      * Returns a {@link Delivery} that can be used to retrieve the requests
      * once they are delivered.
-     * @param connection
-     * @return
+     * @return an expected delivery. (Works like a "Promise")
      */
-    public Delivery expectRequest(InputConnection connection){
+    public Delivery<Request[]> expectRequest(){
         return expectDelivery();
     }
 

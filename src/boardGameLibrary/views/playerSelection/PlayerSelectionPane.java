@@ -2,61 +2,61 @@ package boardGameLibrary.views.playerSelection;
 
 import boardGameLibrary.players.Player;
 import boardGameLibrary.views.dialogs.PlayerSelectionDialog;
+import boardGameLibrary.views.playerSelection.playerSelectionController.PlayerSelectionController;
+import boardGameLibrary.views.playerSelection.playerSelectionController.PlayerSelectionPaneController;
 import boardGameLibrary.views.playerSelection.selectionConfirmation.SelectionConfirmationButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerSelectionPane extends VBox {
-//TODO separate to controller and view object
-    private final PlayerSelectionBucket chosenPlayers;
 
+    private PlayerSelectionBucket chosenPlayers = null;
     private ObservableList<Player> playerOptions;
-    private ArrayList<SelectionConfirmationButton<Player>> confirmationButtons = new ArrayList<>();
+
+    private List<PlayerSelectionRow> rows = new ArrayList<>();
+    private PlayerSelectionController selectionController = new PlayerSelectionPaneController().setPlayerSelectionPane(this);
 
     public PlayerSelectionPane(Player[] playerOptions, int numberOfPlayers){
-        this.chosenPlayers = new PlayerSelectionBucket(numberOfPlayers);
         this.playerOptions = FXCollections.observableArrayList(playerOptions);
-
-        for(int i = 0; i < numberOfPlayers; i++)
-            addPlayerSelectionBox();
-
-        listenToSelectionConfirmation();
+        this.initialize(numberOfPlayers);
     }
 
     public PlayerSelectionBucket chosenPlayersProperty(){
         return this.chosenPlayers;
     }
 
-    private void listenToSelectionConfirmation(){
-        for(SelectionConfirmationButton<Player> button : this.confirmationButtons){
-            button.confirmedSelectionProperty().addListener((observable, oldValue, newValue) -> {
+    public PlayerSelectionController getSelectionController(){
+        return this.selectionController;
+    }
 
+    public void setSelectionController(PlayerSelectionController selectionController){
+        this.selectionController = selectionController;
+        this.selectionController.setPlayerSelectionPane(this);
+    }
 
-                if(button.isSelected()) {
-                    if (this.chosenPlayers.contains(newValue)) {
-                        PlayerSelectionDialog.displayAndWait("Player already selected.");
-                        button.reset();
-                    } else if (newValue != null)
-                        this.chosenPlayers.add(newValue);
-                }
-                else
-                    this.chosenPlayers.remove(oldValue);
+    public List<PlayerSelectionRow> getPlayerSelectionRows(){
+        return this.rows;
+    }
 
-            });
-        }
+    private void initialize(int numberOfPlayers){
+        this.chosenPlayers = new PlayerSelectionBucket(numberOfPlayers);
+
+        for(int i = 0; i < numberOfPlayers; i++)
+            addPlayerSelectionBox();
     }
 
     private void addPlayerSelectionBox(){
-        PlayerSelectionBox playerSelectionBox = new PlayerSelectionBox(this.playerOptions);
-        SelectionConfirmationButton<Player> confirmationButton = new SelectionConfirmationButton<>(playerSelectionBox);
-        PlayerSelectionRow selectionRow = new PlayerSelectionRow(playerSelectionBox, confirmationButton);
-        this.getChildren().add(selectionRow);
+        PlayerSelectionRow selectionRow = new PlayerSelectionRow(this.playerOptions);
 
-        this.confirmationButtons.add(confirmationButton);
+        this.getChildren().add(selectionRow);
+        this.rows.add(selectionRow);
     }
+
     /*
 
     private Player getPlayerFromOptionName(String playerName){

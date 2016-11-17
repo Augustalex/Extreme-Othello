@@ -22,12 +22,12 @@ public class GameServer {
     private RequestReceiver requestReceiver;
     private IActivePlayersManagement activePlayersManager = new OfflineActivePlayersManager();
 
-    private int outPort;
+    private int port;
 
-    public GameServer(int inPort, int outPort) throws IOException {
-        this.outPort = inPort;
+    public GameServer(int port) throws IOException {
+        this.port = port;
 
-        this.requestConnection = new RequestInputSocket(inPort);
+        this.requestConnection = new RequestInputSocket(port);
         this.requestReceiver = new RequestReceiver(this.requestConnection);
     }
 
@@ -36,15 +36,11 @@ public class GameServer {
 
     }
 
-    public boolean canConnect(Player player){
-        return false;
-    }
-
-    public Delivery<Request> requestConnection(Player player){
+    public Delivery<Request[]> requestConnection(Player player){
         ConnectionDetails connectionDetails = this.activePlayersManager.getActivePlayerConnectionDetails(player);
 
         try {
-            Sender sender = new Sender(connectionDetails, this.outPort);
+            Sender sender = new Sender(connectionDetails, this.port);
             sender.send(
                     new Package()
                     .senderAddress("192.168.1.4")
@@ -56,7 +52,7 @@ public class GameServer {
             e.printStackTrace();
         }
 
-        return null;
+        return this.requestReceiver.expectRequest();
     }
 
 

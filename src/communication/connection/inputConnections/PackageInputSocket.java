@@ -23,12 +23,18 @@ public class PackageInputSocket extends SocketConnection implements InputConnect
 
     @Override
     public Package receive() throws Exception {
+
         Scanner scanner = new Scanner(this.connection.getInputStream());
+
+        while(!scanner.hasNext()){
+
+        }
+
         String message = scanner.next();
 
-        if(!PackageValidator.validatePackage(message))
+        /*if(!PackageValidator.validatePackage(message))
             throw new InvalidPackageException();
-        else
+        else*/
             return PackageCompiler.decode(message);
     }
 }
