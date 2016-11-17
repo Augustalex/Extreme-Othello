@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * Sets up change listeners for when a player is selected.
  *
- * Also connects to players that has been selected and asks for "Joing game" confirmation.
+ * Also connects to players that has been selected and asks for "Join game" confirmation.
  */
 public class OnlinePlayerSelectionPaneController implements PlayerSelectionController {
 

@@ -30,6 +30,8 @@ public class GameServer {
 
         this.requestConnection = new RequestInputSocket(port);
         this.requestReceiver = new RequestReceiver(this.requestConnection);
+
+        this.requestReceiver.loomingDelivery(new Request[]{new GameRequest()});
     }
 
     public IActivePlayersManagement activePlayersManager(){

@@ -4,6 +4,7 @@ import communication.OneTimeChangeListener;
 import communication.connection.inputConnections.InputConnection;
 import communication.connection.inputConnections.VoidInputConnection;
 import communication.receiver.delivery.Delivery;
+import communication.receiver.delivery.LoomingDelivery;
 import communication.receiver.delivery.PropertyDelivery;
 import communication.receiver.exceptions.NoPackageInBuffer;
 import javafx.beans.property.ObjectProperty;
@@ -11,12 +12,15 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.concurrent.SynchronousQueue;
 
 /**
  * Handles receives from a connection with Java Properties.
  * @param <T>
  */
-public abstract class PropertyReceiver<T> implements Receiver{
+public class PropertyReceiver<T> implements Receiver<T>{
 
     private InputConnection<T> connection;
 
@@ -27,6 +31,8 @@ public abstract class PropertyReceiver<T> implements Receiver{
 
     private final Object bufferKey = new Object();
     private final List<T> buffer = new ArrayList<>();
+
+    private final Queue<LoomingDelivery<T>> loomingDeliveries = new SynchronousQueue<>();
 
     public PropertyReceiver(InputConnection<T> connection){
         this.connection = connection;
@@ -46,6 +52,14 @@ public abstract class PropertyReceiver<T> implements Receiver{
         requestDelivery(delivery);
 
         return delivery;
+    }
+
+    @Override
+    public Delivery<T> loomingDelivery(T reference) {
+        LoomingDelivery<T> loomingDelivery = new LoomingDelivery<>(reference);
+        this.loomingDeliveries.add(loomingDelivery);
+
+        return loomingDelivery;
     }
 
     /**
@@ -105,9 +119,9 @@ public abstract class PropertyReceiver<T> implements Receiver{
             try {
                 T payload = null;
                 payload = this.connection.receive();
-
                 System.out.println("Received " + payload + ", pushing to buffer.");
-                pushToBuffer(payload);
+
+                pushIfNotNull(passThroughLoomingDeliveries(payload));
                 waitAndReceive();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -128,6 +142,35 @@ public abstract class PropertyReceiver<T> implements Receiver{
         }));
 
         System.out.println("Now set to wait for buffer to update. Expecting delivery for: " + delivery);
+    }
+
+    /**
+     * Will either return the passed payload or return
+     * null if the payload was consumed by a Looming Delivery.
+     * @param payload
+     * @return
+     */
+    private T passThroughLoomingDeliveries(T payload){
+
+        for(LoomingDelivery<T> loomingDelivery : this.loomingDeliveries){
+            if(loomingDelivery.test(payload)){
+                loomingDelivery.deliver(payload);
+                return null;
+            }
+        }
+
+        return payload;
+    }
+
+    /**
+     * Pushes payload to buffer if not null.
+     *
+     * Mainly used when a possibly consuming filter is passed onto the argument.
+     * @param payload
+     */
+    private void pushIfNotNull(T payload){
+        if(payload != null)
+            this.pushToBuffer(payload);
     }
 
 }
