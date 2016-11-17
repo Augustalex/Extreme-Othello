@@ -34,7 +34,7 @@ public class OnlinePlayerSelectionPaneController implements PlayerSelectionContr
                 return;
 
             server.requestConnection(newValue).onDelivery(new OneTimeChangeListener<>((observable1, oldValue1, delivery) -> {
-                System.out.println(Arrays.toString(delivery));
+                System.out.println("DELIVERY HAS ARRIVED: " + Arrays.toString(delivery));
                 row.getConfirmationButton().confirmedSelectionProperty().set(row.getSelectionBox().getValue());
             }));
         });
