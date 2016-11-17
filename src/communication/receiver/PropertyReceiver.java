@@ -42,6 +42,7 @@ public abstract class PropertyReceiver<T> implements Receiver{
     @Override
     public Delivery<T> expectDelivery(){
         Delivery<T> delivery = new PropertyDelivery<>();
+        System.out.println("Now expecting a delivery: " + delivery);
         requestDelivery(delivery);
 
         return delivery;
@@ -125,6 +126,8 @@ public abstract class PropertyReceiver<T> implements Receiver{
             System.out.println("Delivery arrived in buffer: " + incoming);
             delivery.deliver(incoming);
         }));
+
+        System.out.println("Now set to wait for buffer to update. Expecting delivery for: " + delivery);
     }
 
 }
