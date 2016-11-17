@@ -42,7 +42,7 @@ public class PropertyReceiver<T> implements Receiver<T>{
 
     /**
      * Returns a delivery that can be used to plan action before
-     * anything is really available.
+     * anything is really available.S
      *
      * @return
      */
