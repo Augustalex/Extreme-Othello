@@ -150,9 +150,6 @@ public class NewGameViewController extends FXMLViewController{
 
         Player[] activePlayers = this.server.activePlayersManager().getActivePlayers();
 
-        System.out.println("here");
-        this.server.requestConnection(activePlayers[0]);
-        System.out.println("Done");
         allPlayers.addAll(Stream.of(activePlayers).collect(Collectors.toList()));
 
         return allPlayers.stream().toArray(Player[]::new);
