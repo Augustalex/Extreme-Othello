@@ -3,6 +3,8 @@ package communication.connection.inputConnections;
 import communication.requests.RequestCompiler;
 import communication.sender.Package;
 import communication.requests.Request;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +32,7 @@ public class RequestInputSocket implements InputConnection<Request[]> {
     @Override
     public Request[] receive() throws Exception {
         Package payload = this.packageSocket.receive();
-
+        System.out.println("Payload: " + payload);
         return(
                 Stream
                 .of(payload.getRequests())

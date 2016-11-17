@@ -6,6 +6,7 @@ import boardGameLibrary.players.Player;
 import boardGameLibrary.views.playerSelection.NumberOfPlayersSelection;
 import boardGameLibrary.views.playerSelection.PlayerSelectionPane;
 import boardGameLibrary.views.FXMLViewController;
+import boardGameLibrary.views.playerSelection.playerSelectionController.OnlinePlayerSelectionPaneController;
 import boardGamePlugins.othello.players.GreedyAI;
 import boardGamePlugins.othello.players.NaturalAI;
 import communication.GameServer;
@@ -32,6 +33,10 @@ public class NewGameViewController extends FXMLViewController{
     private static final String fxmlFileName = "NewGameView.fxml";
 
     private PlayerProfileStore store;
+
+    private Player[] players;
+
+    private NumberOfPlayersSelection numberOfPlayersSelection;
     private PlayerSelectionPane selectionPane = null;
 
     private GameServer server;
@@ -46,7 +51,7 @@ public class NewGameViewController extends FXMLViewController{
         super(container, NewGameViewController.fxmlFileName);
 
         try {
-            this.server = new GameServer(1337, 1337);
+            this.server = new GameServer(1337);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,48 +63,58 @@ public class NewGameViewController extends FXMLViewController{
     public void initialize(URL location, ResourceBundle resources) {
         setupButtonActions();
 
-        Player[] players = getAvailablePlayers();
+        this.players = getAvailablePlayers();
 
-        NumberOfPlayersSelection numberOfPlayersSelection = new NumberOfPlayersSelection(16);
+        this.numberOfPlayersSelection = new NumberOfPlayersSelection(16);
         this.newGameContainer.getChildren().add(numberOfPlayersSelection);
 
-        final ChangeListener<Boolean> selectionPaneListener = (observable, oldValue, newValue) -> {
-            //Create new match from selected players
-            MatchSetup setup = new MatchSetup(
-                    "Othello",
-                    getSelectionPane().chosenPlayersProperty().removeAndReturnAllSelectedPlayers()
-            );
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("MatchSetup", setup);
-
-            //Route to GameView with the new GameMatch object.
-            Router.getApplicationRouter().route("GameView", map);
-        };
-
-        //Sets up what happens when the number of players are selected.
         numberOfPlayersSelection.selectedValue().addListener(e -> {
-            System.out.println("IT WORKED!");
-            this.newGameContainer.getChildren().remove(this.getSelectionPane());
-
-            PlayerSelectionPane selectionPane = new PlayerSelectionPane(players, numberOfPlayersSelection.selectedValue().get());
-            setSelectionPane(selectionPane);
-
-            selectionPane.chosenPlayersProperty().onAllPlayersSelected(selectionPaneListener);
-
-            this.newGameContainer.getChildren().add(selectionPane);
+            setupPlayerSelectionPane(this.players, numberOfPlayersSelection.selectedValue().get());
+            viewPlayerSelectionUI();
         });
 
-    }
-
-    private void confirmPlayer(Player player){
 
     }
 
-    private void unselectPlayer(Player player){
+    private void setupPlayerSelectionPane(Player[] playerOptions, int numberOfPlayers){
+        this.selectionPane = new PlayerSelectionPane(playerOptions, numberOfPlayers);
+        this.selectionPane.setSelectionController(new OnlinePlayerSelectionPaneController(this.server));
 
+        //Sets up what happens when all players are selected.
+        this.selectionPane
+                .chosenPlayersProperty()
+                .onAllPlayersSelected((observable, oldValue, newValue) -> {
+                    routeToGameView(
+                            this.selectionPane
+                                    .chosenPlayersProperty()
+                                    .removeAndReturnAllSelectedPlayers()
+                    );
+                });
     }
 
+    private void viewPlayerSelectionUI(){
+        this.newGameContainer.getChildren().remove(this.getSelectionPane());
+        this.newGameContainer.getChildren().add(selectionPane);
+    }
+
+    private void routeToGameView(Player[] chosenPlayers){
+        Router.getApplicationRouter().route("GameView", getGameSettings(chosenPlayers));
+    }
+
+    private Map<String, Object> getGameSettings(Player[] chosenPlayers){
+        Map<String, Object> map = new HashMap<>();
+        map.put("MatchSetup", getMatchSetup(chosenPlayers));
+
+        return map;
+    }
+
+    private MatchSetup getMatchSetup(Player[] chosenPlayers){
+        return new MatchSetup(
+                "Othello",
+                getSelectionPane().chosenPlayersProperty().removeAndReturnAllSelectedPlayers()
+        );
+    }
     private void setupButtonActions(){
         back.setOnAction((e)-> Router.getApplicationRouter().previous());
     }

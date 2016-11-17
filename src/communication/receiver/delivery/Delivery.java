@@ -4,7 +4,9 @@ import communication.OneTimeChangeListener;
 import javafx.beans.value.ChangeListener;
 
 /**
- * Created by August on 2016-10-27.
+ * Much like an ObjectProperty but with the capability of dealing with cancellation.
+ *
+ * @param <T>
  */
 public interface Delivery<T> {
 
