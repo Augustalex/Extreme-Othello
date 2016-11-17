@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 
 /**
@@ -32,7 +33,7 @@ public class PropertyReceiver<T> implements Receiver<T>{
     private final Object bufferKey = new Object();
     private final List<T> buffer = new ArrayList<>();
 
-    private final Queue<LoomingDelivery<T>> loomingDeliveries = new SynchronousQueue<>();
+    private final Queue<LoomingDelivery<T>> loomingDeliveries = new LinkedBlockingQueue<>();
 
     public PropertyReceiver(InputConnection<T> connection){
         this.connection = connection;

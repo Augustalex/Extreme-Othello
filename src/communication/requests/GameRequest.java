@@ -1,7 +1,8 @@
 package communication.requests;
 
 /**
- * Created by August on 2016-10-31.
+ * Pre configured Request object that asks for
+ * a client to join a game.
  */
 public class GameRequest extends Request {
 
