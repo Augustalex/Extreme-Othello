@@ -37,6 +37,12 @@ public class GameTest extends Application {
         router.route("MainView", new HashMap());
 
         primaryStage.show();
+        System.setOut(new OutputThreadDelegator());
+
+        //LoggableThread thread = new LoggableThread(new ClientTest());
+        //thread.setPrintStream();
+       // new ClientTest().start();
+
     }
 
     public static void main(String[] args){
