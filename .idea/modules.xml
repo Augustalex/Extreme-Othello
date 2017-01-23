@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Core/Core.iml" filepath="$PROJECT_DIR$/Core/Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GameServer/GameServer.iml" filepath="$PROJECT_DIR$/GameServer/GameServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServerUtilities/ServerUtilities.iml" filepath="$PROJECT_DIR$/ServerUtilities/ServerUtilities.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestTestYe.iml" filepath="$PROJECT_DIR$/TestTestYe.iml" />
     </modules>
   </component>
